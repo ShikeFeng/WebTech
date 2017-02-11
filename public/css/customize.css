@@ -1,0 +1,102 @@
+body {
+    min-width: 40em;
+    color: black;
+    z-index: 0;
+}
+
+#heading {
+    height: 2.5em;
+}
+#signup, #login {
+    display: inline-block;
+}
+
+.nav-bar {
+    left: 0;
+    right: 0;
+    position: fixed;
+    text-align: center;
+    background-color: #1affa3;
+    z-index: 2;
+    border: 0.2em solid red;
+}
+
+.category {
+    height: 2em;
+}
+a.home:hover,
+a.home:active {
+  background: #A62A2A;
+}
+
+a.videos:hover,
+a.videos:before {
+  background: #FF2400;
+}
+
+a.almanac:hover,
+a.almanac:before {
+  background: #7F00FF;
+}
+
+a.snippets:hover,
+a.snippets:before {
+  background: #002859;
+}
+
+a.forums:hover,
+a.forums:before {
+  background: #238E23;
+}
+
+.content {
+    height: 100em;
+    padding: 0;
+    padding-top: 3em;
+}
+
+section {
+    margin-top: 2em;
+}
+.model1 {
+}
+
+.topStory{
+    height: 25em
+}
+
+
+#topStory-image{
+    background-image: url(../img/loveProgramming.png);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    height: 100%;
+}
+
+#topStory-description{
+    height: auto;
+}
+
+.topStory-title{
+    font-size: 2em;
+    text-overflow: ellipsis;
+    height: 50%;
+}
+.intro {
+    padding: 1em 1em;
+    height: 15%;
+}
+.author-info {
+    padding: 1em 0.5em;
+    height: 35%;
+}
+.author-info img {
+    width: 3em;;
+    border-radius: 50%;
+    position: top left;
+}
+
+.latestStories {
+    height: 20em;
+    margin-top: 1.5em;
+}

@@ -13,17 +13,55 @@
 	<link href="css/customize.css" rel="stylesheet"></link>
 </head>
 <body>
-	<div class="container">
-		<h1>Home</h1>
-
-		<p>This is the home page of a site that illustrates a security loophole.  Here
-		is a link to an admin page:</p>
-
-		<p><a href="admin.html"></a>Admin</p>
-
-		<p>You shouldn't be able to visit it because (a) it is protected by login
-		authorisation and (b) login isn't implemented.  But there is a way to visit
-		it.</p>
+    
+    <!--Navigation Bar-->
+    <div class="nav-bar container">
+        <div class="container-fluid" id="heading">
+            <div class="rows">
+                <div class="col-sm-4">
+                        <a class="brand" id="home" href="#">WebSiteName</a>
+                </div>
+                <div class="col-sm-4 navbar-right" id ="userlog"> 
+                    <ul >
+                        <li id="signup"><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                        <li id="login"><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <nav class="main-nav row">
+                  <a class="home col-sm-3 category" href="#content">Home</a>
+                  <a class="videos col-sm-3 category" href="#">Videos</a>
+                  <a class="almanac col-sm-3 category" href="#">Technology</a>
+                  <a class="snippets col-sm-3 category" href="#">Snippets</a>
+            </nav>
+        </div>
+    </div>
+    
+    
+	<div class="container content">
+        
+        <section class="sections container-fluid model1" id="video">
+            <h2 class="topic"><a  href="http://www.w3schools.com/html/">Video ></a></h2>
+                <div class="row topStory">
+                    <div class="col-sm-8" id="topStory-image"></div>
+                    <div class="col-sm-4" id="topStory-description">
+                        <div class="topStory-title">HOW TO KEEP CALM AND LOVE PROGRAMMING? </div>
+                        <div class="intro">just try to enjoy it ^_^ </div>
+                        <div class="author-info">
+                            <img src="../public/img/ShikeFeng.jpg" /> Brilliant Robert
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 latestStories">fdfdf</div>
+                    <div class="col-sm-4 latestStories">dsfdf</div>
+                    <div class="col-sm-4 latestStories">fdfdfdfdfd</div>
+                </div>
+                    
+               
+        </section>
 	</div>
 
 	
