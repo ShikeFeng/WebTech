@@ -18,10 +18,10 @@
     <div class="nav-bar container">
         <div class="container-fluid" id="heading">
             <div class="rows">
-                <div class="col-sm-4">
+                <div class="col-sm-3">
                         <a class="brand" id="home" href="#">WebSiteName</a>
                 </div>
-                <div class="col-sm-4 navbar-right" id ="userlog"> 
+                <div class="col-sm-3 navbar-right" id ="userlog"> 
                     <ul >
                         <li id="signup"><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
                         <li id="login"><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
@@ -31,10 +31,10 @@
         </div>
         <div class="container-fluid">
             <nav class="main-nav row">
-                  <a class="home col-sm-3 category" href="#content">Home</a>
-                  <a class="videos col-sm-3 category" href="#">Videos</a>
-                  <a class="almanac col-sm-3 category" href="#">Technology</a>
-                  <a class="snippets col-sm-3 category" href="#">Snippets</a>
+                  <a class="home col-sm-2 category" href="#content">Home</a>
+                  <a class="videos col-sm-2 category" href="#">Programming</a>
+                  <a class="almanac col-sm-2 category" href="#">Technology</a>
+                  <a class="snippets col-sm-2 category" href="#">Snippets</a>
             </nav>
         </div>
     </div>
@@ -42,25 +42,53 @@
     
 	<div class="container content">
         
-        <section class="sections container-fluid model1" id="video">
-            <h2 class="topic"><a  href="http://www.w3schools.com/html/">Video ></a></h2>
-                <div class="row topStory">
-                    <div class="col-sm-8" id="topStory-image"></div>
-                    <div class="col-sm-4" id="topStory-description">
-                        <div class="topStory-title">HOW TO KEEP CALM AND LOVE PROGRAMMING? </div>
-                        <div class="intro">just try to enjoy it ^_^ </div>
-                        <div class="author-info">
-                            <img src="../public/img/ShikeFeng.jpg" /> Brilliant Robert
+        <!--The first section-->
+        <section class="sections container-fluid model1" id="cat1">
+            <h2 class="topic"><a  href="http://www.w3schools.com/html/">Programming ></a></h2>
+                <div class="row container">
+                    <div class="row topStory">
+                        <img class="col-sm-8" id="topImage" src="../public/img/loveProgramming.png" />
+                        <div class="col-sm-4" id="topStory-description">
+                            <h3 class="topStory-title">HOW TO KEEP CALM AND LOVE PROGRAMMING?</h3>
+                            <p class="intro">just try to enjoy it ^_^ </p>
+                            <div class="topStory-author-info">
+                                <img src="../public/img/ShikeFeng.jpg" /> Brilliant Robert
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-4 latestStories">fdfdf</div>
-                    <div class="col-sm-4 latestStories">dsfdf</div>
-                    <div class="col-sm-4 latestStories">fdfdfdfdfd</div>
-                </div>
+                        
+                    <div class="row latestStories">
+                        <div class="col-sm-4 container story" id="story1">
+                            <div class="story-image"></div>
+                            <h4 class="story-title">Java or C++ ? Which one is better ?</h4>
+                            <p class="story-intro">Both are very popular, whether one is better than the other depends on ...</p>
+                            <div class="story-author-info">
+                                <img src="../public/img/ShikeFeng.jpg" /> Brilliant Robert
+                            </div>
+                        </div>
+                        <div class="col-sm-4 container story" id="story2">
+                            <div class="story-image"></div>
+                            <h4 class="story-title">How should a beginner learn python ?</h4>
+                            <p class="story-intro">Some advice from experienced python developer</p>
+                            <div class="story-author-info">
+                                <img src="../public/img/ShikeFeng.jpg" /> Brilliant Robert
+                            </div>
+                        </div>
+                        <div class="col-sm-4 container story" id="story3">
+                            <div class="story-image"></div>
+                            <h4 class="story-title">Why is NodeJS so popular these years</h4>
+                            <p class="story-intro">Google V8 engine has made NodeJS become the first choice for a lot of web developers</p>
+                            <div class="story-author-info">
+                                <img src="../public/img/ShikeFeng.jpg" /> Brilliant Robert
+                            </div>
+                        </div>
+                    </div>
                     
-               
+                </div>
+        </section>
+        
+        <!--The Second section-->
+        <section>
         </section>
 	</div>
 

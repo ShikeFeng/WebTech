@@ -4,6 +4,9 @@ body {
     z-index: 0;
 }
 
+/*
+    Style sheet for the fixed navigation bar at top
+*/
 #heading {
     height: 2.5em;
 }
@@ -50,27 +53,23 @@ a.forums:before {
 }
 
 .content {
-    height: 100em;
     padding: 0;
     padding-top: 3em;
 }
 
 section {
-    margin-top: 2em;
+    margin-top: 1.5em;
 }
 .model1 {
+    
 }
 
 .topStory{
-    height: 25em
+    
 }
-
-
-#topStory-image{
-    background-image: url(../img/loveProgramming.png);
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    height: 100%;
+#topImage {
+    height: auto;
+    max-height: 25em;
 }
 
 #topStory-description{
@@ -78,25 +77,71 @@ section {
 }
 
 .topStory-title{
+    padding: 0.5em 0.5em;
     font-size: 2em;
     text-overflow: ellipsis;
-    height: 50%;
+    text-align: left;
+    font-weight: bold;
 }
 .intro {
-    padding: 1em 1em;
-    height: 15%;
+    padding-left: 1em;
+    font-size: 1.5em;
 }
-.author-info {
+.topStory-author-info {
     padding: 1em 0.5em;
-    height: 35%;
 }
-.author-info img {
+.topStory-author-info img {
     width: 3em;;
     border-radius: 50%;
     position: top left;
 }
 
+/* Stylesheet for stories */
+
 .latestStories {
-    height: 20em;
+    width: 100%;
+    max-height: 25em;
     margin-top: 1.5em;
+}
+
+.story-image{
+    width: 100%;
+    height: 10em;
+    //background-image: url(../img/javaOrCpp.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.story-title {
+    padding: 0.5em 0.5em;
+    font-size: 1.5em;
+    font-weight: bolder;
+}
+.story-intro {
+    padding: 0 0.5em;
+    font-size: 1.2em;
+}
+.story-author-info {
+    padding: 0.5em 0.5em;
+}
+.story-author-info img{
+    width: 2.5em;
+    border-radius: 50%;
+    position: top left;
+}
+.story {
+    max-height: 25em;
+    padding-bottom: 0.5em;
+}
+
+#story1 .story-image{
+    background-image: url(../img/javaOrCpp.png);
+}
+
+#story2 .story-image{
+    background-image: url(../img/python.png);
+}
+
+#story3 .story-image{
+    background-image: url(../img/node.png);
 }
