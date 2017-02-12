@@ -56,10 +56,13 @@ a.forums:before {
 /* The actual content of the homepage*/
 .content {
     padding: 0;
-    padding-top: 4.5em;
+    padding-top: 3.5em;
 }
 
-.model1 {
+.module {
+    margin: 1em 0;
+}
+.model-1 {
     height: auto;
 }
 
@@ -104,8 +107,8 @@ a.forums:before {
 
 .story {
     max-height: 25em;
-    
 }
+
 .story-image{
     width: 100%;
     height: 10em;
@@ -149,10 +152,50 @@ a.forums:before {
     background-image: url(../img/node.png);
 }
 
-.m2 {
-    max-height: 25em;
-}
 #story-2-1 {
     background-image:;
 }
 /* The second section*/
+
+.model-2 {
+    
+}
+.model-2 .story {
+}
+
+
+.bounding-box{
+    margin: 1em 0.5em;
+    height: 20em;
+    background-repeat: no-repeat;
+    background-size: cover; 
+    background-position: center;
+    padding: 1em;
+}
+
+#story-2-1 {
+    background-image: url(../img/iphone7.png);
+    color:white;
+}
+
+#story-2-2 {
+    background-image: url(../img/s7edge.png);
+    color:antiquewhite;
+}
+
+#story-2-3 {
+    background-image: url(../img/blackberry_priv.png);
+    color: white;
+}
+
+#story-2-4 {
+    background-image: url(../img/Nokia.png);
+    color: antiquewhite;;
+}
+
+.bounding-box h3{
+    padding-top: 15%;
+    font-weight: 700;
+    font-size: 2em;
+    
+}
