@@ -7,6 +7,8 @@ img {
     max-height: 100%;
 }
 
+/*Short stories box*/
+
 .short-story-container{
     background-color: white;
     margin-left: 20%;
@@ -23,15 +25,42 @@ img {
 .short-profile-details{
     font-size: 130%;
     margin-bottom: 1%;
+    padding-top: 1%;
 }
 .short-post-story{
     width: inherit;
     word-wrap: break-word;
+    padding-bottom: 2%;
 }
+
 .user-name{
     color: deepskyblue;
 }
 
 .category{
     color: royalblue;
+}
+
+/*Most recent stories*/
+
+.recent-story{
+    margin-top: 2%;
+}
+
+.most-recent-stories{
+    margin-top: 3%;
+    /*text-align: center;*/
+}
+
+.most-recent-stories-author{
+    margin-left: 1.5%;
+}
+
+.most-recent-stories-title{
+    font-size: large;
+}
+.user-icon{
+    float: left;
+    margin-right: 1%;
+    margin-top: 1%;
 }
