@@ -1,0 +1,21 @@
+body {
+    background-color: rgb(250,250,250);
+}
+
+.edit-content{
+    align-self: center;
+    margin-top: 2%;
+}
+
+.choose-picture-button{
+    margin-top: 0.5%;
+}
+
+.submit-button{
+    margin-top: 0.5%;
+}
+
+textarea{
+    border: none;
+}
+
