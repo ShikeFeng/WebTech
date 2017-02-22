@@ -14,11 +14,33 @@
 	<link href="css/category.css" rel="stylesheet"></link>
 </head>
 <body>
-	<div>
-		Navigation Bar
-	</div>
+	<div class="nav-bar container-fluid">
+        <div class="container-fluid" id="heading">
+            <div class="rows">
+                <div class="col-sm-3">
+                        <a class="brand" id="home" href="#">WebSiteName</a>
+                </div>
+                <div class="col-sm-3 navbar-right" id ="userlog"> 
+                    <ul >
+                        <li id="signup"><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                        <li id="login"><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <nav class="main-nav row">
+                  <a class="home col-sm-2 category" href="#content">Home</a>
+                  <a class="videos col-sm-2 category" href="#programming">Programming</a>
+                  <a class="almanac col-sm-2 category" href="#digital">Digital</a>
+                  <a class="snippets col-sm-2 category" href="#">Snippets</a>
+            </nav>
+        </div>
+    </div>
+    
+    
 	<div class="row">
-		<div class="col-md-8">
+		<div class="col-md-8" id="stories-column">
 			<div class="short-story-container">
 				<div class="container short-profile-details">
 					<object type="image/svg+xml" data="svg/user-icon-resized.svg">

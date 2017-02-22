@@ -19,7 +19,9 @@ svg {
 }
 
 /*Short stories box*/
-
+#stories-column {
+    padding-top: 3%;
+}
 .short-story-container{
     background-color: white;
     margin-left: 20%;
