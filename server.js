@@ -1,11 +1,22 @@
+"use strict";
 // Sample express web server.  Supports the same features as the provided server,
 // and demonstrates a big potential security loophole in express.
 
 var express = require("express");
 var app = express();
 var fs = require("fs");
+var db = require("./public/js/db.js");
 var banned = [];
 banUpperCase("./public/", "");
+
+/*
+var sql = require("sqlite3");
+console.log(sql);
+var db = new sql.Database('public/db/site.db');
+*/
+
+
+
 
 // Define the sequence of functions to be called for each request.  Make URLs
 // lower case, ban upper case filenames, require authorisation for admin.html,
