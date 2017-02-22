@@ -7,15 +7,31 @@ body {
     margin-top: 2%;
 }
 
-.choose-picture-button{
+.button{
     margin-top: 0.5%;
+    cursor: pointer;
+    border: none;
+}
+
+.button:hover{
+    background-color: rgb(250,250,250);
+}
+
+.choose-picture-button{
 }
 
 .submit-button{
-    margin-top: 0.5%;
+    color: white;
+    background-color: deepskyblue;
+    transition-duration: 0.2s;
+    font-weight: bold;
+    padding: 1% 1% 1% 1%;
+}
+
+.submit-button:hover{
+    color: deepskyblue;
 }
 
 textarea{
     border: none;
 }
-
