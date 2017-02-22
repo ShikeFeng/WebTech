@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-GB" xml:lang="en-GB">
+<head>
+    <title>Edit post</title>
+    <meta charset="utf-8"></meta>
+    <meta name="viewpoint" content="width=device-width, initial-scale=1"></meta>
+    <meta name="description" content="This is the edit page; users will write stories in this page"></meta>
+    <meta name="author" content="Shike and Silviu"></meta>
+
+    <!-- Bootstrap CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet"></link>
+    <!-- Custom CSS -->
+    <link href="css/customize.css" rel="stylesheet"></link>
+    <link href="css/edit_post.css" rel="stylesheet"></link>
+</head>
+<body>
+<div>
+    Navigation Bar
+</div>
+<div class="row">
+    <div class="col-md-12 edit-content">
+        <form action="some-action">
+            <div class="container title-textarea">
+                <textarea name="title" rows="1" cols="30" placeholder="Title"></textarea>
+            </div>
+            <div class="container article-textarea">
+                <textarea name="Article" rows="10" cols="100" placeholder="Content"></textarea>
+            </div>
+            <div class="container category-drop">
+                <input list="categories" placeholder="Choose a category"/>
+                <datalist id="categories">
+                    <option value="Technology"/>
+                    <option value="Science"/>
+                    <option value="Future"/>
+                    <option value="Biology"/>
+                </datalist>
+            </div>
+            <div class="container">
+                <input class="button" type="file"/>
+            </div>
+            <div class="container">
+                <input class="button submit-button" type="submit" value="Submit article"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!--	JavaScrip files included-->
+<!-- JQuery -->
+<script src="js/jquery-3.1.1.js"></script>
+<!-- Bootstrap -->
+<script src="js/bootstrap.min.js"></script>
+<!-- Custom JS-->
+</body>
+</html>
