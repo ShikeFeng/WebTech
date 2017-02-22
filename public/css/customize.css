@@ -96,7 +96,7 @@ a.forums:before {
 .topStory-author-info img {
     width: 3em;;
     border-radius: 50%;
-    position: top left;
+    /*position: top left;*/
 }
 
 /* Stylesheet for stories */
@@ -136,7 +136,7 @@ a.forums:before {
 .story-author-info img{
     width: 2.5em;
     border-radius: 50%;
-    position: top left;
+    /*position: top left;*/
 }
 
 
@@ -144,7 +144,7 @@ a.forums:before {
     background-position: center;
 }
 #story1-1 .story-image{
-    background-image: url(../img/javaOrCpp.png);
+    background-image: url(../img/javaorcpp.png);
 }
 
 #story1-2 .story-image{
@@ -156,7 +156,7 @@ a.forums:before {
 }
 
 #story-2-1 {
-    background-image:;
+    /*background-image:;*/
 }
 /* The second section*/
 
@@ -193,7 +193,7 @@ a.forums:before {
 }
 
 #story-2-4 {
-    background-image: url(../img/Nokia.png);
+    background-image: url(../img/nokia.png);
     color: antiquewhite;;
 }
 
@@ -218,11 +218,11 @@ a.forums:before {
 }
 
 #story-3-1 .story-image{
-    background-image: url(../img/chomePlugins.png);
+    background-image: url(../img/chomeplugins.png);
 }
 
 #story-3-2 .story-image{
-    background-image: url(../img/GitHub.png);
+    background-image: url(../img/github.png);
 }
 
 #story-3-3 .story-image{
