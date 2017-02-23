@@ -11,9 +11,23 @@
 	<link href="css/bootstrap.min.css" rel="stylesheet"></link>
 	<!-- Custom CSS -->
 	<link href="css/customize.css" rel="stylesheet"></link>
+    <link href="css/popup-box.css" rel="stylesheet"></link>
 </head>
 <body>
-    
+
+    <!--Login popup-->
+    <div class="login-popup">
+        <div class="login-popup-content">
+            <span class="close">&#10005;</span>
+            <div class="container user-name-container">
+                <textarea class="user-name-textarea" name="user-name" rows="1" cols="20" placeholder="Username"></textarea>
+            </div>
+            <div class="container password-container">
+                <textarea name="password" rows="1" cols="30" placeholder="Password"></textarea>
+            </div>
+        </div>
+    </div>
+
     <!--Navigation Bar-->
     <div class="nav-bar container-fluid">
         <div class="container-fluid" id="heading">
@@ -41,7 +55,7 @@
     
     
 	<div class="container content">
-        
+
         <!--The first section-->
         <section class="container-fluid module model-1" id="programming">
             <h2 class="topic"><a  href="category.html">Programming ></a></h2>
@@ -183,8 +197,6 @@
             </div>
         </section>
 	</div>
-
-	
 	
 <!--	JavaScrip files included-->
 <!-- JQuery -->
@@ -192,5 +204,6 @@
 <!-- Bootstrap -->
 	<script src="js/bootstrap.min.js"></script>
 <!-- Custom JS-->
+    <script src="js/popup.js"></script>
 </body>
 </html>
