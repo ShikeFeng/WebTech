@@ -5,7 +5,7 @@
 var express = require("express");
 var app = express();
 var fs = require("fs");
-var db = require("./public/js/db.js");
+var db = require("./db.js");
 var banned = [];
 banUpperCase("./public/", "");
 
