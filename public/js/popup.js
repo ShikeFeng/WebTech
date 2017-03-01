@@ -18,3 +18,20 @@ window.onclick = function(event) {
         popupBox.style.display = "none";
     }
 }
+
+window.onload = function(){
+    var q = new XMLHttpRequest();
+    q.onreadystatechange = receive;
+    var p = {
+        "username": "Robert",
+        "password": 123456
+    }
+    alert(JSON.stringify(p));
+    q.open("POST", "/", true);
+    q.send(JSON.stringify(p));
+    function receive() {
+        if (this.readyState == 4 && this.status == 200) {
+            alert(this.responseText);
+       }
+    };
+}

@@ -9,14 +9,6 @@ var db = require("./db.js");
 var banned = [];
 banUpperCase("./public/", "");
 
-/*
-var sql = require("sqlite3");
-console.log(sql);
-var db = new sql.Database('public/db/site.db');
-*/
-
-
-
 
 // Define the sequence of functions to be called for each request.  Make URLs
 // lower case, ban upper case filenames, require authorisation for admin.html,
@@ -28,6 +20,36 @@ var options = { setHeaders: deliverXHTML };
 app.use(express.static("public", options));
 app.listen(8080, "localhost");
 console.log("Visit http://localhost:8080/");
+
+// login / register
+app.post('/', loginRequestHandler);
+function loginRequestHandler(req, res) {
+    var body = "";
+    req.on('data', add);
+    req.on('end', end);
+    
+    function add(chunk){
+        body = body + chunk.toString();
+    }
+
+    function end(){
+        body = JSON.parse(body);
+        var loginResponse = db.login(body);
+        switch (loginResponse) {
+            case 1:
+                console.log("No Such User");
+                break;
+            case 2:
+                console.log("Incorrect Password");
+                break;
+            default:
+                console.log("Successfully LoggedIn");
+                break;
+        }
+        res.send("Hello");
+    }
+}
+
 
 // Make the URL lower case.
 function lower(req, res, next) {
