@@ -1,0 +1,18 @@
+.user-info{
+    margin-top: 5%;
+    cursor: pointer;
+}
+
+.article-title{
+    margin-top: 5%;
+}
+
+.post-picture {
+    height: 100%;
+    width: 50%;
+}
+
+.post-picture img{
+    height: 40%;
+    width: 100%;
+}

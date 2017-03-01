@@ -18,3 +18,8 @@ window.onclick = function(event) {
         popupBox.style.display = "none";
     }
 }
+
+window.onload = function() {
+    var q = new XMLHttpRequest();
+    console.log(q);
+}
