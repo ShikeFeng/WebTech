@@ -1,0 +1,70 @@
+/* The page background when the popup is on */
+.login-popup {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 10%; /* Location of the box */
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Popup content Content */
+.login-popup-content {
+    background-color: rgb(69,159,134);
+    margin: 0 auto;
+    height: 40%;
+    width: 25%;
+    min-width: 350px;
+}
+
+.login-textarea {
+    padding-top: 1%;
+    padding-bottom: 1%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.user-name-container {
+    margin-top: 10%;
+}
+.password-container {
+    margin-top: 5%;
+}
+
+.login-text{
+    padding-left: 45%;
+    font-size: 200%;
+    color: white;
+}
+
+.login-link{
+    color: white;
+    padding-left: 1%;
+}
+
+.login-link:hover{
+    color: white;
+}
+
+.register{
+    float: right;
+    padding-right: 1%;
+}
+
+.login-button{
+    background-color: rgb(78, 198, 73);
+    color: white;
+    position: relative;
+    left: 43%;
+    margin-top: 3%;
+    padding: 1% 7% 1% 7%;
+    border: none;
+    cursor: pointer;
+}
+
+.login-button:hover{
+    background-color: rgb(250,250,250);
+    color: rgb(78, 198, 73);
+}
