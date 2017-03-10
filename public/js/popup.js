@@ -24,7 +24,7 @@ window.onload = function(){
     q.onreadystatechange = receive;
     var p = {
         "username": "Robert",
-        "password": 123456
+        "password": 1234567
     }
     alert(JSON.stringify(p));
     q.open("POST", "/", true);

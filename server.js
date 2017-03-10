@@ -5,7 +5,14 @@
 var express = require("express");
 var app = express();
 var fs = require("fs");
-var db = require("./db.js");
+//var db = require("./db.js");
+var path = require("path");
+var sql = require("sqlite3").verbose();
+var dbpath = path.resolve('public/db/', 'site.db');
+console.log(dbpath);
+var db = new sql.Database(dbpath);
+
+
 var banned = [];
 banUpperCase("./public/", "");
 
@@ -27,26 +34,36 @@ function loginRequestHandler(req, res) {
     var body = "";
     req.on('data', add);
     req.on('end', end);
-    
+    var response = {};
     function add(chunk){
         body = body + chunk.toString();
     }
 
     function end(){
         body = JSON.parse(body);
-        var loginResponse = db.login(body);
-        switch (loginResponse) {
-            case 1:
-                console.log("No Such User");
-                break;
-            case 2:
-                console.log("Incorrect Password");
-                break;
-            default:
-                console.log("Successfully LoggedIn");
-                break;
+
+        db.get("select * from user where username= ?", body.username, handler);
+
+        function handler(err, row){
+            if (err) {
+                throw err;
+            }
+            else {
+                if (row === undefined){
+                    response.loginResponse = "No such user";
+                }
+                else {
+                    if(row.password === body.password){
+                        response.loginResponse = "Successfully LoggedIn";
+                    }
+                    else {
+                        response.loginResponse = "Incorrect Password";
+                    }
+                }
+                res.send(JSON.stringify(response));
+            }
         }
-        res.send("Hello");
+
     }
 }
 

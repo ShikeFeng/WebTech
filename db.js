@@ -23,7 +23,6 @@ function register(data){
 // This is the function to handle user's login
 // loginInfo should be an array of the form [username, password]
 function login(data){
-    var response;
     db.get("select * from user where username= ?", data.username, handler);
     function handler(err, row) {
         if (err) {
@@ -35,12 +34,12 @@ function login(data){
             }
             else {
                 if(row.password === data.password){
-                    return 0;
                     console.log("Correct Username and Password");
+                    return 0;
                 }
                 else {
-                    return 2;
                     console.log("Password Incorrect");
+                    return 2;
                 }
             }
         }
