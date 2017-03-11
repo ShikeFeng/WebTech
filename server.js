@@ -12,10 +12,8 @@ var dbpath = path.resolve('public/db/', 'site.db');
 console.log(dbpath);
 var db = new sql.Database(dbpath);
 
-
 var banned = [];
 banUpperCase("./public/", "");
-
 
 // Define the sequence of functions to be called for each request.  Make URLs
 // lower case, ban upper case filenames, require authorisation for admin.html,
@@ -29,7 +27,7 @@ app.listen(8080, "localhost");
 console.log("Visit http://localhost:8080/");
 
 // login / register
-app.post('/', loginRequestHandler);
+app.post('/login', loginRequestHandler);
 function loginRequestHandler(req, res) {
     var body = "";
     req.on('data', add);
@@ -42,7 +40,7 @@ function loginRequestHandler(req, res) {
     function end(){
         body = JSON.parse(body);
 
-        db.get("select * from user where username= ?", body.username, handler);
+        db.get("select * from user where username= ?", body.userName, handler);
 
         function handler(err, row){
             if (err) {
