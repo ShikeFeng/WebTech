@@ -26,6 +26,15 @@ app.use(express.static("public", options));
 app.listen(8080, "localhost");
 console.log("Visit http://localhost:8080/");
 
+// set the view engine to ejs
+app.set('view engine', 'ejs');
+
+//index page
+// app.get('/', function(req, res)){
+//     var test = 'this is a test';
+//
+//     res.render()
+// }
 // login / register
 app.post('/login', loginRequestHandler);
 function loginRequestHandler(req, res) {
