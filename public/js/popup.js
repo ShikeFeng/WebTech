@@ -8,12 +8,10 @@ var loginBtn = document.getElementsByClassName('login-button')[0];
 
 loginLink.onclick = function() {
     popupBox.style.display = 'block';
-    history.pushState('some state object', 'login-popup', 'http://localhost:8080/login');
 }
 
 span.onclick = function () {
     popupBox.style.display = 'none';
-    history.pushState('some state object', 'login-popup', 'http://localhost:8080/index.html');
 }
 
 loginBtn.onclick = function(){
@@ -30,7 +28,6 @@ loginBtn.onclick = function(){
 window.onclick = function(event) {
     if(event.target == popupBox) {
         popupBox.style.display = 'none';
-        history.pushState('some state object', 'login-popup', 'http://localhost:8080/index.html');
     }
 }
 
