@@ -12,8 +12,29 @@
 	<!-- Custom CSS -->
 	<link href="css/customize.css" rel="stylesheet"></link>
 	<link href="css/category.css" rel="stylesheet"></link>
+	<link href="css/popup-box.css" rel="stylesheet"></link>
 </head>
 <body>
+
+	<!--Login popup-->
+	<div class="login-popup">
+		<div class="login-popup-content">
+			<span class="close">&#10005;</span>
+			<span class="login-text">Login</span>
+			<div class="login-logic">
+				<div class="container user-name-container">
+					<textarea class="login-textarea usen-name" name="user-name" rows="1" cols="30" placeholder="Username"></textarea>
+				</div>
+				<div class="container password-container">
+					<textarea class="login-textarea password" name="password" rows="1" cols="30" placeholder="Password"></textarea>
+				</div>
+				<button class="login-button">Login</button>
+			</div>
+			<a href="#" class="login-link forgot">Forgot password?</a>
+			<a href="#" class="login-link register">Register</a>
+		</div>
+	</div>
+
 	<div class="nav-bar container-fluid">
         <div class="container-fluid" id="heading">
             <div class="rows">
@@ -110,5 +131,6 @@
 <!-- Bootstrap -->
 	<script src="js/bootstrap.min.js"></script>
 <!-- Custom JS-->
+	<script src="js/popup.js"></script>
 </body>
 </html>
