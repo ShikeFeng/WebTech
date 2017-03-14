@@ -52,23 +52,18 @@ function loginRequestHandler(req, res) {
         db.get("select * from user where username= ?", body.userName, handler);
 
         function handler(err, row){
-            if (err) {
-                throw err;
+            if (err)  throw err;
+
+            if (row === undefined) {
+              response.loginResponse = "No such user";
+            }
+            else if(row.password === body.password) {
+              response.loginResponse = "Successfully LoggedIn";
             }
             else {
-                if (row === undefined){
-                    response.loginResponse = "No such user";
-                }
-                else {
-                    if(row.password === body.password){
-                        response.loginResponse = "Successfully LoggedIn";
-                    }
-                    else {
-                        response.loginResponse = "Incorrect Password";
-                    }
-                }
-                res.send(JSON.stringify(response));
+              response.loginResponse = "Incorrect Password";
             }
+            res.send(JSON.stringify(response));
         }
 
     }
