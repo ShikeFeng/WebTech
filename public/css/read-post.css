@@ -8,11 +8,9 @@
 }
 
 .post-picture {
-    height: 100%;
     width: 50%;
 }
 
 .post-picture img{
-    height: 40%;
     width: 100%;
 }
