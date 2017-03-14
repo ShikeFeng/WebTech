@@ -81,6 +81,10 @@ a.forums:before {
     height: auto;
 }
 
+.clickable {
+    cursor: pointer;
+}
+
 .topStory-title{
     padding: 0.5em 0.5em;
     font-size: 2em;
@@ -92,9 +96,11 @@ a.forums:before {
     padding-left: 1em;
     font-size: 1.5em;
 }
+
 .topStory-author-info {
     padding: 1em 0.5em;
 }
+
 .topStory-author-info img {
     width: 3em;;
     border-radius: 50%;
