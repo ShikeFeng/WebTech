@@ -29,12 +29,22 @@ console.log("Visit http://localhost:8080/");
 // set the view engine to ejs
 app.set('view engine', 'ejs');
 
-//index page
-// app.get('/', function(req, res)){
-//     var test = 'this is a test';
-//
-//     res.render()
-// }
+app.get('/index.ejs', function(req, res) {
+    res.render('pages/index');
+});
+
+app.get('/category.ejs', function(req, res) {
+    res.render('pages/category');
+});
+
+app.get('/edit_post.ejs', function(req, res) {
+    res.render('pages/edit_post');
+});
+
+app.get('/read_post.ejs', function(req, res) {
+    res.render('pages/read_post');
+});
+
 // login / register
 app.post('/login', loginRequestHandler);
 function loginRequestHandler(req, res) {
@@ -100,7 +110,7 @@ function auth(req, res, next) {
 
 // Called by express.static.  Deliver response as XHTML.
 function deliverXHTML(res, path, stat) {
-    if (path.endsWith(".html")) {
+    if (path.endsWith(".ejs")) {
         res.header("Content-Type", "application/xhtml+xml");
     }
 }
