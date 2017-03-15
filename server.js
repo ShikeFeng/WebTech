@@ -5,7 +5,6 @@
 var express = require("express");
 var app = express();
 var fs = require("fs");
-//var db = require("./db.js");
 var path = require("path");
 var sql = require("sqlite3").verbose();
 var dbpath = path.resolve('public/db/', 'site.db');
@@ -29,12 +28,41 @@ console.log("Visit http://localhost:8080/");
 // set the view engine to ejs
 app.set('view engine', 'ejs');
 
-//index page
-// app.get('/', function(req, res)){
-//     var test = 'this is a test';
-//
-//     res.render()
-// }
+app.get('/index.html', function(req, res) {
+    var posts = [];
+    var post1 = {};
+    var post2 = {};
+
+    post1['title'] = 'HOW TO KEEP CALM AND LOVE PROGRAMMING?';
+    post1['description'] = 'just try to enjoy it ^_^';
+    post1['imageUrl'] = '/img/shikefeng.jpg';
+    post1['userName'] = 'Brilliant Robert';
+
+    post2['title'] = 'Java or C++ ? Which one is better ?';
+    post2['description'] = 'Both are very popular, whether one is better than the other depends on ...';
+    post2['imageUrl'] = '/img/shikefeng.jpg';
+    post2['userName'] = 'Brilliant Robert';
+
+    posts.push(post1);
+    posts.push(post2);
+
+    res.render('pages/index', {
+        posts: posts
+    });
+});
+
+app.get('/category.html', function(req, res) {
+    res.render('pages/category');
+});
+
+app.get('/edit_post.html', function(req, res) {
+    res.render('pages/edit_post');
+});
+
+app.get('/read_post.html', function(req, res) {
+    res.render('pages/read_post');
+});
+
 // login / register
 app.post('/login', loginRequestHandler);
 function loginRequestHandler(req, res) {
@@ -96,7 +124,7 @@ function auth(req, res, next) {
 
 // Called by express.static.  Deliver response as XHTML.
 function deliverXHTML(res, path, stat) {
-    if (path.endsWith(".html")) {
+    if (path.endsWith(".ejs")) {
         res.header("Content-Type", "application/xhtml+xml");
     }
 }
@@ -119,4 +147,9 @@ function banUpperCase(root, folder) {
         if ((mode & folderBit) == 0) continue;
         banUpperCase(root, file);
     }
+}
+
+function generatePosts() {
+    /*insert database query here*/
+    /*create array of posts here*/
 }
