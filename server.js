@@ -30,21 +30,24 @@ app.set('view engine', 'ejs');
 
 app.get('/index.html', function(req, res) {
     var posts = [];
-    var post1 = {};
-    var post2 = {};
 
-    post1['title'] = 'HOW TO KEEP CALM AND LOVE PROGRAMMING?';
-    post1['description'] = 'just try to enjoy it ^_^';
-    post1['imageUrl'] = '/img/shikefeng.jpg';
-    post1['userName'] = 'Brilliant Robert';
+    db.all('select * from posts', handler);
 
-    post2['title'] = 'Java or C++ ? Which one is better ?';
-    post2['description'] = 'Both are very popular, whether one is better than the other depends on ...';
-    post2['imageUrl'] = '/img/shikefeng.jpg';
-    post2['userName'] = 'Brilliant Robert';
+    function handler(err, table) {
+        var post = {};
 
-    posts.push(post1);
-    posts.push(post2);
+        if (err) throw err;
+
+        for(var row = 0; row < table.length; row++) {
+            post['id'] = table[row].postID;
+            post['title'] = table[row].title;
+            post['description'] = table[row].introduction;
+            post['imageUrl'] = table[row].imagePath;
+
+            posts.push(post);
+        }
+        console.log(posts);
+    }
 
     res.render('pages/index', {
         posts: posts
