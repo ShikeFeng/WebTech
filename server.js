@@ -59,6 +59,7 @@ function loginRequestHandler(req, res) {
             }
             else if(row.password === body.password) {
               response.loginResponse = "Successfully LoggedIn";
+              response.imageIcon = row.imgURL;
             }
             else {
               response.loginResponse = "Incorrect Password";
