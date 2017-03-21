@@ -57,149 +57,151 @@
         </div>
     </div>
     
-    
 	<div class="container content">
-        <!--The first section-->
-        <section class="container-fluid module model-1" id="programming">
-            <h2 class="topic"><a  href="category.html">Programming ></a></h2>
-            <div class="row topStory">
-                <a href="read_post.html"><img class="col-sm-8 clickable" id="topImage" src="../../img/loveprogramming.png"/></a>
-                <div class="col-sm-4" id="topStory-description">
-                    <a href="read_post.html">
-                        <h3 class="topStory-title clickable">dshiad</h3>
-                        <p class="intro clickable">just try to enjoy it ^_^ </p>
-                    </a>
-                        <div class="topStory-author-info clickable">
-                    <img src="../../img/shikefeng.jpg" /> Brilliant Robert
+        <%  for(var category = 0; category < categoriesPosts.length; category++) { %>
+            <%if(category == 0) { %>
+                <!--The first section-->
+                <section class="container-fluid module model-1" id="programming">
+                    <h2 class="topic"><a  href="category.html">Programming ></a></h2>
+                    <div class="row topStory">
+                        <a href="read_post.html"><img class="col-sm-8 clickable" id="topImage" src="../..<%=categoriesPosts[category][0].imageUrl%>"/></a>
+                        <div class="col-sm-4" id="topStory-description">
+                            <a href="read_post.html">
+                                <h3 class="topStory-title clickable"><%= categoriesPosts[category][0].title%></h3>
+                                <p class="intro clickable"><%= categoriesPosts[category][0].description%></p>
+                            </a>
+                            <div class="topStory-author-info clickable">
+                                <img src="../../img/shikefeng.jpg" /> Brilliant Robert
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
 
-            <div class="row latestStories">
-                <div class="col-sm-4 story clickable" id="story1-1">
-                    <div class="story-image"></div>
-                        <h4 class="story-title">Java or C++ ? Which one is better ?</h4>
-                        <p class="story-intro">Both are very popular, whether one is better than the other depends on ...</p>
-                    <div class="story-author-info">
-                        <img src="../../img/shikefeng.jpg" /> Brilliant Robert
-                    </div>
-                </div>
-                <div class="col-sm-4 story clickable" id="story1-2">
-                    <div class="story-image"></div>
-                        <h4 class="story-title">How should a beginner learn python ?</h4>
-                        <p class="story-intro">Some advice from experienced python developer</p>
-                    <div class="story-author-info">
-                        <img src="../../img/shikefeng.jpg" /> Brilliant Robert
-                    </div>
-                </div>
-                <div class="col-sm-4 story clickable" id="story1-3">
-                    <div class="story-image"></div>
-                        <h4 class="story-title">Why is NodeJS so popular these years</h4>
-                        <p class="story-intro">Google V8 engine has made NodeJS become the first choice for a lot of web developers</p>
-                    <div class="story-author-info">
-                        <img src="../../img/shikefeng.jpg" /> Brilliant Robert
-                    </div>
-                </div>
-            </div>
-
-        </section>
-        
-        <!--The Second section-->
-        <section class="container-fluid module model-2" id="digital">
-            <h2 class="topic"><a href="">Digital Device ></a></h2>
-            <div class="row">
-                <div class="col-sm-7 story clickable">
-                    <div class="bounding-box" id="story-2-1">
-                        <h3>What are the new features in iphone 7</h3>
-                    </div>
-                </div>
-                <div class="col-sm-5 story clickable">
-                    <div class="bounding-box" id="story-2-2">
-                        <h3>New Features in Samsung Edge 7</h3>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-5 story clickable">
-                    <div class="bounding-box" id="story-2-3">
-                        <h3>Blueberry Priv, will it be the last Blackburry Phone ?</h3>
-                    </div>
-                </div>
-                <div class="col-sm-7 story clickable">
-                    <div class="bounding-box" id="story-2-4">
-                        <h3>When Will NOKIA Come Back ?</h3>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <section class="container-fluid" id="">
-            <h2 class="topic"><a href="category.html">Software ></a></h2>
-            <div class="row">
-                <div class="col-sm-4 story clickable">
-                    <div class="bounding-box-2" id="story-3-1">
-                        <div class="story-image"></div>
-                        <h4 class="story-title">Top 10 Chrome Plugins</h4>
-                        <p class="story-intro">Chrome Plugins can be quite useful for your daily work</p>
-                        <div class="story-author-info">
-                            <img src="../../img/shikefeng.jpg" /> Brilliant Robert
+                    <div class="row latestStories">
+                        <div class="col-sm-4 story clickable" id="story1-1">
+                            <div class="story-image" style="background-image: url('../..<%=categoriesPosts[category][1].imageUrl%>')"></div>
+                            <h4 class="story-title"><%= categoriesPosts[category][1].title%></h4>
+                            <p class="story-intro"><%= categoriesPosts[category][1].description%></p>
+                            <div class="story-author-info">
+                                <img src="../../img/shikefeng.jpg" /> Brilliant Robert
+                            </div>
+                        </div>
+                        <div class="col-sm-4 story clickable" id="story1-2">
+                            <div class="story-image" style="background-image: url('../..<%=categoriesPosts[category][2].imageUrl%>')"></div>
+                            <h4 class="story-title"><%= categoriesPosts[category][2].title%></h4>
+                            <p class="story-intro"><%= categoriesPosts[category][2].description%></p>
+                            <div class="story-author-info">
+                                <img src="../../img/shikefeng.jpg" /> Brilliant Robert
+                            </div>
+                        </div>
+                        <div class="col-sm-4 story clickable" id="story1-3">
+                            <div class="story-image" style="background-image: url('../..<%=categoriesPosts[category][3].imageUrl%>')"></div>
+                            <h4 class="story-title"><%= categoriesPosts[category][3].title%></h4>
+                            <p class="story-intro"><%= categoriesPosts[category][3].description%></p>
+                            <div class="story-author-info">
+                                <img src="../../img/shikefeng.jpg" /> Brilliant Robert
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-sm-4 story clickable">
-                    <div class="bounding-box-2" id="story-3-2">
-                        <div class="story-image"></div>
-                        <h4 class="story-title">Basic GitHub Operations</h4>
-                        <p class="story-intro">It is a necessary skill for software developers, follow the tutorial and learn it</p>
-                        <div class="story-author-info">
-                            <img src="../../img/shikefeng.jpg" /> Brilliant Robert
+                </section>
+            <%} else if(category == 1){%>
+                <!--The Second section-->
+                <section class="container-fluid module model-2" id="digital">
+                    <h2 class="topic"><a href="">Digital Device ></a></h2>
+                    <div class="row">
+                        <div class="col-sm-7 story clickable">
+                            <div class="bounding-box" id="story-2-1" style="background-image: url('../..<%=categoriesPosts[category][0].imageUrl%>')">
+                                <h3><%= categoriesPosts[category][0].title%></h3>
+                            </div>
+                        </div>
+                        <div class="col-sm-5 story clickable">
+                            <div class="bounding-box" id="story-2-2"  style="background-image: url('../..<%=categoriesPosts[category][1].imageUrl%>')">
+                                <h3><%= categoriesPosts[category][1].title%></h3>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-sm-4 story clickable">
-                    <div class="bounding-box-2" id="story-3-3">
-                        <div class="story-image"></div>
-                        <h4 class="story-title">So Many Online Music Apps, Choose One</h4>
-                        <p class="story-intro">Different features in these music apps </p>
-                        <div class="story-author-info">
-                            <img src="../../img/shikefeng.jpg" /> Brilliant Robert
+                    <div class="row">
+                        <div class="col-sm-5 story clickable">
+                            <div class="bounding-box" id="story-2-3"  style="background-image: url('../..<%=categoriesPosts[category][2].imageUrl%>')">
+                                <h3><%= categoriesPosts[category][2].title%></h3>
+                            </div>
+                        </div>
+                        <div class="col-sm-7 story clickable">
+                            <div class="bounding-box" id="story-2-4"  style="background-image: url('../..<%=categoriesPosts[category][3].imageUrl%>')">
+                                <h3><%= categoriesPosts[category][3].title%></h3>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-4 story clickable">
-                    <div class="bounding-box-2" id="story-3-4">
-                        <div class="story-image"></div>
-                        <h4 class="story-title">JetBrain Products</h4>
-                        <p class="story-intro">JetBrain has developed several good software for developers</p>
-                        <div class="story-author-info">
-                            <img src="../../img/shikefeng.jpg" /> Brilliant Robert
+                </section>
+            <%} else {%>
+                <section class="container-fluid" id="">
+                    <h2 class="topic"><a href="category.html">Software ></a></h2>
+                    <div class="row">
+                        <div class="col-sm-4 story clickable">
+                            <div class="bounding-box-2" id="story-3-1">
+                                <div class="story-image" style="background-image: url('../..<%=categoriesPosts[category][0].imageUrl%>')"></div>
+                                <h4 class="story-title"><%= categoriesPosts[category][0].title%></h4>
+                                <p class="story-intro"><%= categoriesPosts[category][0].description%></p>
+                                <div class="story-author-info">
+                                    <img src="../../img/shikefeng.jpg" /> Brilliant Robert
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 story clickable">
+                            <div class="bounding-box-2" id="story-3-2">
+                                <div class="story-image" style="background-image: url('../..<%=categoriesPosts[category][1].imageUrl%>')"></div>
+                                <h4 class="story-title"><%= categoriesPosts[category][1].title%></h4>
+                                <p class="story-intro"><%= categoriesPosts[category][1].description%></p>
+                                <div class="story-author-info">
+                                    <img src="../../img/shikefeng.jpg" /> Brilliant Robert
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 story clickable">
+                            <div class="bounding-box-2" id="story-3-3">
+                                <div class="story-image" style="background-image: url('../..<%=categoriesPosts[category][2].imageUrl%>')"></div>
+                                <h4 class="story-title"><%= categoriesPosts[category][2].title%></h4>
+                                <p class="story-intro"><%= categoriesPosts[category][2].description%></p>
+                                <div class="story-author-info">
+                                    <img src="../../img/shikefeng.jpg" /> Brilliant Robert
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-sm-4 story clickable">
-                    <div class="bounding-box-2" id="story-3-5">
-                        <div class="story-image"></div>
-                        <h4 class="story-title">Where Work Happens</h4>
-                        <p class="story-intro">Whatever work means for you, Slack brings all the pieces and people you need together so you can actually get things done</p>
-                        <div class="story-author-info">
-                            <img src="../../img/shikefeng.jpg" /> Brilliant Robert
+                    <div class="row">
+                        <div class="col-sm-4 story clickable">
+                            <div class="bounding-box-2" id="story-3-4">
+                                <div class="story-image" style="background-image: url('../..<%=categoriesPosts[category][3].imageUrl%>')"></div>
+                                <h4 class="story-title"><%= categoriesPosts[category][3].title%></h4>
+                                <p class="story-intro"><%= categoriesPosts[category][3].description%></p>
+                                <div class="story-author-info">
+                                    <img src="../../img/shikefeng.jpg" /> Brilliant Robert
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 story clickable">
+                            <div class="bounding-box-2" id="story-3-5">
+                                <div class="story-image" style="background-image: url('../..<%=categoriesPosts[category][4].imageUrl%>')"></div>
+                                <h4 class="story-title"><%= categoriesPosts[category][4].title%></h4>
+                                <p class="story-intro"><%= categoriesPosts[category][4].description%></p>
+                                <div class="story-author-info">
+                                    <img src="../../img/shikefeng.jpg" /> Brilliant Robert
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 story clickable">
+                            <div class="bounding-box-2" id="story-3-6">
+                                <div class="story-image" style="background-image: url('../..<%=categoriesPosts[category][5].imageUrl%>')"></div>
+                                <h4 class="story-title"><%= categoriesPosts[category][5].title%></h4>
+                                <p class="story-intro"><%= categoriesPosts[category][5].description%></p>
+                                <div class="story-author-info">
+                                    <img src="../../img/shikefeng.jpg" /> Brilliant Robert
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-sm-4 story clickable">
-                    <div class="bounding-box-2" id="story-3-6">
-                        <div class="story-image"></div>
-                        <h4 class="story-title">A modern, open source text editor that understands web design.</h4>
-                        <p class="story-intro">With focused visual tools and preprocessor support, Brackets is a modern text editor that makes it easy to design in the browser. It's crafted from the ground up for web designers and front-end developers.</p>
-                        <div class="story-author-info">
-                            <img src="../../img/shikefeng.jpg" /> Brilliant Robert
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+                </section>
+            <%}%>
+        <% }; %>
 	</div>
 	
 <!--	JavaScrip files included-->

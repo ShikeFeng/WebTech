@@ -24,34 +24,52 @@ var options = { setHeaders: deliverXHTML };
 app.use(express.static("public", options));
 app.listen(8080, "localhost");
 console.log("Visit http://localhost:8080/");
-
 // set the view engine to ejs
 app.set('view engine', 'ejs');
 
-app.get('/index.html', function(req, res) {
-    var posts = [];
+/*Global Variables*/
 
-    db.all('select * from posts', handler);
+var categories = [1,2,3];   //Hardcoded for the current category types
+var postsPerCategory = [4, 4, 6];    //Hardcoded for the current layout
+
+app.get('/index.html', function(req, res) {
+    var categoriesPosts = [];
+
+    db.all('select * from posts order by postID desc', handler);
+
+    //db.all("select * from posts where category = '1'", handler);
 
     function handler(err, table) {
-        var post = {};
 
         if (err) throw err;
 
-        for(var row = 0; row < table.length; row++) {
-            post['id'] = table[row].postID;
-            post['title'] = table[row].title;
-            post['description'] = table[row].introduction;
-            post['imageUrl'] = table[row].imagePath;
+        for(var categoryId = 1; categoryId<=categories.length; categoryId++) {
+            var posts = [];
 
-            posts.push(post);
+            for(var row = 0; row < table.length; row++) {
+                var post = {};
+                if(table[row].category == categoryId) {
+                    post['id'] = table[row].postID;
+                    post['title'] = table[row].title;
+                    post['description'] = table[row].introduction;
+                    post['imageUrl'] = table[row].imagePath;
+
+                    console.log(post['imageUrl']);
+                    if(posts.length < postsPerCategory[categoryId - 1]) {
+                        posts.push(post);
+                    } else {
+                        break;
+                    }
+                }
+            }
+            categoriesPosts.push(posts)
         }
-        console.log(posts);
+
+        res.render('pages/index', {
+            categoriesPosts: categoriesPosts
+        });
     }
 
-    res.render('pages/index', {
-        posts: posts
-    });
 });
 
 app.get('/category.html', function(req, res) {

@@ -147,21 +147,21 @@ a.forums:before {
     /*position: top left;*/
 }
 
-
 .story-image {
     background-position: center;
 }
-#story1-1 .story-image{
-    background-image: url(../img/javaorcpp.png);
-}
 
-#story1-2 .story-image{
-    background-image: url(../img/python.png);
-}
+/*#story1-1 .story-image{*/
+    /*background-image: url(../img/javaorcpp.png);*/
+/*}*/
 
-#story1-3 .story-image{
-    background-image: url(../img/node.png);
-}
+/*#story1-2 .story-image{*/
+    /*background-image: url(../img/python.png);*/
+/*}*/
+
+/*#story1-3 .story-image{*/
+    /*background-image: url(../img/node.png);*/
+/*}*/
 
 #story-2-1 {
     /*background-image:;*/
@@ -186,22 +186,22 @@ a.forums:before {
 }
 
 #story-2-1 {
-    background-image: url(../img/iphone7.png);
+    /*background-image: url(../img/iphone7.png);*/
     color:white;
 }
 
 #story-2-2 {
-    background-image: url(../img/s7edge.png);
+    /*background-image: url(../img/s7edge.png);*/
     color:antiquewhite;
 }
 
 #story-2-3 {
-    background-image: url(../img/blackberry_priv.png);
+    /*background-image: url(../img/blackberry_priv.png);*/
     color: white;
 }
 
 #story-2-4 {
-    background-image: url(../img/nokia.png);
+    /*background-image: url(../img/nokia.png);*/
     color: antiquewhite;;
 }
 
@@ -225,26 +225,26 @@ a.forums:before {
     overflow: hidden;
 }
 
-#story-3-1 .story-image{
-    background-image: url(../img/chomeplugins.png);
-}
+/*#story-3-1 .story-image{*/
+    /*background-image: url(../img/chomeplugins.png);*/
+/*}*/
 
-#story-3-2 .story-image{
-    background-image: url(../img/github.png);
-}
+/*#story-3-2 .story-image{*/
+    /*background-image: url(../img/github.png);*/
+/*}*/
 
-#story-3-3 .story-image{
-    background-image: url(../img/musics.png);
-}
+/*#story-3-3 .story-image{*/
+    /*background-image: url(../img/musics.png);*/
+/*}*/
 
-#story-3-4 .story-image{
-    background-image: url(../img/jetbrains);
-}
+/*#story-3-4 .story-image{*/
+    /*background-image: url(../img/jetbrains);*/
+/*}*/
 
-#story-3-5 .story-image{
-    background-image: url(../img/slack.png);
-}
+/*#story-3-5 .story-image{*/
+    /*background-image: url(../img/slack.png);*/
+/*}*/
 
-#story-3-6 .story-image{
-    background-image: url(../img/bracket.png);
-}
+/*#story-3-6 .story-image{*/
+    /*background-image: url(../img/bracket.png);*/
+/*}*/
