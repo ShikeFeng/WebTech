@@ -62,13 +62,13 @@
             <%if(category == 0) { %>
                 <!--The first section-->
                 <section class="container-fluid module model-1" id="programming">
-                    <h2 class="topic"><a  href="category.html">Programming ></a></h2>
+                    <h2 class="topic"><a  href="category.html/id=<%=categoriesPosts[category][0].categoryId%>"><%=categoriesPosts[category][0].categoryName%> ></a></h2>
                     <div class="row topStory">
                         <a href="read_post.html"><img class="col-sm-8 clickable" id="topImage" src="../..<%=categoriesPosts[category][0].imageUrl%>"/></a>
                         <div class="col-sm-4" id="topStory-description">
                             <a href="read_post.html">
-                                <h3 class="topStory-title clickable"><%= categoriesPosts[category][0].title%></h3>
-                                <p class="intro clickable"><%= categoriesPosts[category][0].description%></p>
+                                <h3 class="topStory-title clickable"><%=categoriesPosts[category][0].title%></h3>
+                                <p class="intro clickable"><%=categoriesPosts[category][0].description%></p>
                             </a>
                             <div class="topStory-author-info clickable">
                                 <img src="../../img/shikefeng.jpg" /> Brilliant Robert
@@ -106,7 +106,7 @@
             <%} else if(category == 1){%>
                 <!--The Second section-->
                 <section class="container-fluid module model-2" id="digital">
-                    <h2 class="topic"><a href="">Digital Device ></a></h2>
+                    <h2 class="topic"><a href="category.html/id=<%=categoriesPosts[category][0].categoryId%>"><%=categoriesPosts[category][0].categoryName%> ></a></h2>
                     <div class="row">
                         <div class="col-sm-7 story clickable">
                             <div class="bounding-box" id="story-2-1" style="background-image: url('../..<%=categoriesPosts[category][0].imageUrl%>')">
@@ -134,7 +134,7 @@
                 </section>
             <%} else {%>
                 <section class="container-fluid" id="">
-                    <h2 class="topic"><a href="category.html">Software ></a></h2>
+                    <h2 class="topic"><a href="category.html/id=<%=categoriesPosts[category][0].categoryId%>"><%=categoriesPosts[category][0].categoryName%> ></a></h2>
                     <div class="row">
                         <div class="col-sm-4 story clickable">
                             <div class="bounding-box-2" id="story-3-1">

@@ -77,15 +77,14 @@ app.get('/index.html', function(req, res) {
     }
 });
 
-app.get('/category.html', function(req, res) {
-    var categoryId = 1;
+app.get('/category.html/id=:id', function(req, res) {
     var posts = [];
+    var categoryId = req.params.id;
 
     db.all('select * from posts order by postID desc', handler);
 
     function handler(err, table) {
         if (err) throw err;
-
         for(var row = 0; row < table.length; row++) {
             var post = {};
             createPost(post, table[row]);
