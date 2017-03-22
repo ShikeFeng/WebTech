@@ -28,9 +28,24 @@ console.log("Visit http://localhost:8080/");
 app.set('view engine', 'ejs');
 
 /*Global Variables*/
-
 var categories = [1,2,3];   //Hardcoded for the current category types
 var postsPerCategory = [4, 4, 6];    //Hardcoded for the current layout
+var categoriesNames = {
+    1: 'Programming',
+    2: 'Digital Device',
+    3: 'Software'
+};
+
+function createPost(post, tableRow) {
+    post['id'] = tableRow.postID;
+    post['title'] = tableRow.title;
+    post['description'] = tableRow.introduction;
+    post['imageUrl'] = tableRow.imagePath;
+    post['categoryId'] = tableRow.category;
+    post['categoryName'] = categoriesNames[tableRow.category];
+
+    return post;
+}
 
 app.get('/index.html', function(req, res) {
     var categoriesPosts = [];
@@ -40,21 +55,13 @@ app.get('/index.html', function(req, res) {
     //db.all("select * from posts where category = '1'", handler);
 
     function handler(err, table) {
-
         if (err) throw err;
-
         for(var categoryId = 1; categoryId<=categories.length; categoryId++) {
             var posts = [];
-
             for(var row = 0; row < table.length; row++) {
                 var post = {};
                 if(table[row].category == categoryId) {
-                    post['id'] = table[row].postID;
-                    post['title'] = table[row].title;
-                    post['description'] = table[row].introduction;
-                    post['imageUrl'] = table[row].imagePath;
-
-                    console.log(post['imageUrl']);
+                    createPost(post, table[row]);
                     if(posts.length < postsPerCategory[categoryId - 1]) {
                         posts.push(post);
                     } else {
@@ -64,16 +71,32 @@ app.get('/index.html', function(req, res) {
             }
             categoriesPosts.push(posts)
         }
-
         res.render('pages/index', {
             categoriesPosts: categoriesPosts
         });
     }
-
 });
 
 app.get('/category.html', function(req, res) {
-    res.render('pages/category');
+    var categoryId = 1;
+    var posts = [];
+
+    db.all('select * from posts order by postID desc', handler);
+
+    function handler(err, table) {
+        if (err) throw err;
+
+        for(var row = 0; row < table.length; row++) {
+            var post = {};
+            createPost(post, table[row]);
+            if(categoryId == post['categoryId']) {
+                posts.push(post);
+            }
+        }
+        res.render('pages/category', {
+            posts: posts
+        });
+    }
 });
 
 app.get('/edit_post.html', function(req, res) {
@@ -118,7 +141,6 @@ function loginRequestHandler(req, res) {
 
     }
 }
-
 
 // Make the URL lower case.
 function lower(req, res, next) {
