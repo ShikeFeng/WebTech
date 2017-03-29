@@ -11,25 +11,25 @@
 	<link href="../../css/bootstrap.min.css" rel="stylesheet"></link>
 	<!-- Custom CSS -->
 	<link href="../../css/customize.css" rel="stylesheet"></link>
-    <link href="../../css/popup-box.css" rel="stylesheet"></link>
 </head>
 <body>
     <!--Login popup-->
-    <div class="login-popup">
-        <div class="login-popup-content">
+    <div class="popup-modal">
+        <div class="authentification-form">
             <span class="close">&#10005;</span>
-            <span class="login-text">Login</span>
-            <div class="login-logic">
-                <div class="container user-name-container">
-                    <textarea class="login-textarea usen-name" name="user-name" rows="1" cols="30" placeholder="Username"></textarea>
-                </div>
-                <div class="container password-container">
-                    <textarea class="login-textarea password" name="password" rows="1" cols="30" placeholder="Password"></textarea>
-                </div>
-                <button class="login-button">Login</button>
-            </div>
-            <a href="#" class="login-link forgot">Forgot password?</a>
-            <a href="#" class="login-link register">Register</a>
+            <form class="register-form">
+                <input type="text" placeholder="name"/>
+                <input type="password" placeholder="password"/>
+                <input type="text" placeholder="email address"/>
+                <button>create</button>
+                <p class="message">Already registered? <a href="#">Sign In</a></p>
+            </form>
+            <form class="login-form">
+                <input type="text" placeholder="username" class="user-name"/>
+                <input type="password" placeholder="password" class="password"/>
+                <button onclick="login()">login</button>
+                <p class="message">Not registered? <a href="#">Create an account</a></p>
+            </form>
         </div>
     </div>
 

@@ -1,34 +1,34 @@
 /**
  * Created by root on 22/02/17.
  */
-var popupBox = document.getElementsByClassName("login-popup")[0];
-var loginLink = document.getElementById('login');
+var popupModal = document.getElementsByClassName('popup-modal')[0];
+var loginLink = document.getElementById('signup');
 var span = document.getElementsByClassName('close')[0];
-var loginBtn = document.getElementsByClassName('login-button')[0];
 
-loginLink.onclick = function() {
-    popupBox.style.display = 'block';
+loginLink.onclick = function () {
+    popupModal.style.display = 'block';
 }
 
 span.onclick = function () {
-    popupBox.style.display = 'none';
+    popupModal.style.display = 'none';
 }
 
-loginBtn.onclick = function(){
+window.onclick = function (event) {
+    if(event.target == popupModal) {
+        popupModal.style.display = 'none';
+    }
+}
+
+function login() {
+    console.log("called this function!");
     var userInfo = {};
-    var userName = document.getElementsByClassName('usen-name')[0].value;
+    var userName = document.getElementsByClassName('user-name')[0].value;
     var password = document.getElementsByClassName('password')[0].value;
 
     userInfo['userName'] = userName;
     userInfo['password'] = password;
 
     sendRequest('POST', '/login', true, userInfo);
-}
-
-window.onclick = function(event) {
-    if(event.target == popupBox) {
-        popupBox.style.display = 'none';
-    }
 }
 
 function sendRequest(method, section, syncValue, data){
@@ -42,3 +42,8 @@ function sendRequest(method, section, syncValue, data){
         }
     }
 }
+
+// Animation
+$('.message a').click(function(){
+    $('form').animate({height: "toggle", opacity: "toggle"}, "slow");
+});
