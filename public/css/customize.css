@@ -328,6 +328,10 @@ body {
     display: none;
 }
 
+.authentification-form .login-form {
+    display: none;
+}
+
 .close {
     position: absolute;
     top: 0;

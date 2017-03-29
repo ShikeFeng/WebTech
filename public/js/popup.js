@@ -2,11 +2,23 @@
  * Created by root on 22/02/17.
  */
 var popupModal = document.getElementsByClassName('popup-modal')[0];
-var loginLink = document.getElementById('signup');
+var signupLink = document.getElementById('signup');
+var loginLink = document.getElementById('login');
 var span = document.getElementsByClassName('close')[0];
+var registerForm = document.getElementsByClassName('register-form')[0];
+var loginForm = document.getElementsByClassName('login-form')[0];
+
+
+signupLink.onclick = function () {
+    loginForm.style.display = 'none';
+    popupModal.style.display = 'block';
+    registerForm.style.display = 'block';
+}
 
 loginLink.onclick = function () {
+    registerForm.style.display = 'none';
     popupModal.style.display = 'block';
+    loginForm.style.display = 'block';
 }
 
 span.onclick = function () {

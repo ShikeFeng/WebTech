@@ -13,29 +13,13 @@
 	<link href="../../css/customize.css" rel="stylesheet"></link>
 </head>
 <body>
-    <!--Login popup-->
-    <div class="popup-modal">
-        <div class="authentification-form">
-            <span class="close">&#10005;</span>
-            <form class="register-form">
-                <input type="text" placeholder="name"/>
-                <input type="password" placeholder="password"/>
-                <input type="text" placeholder="email address"/>
-                <button>create</button>
-                <p class="message">Already registered? <a href="#">Sign In</a></p>
-            </form>
-            <form class="login-form">
-                <input type="text" placeholder="username" class="user-name"/>
-                <input type="password" placeholder="password" class="password"/>
-                <button onclick="login()">login</button>
-                <p class="message">Not registered? <a href="#">Create an account</a></p>
-            </form>
-        </div>
-    </div>
 
     <header>
         <% include ../partials/header %>
     </header>
+
+    <!--Login popup-->
+    <% include ../partials/auth-popup.ejs %>
     
 	<div class="container content">
         <%  for(var category = 0; category < categoriesPosts.length; category++) { %>
@@ -191,6 +175,5 @@
 <script src="../../js/bootstrap.min.js"></script>
 <!-- Custom JS-->
 <script src="../../js/popup.js"></script>
-<script src="../../js/post_controller.js"></script>
 </body>
 </html>
