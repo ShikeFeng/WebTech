@@ -105,7 +105,7 @@ body {
 }
 
 #category3:hover:before{
-    background: yellow;
+    background: orange;
 }
 
 .icon-bar{
@@ -213,18 +213,6 @@ body {
     background-position: center;
 }
 
-/*#story1-1 .story-image{*/
-    /*background-image: url(../img/javaorcpp.png);*/
-/*}*/
-
-/*#story1-2 .story-image{*/
-    /*background-image: url(../img/python.png);*/
-/*}*/
-
-/*#story1-3 .story-image{*/
-    /*background-image: url(../img/node.png);*/
-/*}*/
-
 #story-2-1 {
     /*background-image:;*/
 }
@@ -286,27 +274,3 @@ body {
     padding: 1em;
     overflow: hidden;
 }
-
-/*#story-3-1 .story-image{*/
-    /*background-image: url(../img/chomeplugins.png);*/
-/*}*/
-
-/*#story-3-2 .story-image{*/
-    /*background-image: url(../img/github.png);*/
-/*}*/
-
-/*#story-3-3 .story-image{*/
-    /*background-image: url(../img/musics.png);*/
-/*}*/
-
-/*#story-3-4 .story-image{*/
-    /*background-image: url(../img/jetbrains);*/
-/*}*/
-
-/*#story-3-5 .story-image{*/
-    /*background-image: url(../img/slack.png);*/
-/*}*/
-
-/*#story-3-6 .story-image{*/
-    /*background-image: url(../img/bracket.png);*/
-/*}*/
