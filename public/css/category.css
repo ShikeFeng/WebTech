@@ -41,6 +41,8 @@ svg {
 }
 .short-post-title{
     cursor: pointer;
+    word-wrap: break-word;
+    width: inherit;
 }
 
 .short-profile-details{
