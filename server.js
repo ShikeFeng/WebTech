@@ -102,8 +102,22 @@ app.get('/edit_post.html', function(req, res) {
     res.render('pages/edit_post');
 });
 
-app.get('/read_post.html', function(req, res) {
-    res.render('pages/read_post');
+app.get('/read_post.html/id=:id', function(req, res) {
+    var content = {};
+    var postId = req.params.id;
+
+    db.get('select * from posts where postId= ?', postId, handler);
+
+    function handler(err, row)
+    {
+        content['title'] = row.title;
+        content['imagePath'] = row.imagePath;
+        content['textContent'] = row.content;
+
+        res.render('pages/read_post', {
+            content: content
+        });
+    }
 });
 
 // login / register

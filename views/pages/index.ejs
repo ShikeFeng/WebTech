@@ -28,9 +28,9 @@
                 <section class="container-fluid module model-1" id="programming">
                     <h2 class="topic"><a  href="category.html/id=<%=categoriesPosts[category][0].categoryId%>"><%=categoriesPosts[category][0].categoryName%> ></a></h2>
                     <div class="row topStory">
-                        <a href="read_post.html"><img class="col-sm-8 clickable" id="topImage" src="../..<%=categoriesPosts[category][0].imageUrl%>"/></a>
+                        <a href="read_post.html/id=<%=categoriesPosts[category][0].id%>"><img class="col-sm-8 clickable" id="topImage" src="../..<%=categoriesPosts[category][0].imageUrl%>"/></a>
                         <div class="col-sm-4" id="topStory-description">
-                            <a href="read_post.html">
+                            <a href="read_post.html/id=<%=categoriesPosts[category][0].id%>">
                                 <h3 class="topStory-title clickable"><%=categoriesPosts[category][0].title%></h3>
                                 <p class="intro clickable"><%=categoriesPosts[category][0].description%></p>
                             </a>
@@ -42,25 +42,31 @@
 
                     <div class="row latestStories">
                         <div class="col-sm-4 story clickable" id="story1-1">
-                            <div class="story-image" style="background-image: url('../..<%=categoriesPosts[category][1].imageUrl%>')"></div>
-                            <h4 class="story-title"><%= categoriesPosts[category][1].title%></h4>
-                            <p class="story-intro"><%= categoriesPosts[category][1].description%></p>
+                            <a href="read_post.html/id=<%=categoriesPosts[category][1].id%>">
+                                <div class="story-image" style="background-image: url('../..<%=categoriesPosts[category][1].imageUrl%>')"></div>
+                                <h4 class="story-title"><%= categoriesPosts[category][1].title%></h4>
+                                <p class="story-intro"><%= categoriesPosts[category][1].description%></p>
+                            </a>
                             <div class="story-author-info">
                                 <img src="../../img/shikefeng.jpg" /> Brilliant Robert
                             </div>
                         </div>
                         <div class="col-sm-4 story clickable" id="story1-2">
-                            <div class="story-image" style="background-image: url('../..<%=categoriesPosts[category][2].imageUrl%>')"></div>
-                            <h4 class="story-title"><%= categoriesPosts[category][2].title%></h4>
-                            <p class="story-intro"><%= categoriesPosts[category][2].description%></p>
+                            <a href="read_post.html/id=<%=categoriesPosts[category][2].id%>">
+                                <div class="story-image" style="background-image: url('../..<%=categoriesPosts[category][2].imageUrl%>')"></div>
+                                <h4 class="story-title"><%= categoriesPosts[category][2].title%></h4>
+                                <p class="story-intro"><%= categoriesPosts[category][2].description%></p>
+                            </a>
                             <div class="story-author-info">
                                 <img src="../../img/shikefeng.jpg" /> Brilliant Robert
                             </div>
                         </div>
                         <div class="col-sm-4 story clickable" id="story1-3">
-                            <div class="story-image" style="background-image: url('../..<%=categoriesPosts[category][3].imageUrl%>')"></div>
-                            <h4 class="story-title"><%= categoriesPosts[category][3].title%></h4>
-                            <p class="story-intro"><%= categoriesPosts[category][3].description%></p>
+                            <a href="read_post.html/id=<%=categoriesPosts[category][3].id%>">
+                                <div class="story-image" style="background-image: url('../..<%=categoriesPosts[category][3].imageUrl%>')"></div>
+                                <h4 class="story-title"><%= categoriesPosts[category][3].title%></h4>
+                                <p class="story-intro"><%= categoriesPosts[category][3].description%></p>
+                            </a>
                             <div class="story-author-info">
                                 <img src="../../img/shikefeng.jpg" /> Brilliant Robert
                             </div>
@@ -72,28 +78,36 @@
                 <section class="container-fluid module model-2" id="digital">
                     <h2 class="topic"><a href="category.html/id=<%=categoriesPosts[category][0].categoryId%>"><%=categoriesPosts[category][0].categoryName%> ></a></h2>
                     <div class="row">
-                        <div class="col-sm-7 story clickable">
-                            <div class="bounding-box" id="story-2-1" style="background-image: url('../..<%=categoriesPosts[category][0].imageUrl%>')">
-                                <h3><%= categoriesPosts[category][0].title%></h3>
+                        <a href="read_post.html/id=<%=categoriesPosts[category][0].id%>">
+                            <div class="col-sm-7 story clickable">
+                                <div class="bounding-box" id="story-2-1" style="background-image: url('../..<%=categoriesPosts[category][0].imageUrl%>')">
+                                    <h3><%= categoriesPosts[category][0].title%></h3>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-sm-5 story clickable">
-                            <div class="bounding-box" id="story-2-2"  style="background-image: url('../..<%=categoriesPosts[category][1].imageUrl%>')">
-                                <h3><%= categoriesPosts[category][1].title%></h3>
+                        </a>
+                        <a href="read_post.html/id=<%=categoriesPosts[category][1].id%>">
+                            <div class="col-sm-5 story clickable">
+                                <div class="bounding-box" id="story-2-2"  style="background-image: url('../..<%=categoriesPosts[category][1].imageUrl%>')">
+                                    <h3><%= categoriesPosts[category][1].title%></h3>
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                     <div class="row">
-                        <div class="col-sm-5 story clickable">
-                            <div class="bounding-box" id="story-2-3"  style="background-image: url('../..<%=categoriesPosts[category][2].imageUrl%>')">
-                                <h3><%= categoriesPosts[category][2].title%></h3>
+                        <a href="read_post.html/id=<%=categoriesPosts[category][2].id%>">
+                            <div class="col-sm-5 story clickable">
+                                <div class="bounding-box" id="story-2-3"  style="background-image: url('../..<%=categoriesPosts[category][2].imageUrl%>')">
+                                    <h3><%= categoriesPosts[category][2].title%></h3>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-sm-7 story clickable">
-                            <div class="bounding-box" id="story-2-4"  style="background-image: url('../..<%=categoriesPosts[category][3].imageUrl%>')">
-                                <h3><%= categoriesPosts[category][3].title%></h3>
+                        </a>
+                        <a href="read_post.html/id=<%=categoriesPosts[category][3].id%>">
+                            <div class="col-sm-7 story clickable">
+                                <div class="bounding-box" id="story-2-4"  style="background-image: url('../..<%=categoriesPosts[category][3].imageUrl%>')">
+                                    <h3><%= categoriesPosts[category][3].title%></h3>
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                 </section>
             <%} else {%>
@@ -102,9 +116,11 @@
                     <div class="row">
                         <div class="col-sm-4 story clickable">
                             <div class="bounding-box-2" id="story-3-1">
-                                <div class="story-image" style="background-image: url('../..<%=categoriesPosts[category][0].imageUrl%>')"></div>
-                                <h4 class="story-title"><%= categoriesPosts[category][0].title%></h4>
-                                <p class="story-intro"><%= categoriesPosts[category][0].description%></p>
+                                <a href="read_post.html/id=<%=categoriesPosts[category][0].id%>">
+                                    <div class="story-image" style="background-image: url('../..<%=categoriesPosts[category][0].imageUrl%>')"></div>
+                                    <h4 class="story-title"><%= categoriesPosts[category][0].title%></h4>
+                                    <p class="story-intro"><%= categoriesPosts[category][0].description%></p>
+                                </a>
                                 <div class="story-author-info">
                                     <img src="../../img/shikefeng.jpg" /> Brilliant Robert
                                 </div>
@@ -112,9 +128,11 @@
                         </div>
                         <div class="col-sm-4 story clickable">
                             <div class="bounding-box-2" id="story-3-2">
-                                <div class="story-image" style="background-image: url('../..<%=categoriesPosts[category][1].imageUrl%>')"></div>
-                                <h4 class="story-title"><%= categoriesPosts[category][1].title%></h4>
-                                <p class="story-intro"><%= categoriesPosts[category][1].description%></p>
+                                <a href="read_post.html/id=<%=categoriesPosts[category][1].id%>">
+                                    <div class="story-image" style="background-image: url('../..<%=categoriesPosts[category][1].imageUrl%>')"></div>
+                                    <h4 class="story-title"><%= categoriesPosts[category][1].title%></h4>
+                                    <p class="story-intro"><%= categoriesPosts[category][1].description%></p>
+                                </a>
                                 <div class="story-author-info">
                                     <img src="../../img/shikefeng.jpg" /> Brilliant Robert
                                 </div>
@@ -122,9 +140,11 @@
                         </div>
                         <div class="col-sm-4 story clickable">
                             <div class="bounding-box-2" id="story-3-3">
-                                <div class="story-image" style="background-image: url('../..<%=categoriesPosts[category][2].imageUrl%>')"></div>
-                                <h4 class="story-title"><%= categoriesPosts[category][2].title%></h4>
-                                <p class="story-intro"><%= categoriesPosts[category][2].description%></p>
+                                <a href="read_post.html/id=<%=categoriesPosts[category][2].id%>">
+                                    <div class="story-image" style="background-image: url('../..<%=categoriesPosts[category][2].imageUrl%>')"></div>
+                                    <h4 class="story-title"><%= categoriesPosts[category][2].title%></h4>
+                                    <p class="story-intro"><%= categoriesPosts[category][2].description%></p>
+                                </a>
                                 <div class="story-author-info">
                                     <img src="../../img/shikefeng.jpg" /> Brilliant Robert
                                 </div>
@@ -134,9 +154,11 @@
                     <div class="row">
                         <div class="col-sm-4 story clickable">
                             <div class="bounding-box-2" id="story-3-4">
-                                <div class="story-image" style="background-image: url('../..<%=categoriesPosts[category][3].imageUrl%>')"></div>
-                                <h4 class="story-title"><%= categoriesPosts[category][3].title%></h4>
-                                <p class="story-intro"><%= categoriesPosts[category][3].description%></p>
+                                <a href="read_post.html/id=<%=categoriesPosts[category][3].id%>">
+                                    <div class="story-image" style="background-image: url('../..<%=categoriesPosts[category][3].imageUrl%>')"></div>
+                                    <h4 class="story-title"><%= categoriesPosts[category][3].title%></h4>
+                                    <p class="story-intro"><%= categoriesPosts[category][3].description%></p>
+                                </a>
                                 <div class="story-author-info">
                                     <img src="../../img/shikefeng.jpg" /> Brilliant Robert
                                 </div>
@@ -144,9 +166,11 @@
                         </div>
                         <div class="col-sm-4 story clickable">
                             <div class="bounding-box-2" id="story-3-5">
-                                <div class="story-image" style="background-image: url('../..<%=categoriesPosts[category][4].imageUrl%>')"></div>
-                                <h4 class="story-title"><%= categoriesPosts[category][4].title%></h4>
-                                <p class="story-intro"><%= categoriesPosts[category][4].description%></p>
+                                <a href="read_post.html/id=<%=categoriesPosts[category][4].id%>">
+                                    <div class="story-image" style="background-image: url('../..<%=categoriesPosts[category][4].imageUrl%>')"></div>
+                                    <h4 class="story-title"><%= categoriesPosts[category][4].title%></h4>
+                                    <p class="story-intro"><%= categoriesPosts[category][4].description%></p>
+                                </a>
                                 <div class="story-author-info">
                                     <img src="../../img/shikefeng.jpg" /> Brilliant Robert
                                 </div>
@@ -154,9 +178,11 @@
                         </div>
                         <div class="col-sm-4 story clickable">
                             <div class="bounding-box-2" id="story-3-6">
-                                <div class="story-image" style="background-image: url('../..<%=categoriesPosts[category][5].imageUrl%>')"></div>
-                                <h4 class="story-title"><%= categoriesPosts[category][5].title%></h4>
-                                <p class="story-intro"><%= categoriesPosts[category][5].description%></p>
+                                <a href="read_post.html/id=<%=categoriesPosts[category][5].id%>">
+                                    <div class="story-image" style="background-image: url('../..<%=categoriesPosts[category][5].imageUrl%>')"></div>
+                                    <h4 class="story-title"><%= categoriesPosts[category][5].title%></h4>
+                                    <p class="story-intro"><%= categoriesPosts[category][5].description%></p>
+                                </a>
                                 <div class="story-author-info">
                                     <img src="../../img/shikefeng.jpg" /> Brilliant Robert
                                 </div>
