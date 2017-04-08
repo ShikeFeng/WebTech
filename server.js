@@ -3,6 +3,7 @@
 // and demonstrates a big potential security loophole in express.
 
 var express = require("express");
+var session = require('express-session');
 var app = express();
 var fs = require("fs");
 var path = require("path");
@@ -22,6 +23,16 @@ app.use(ban)
 app.use("/admin.html", auth);
 var options = { setHeaders: deliverXHTML };
 app.use(express.static("public", options));
+
+console.log("About to initialise the session");
+app.use(session({
+  secret: 'ssshhhh',
+  resave: false,
+  saveUninitialized: true,
+  cookie: {maxAge: 60000}
+}));
+console.log("session initialised");
+
 app.listen(8080, "localhost");
 console.log("Visit http://localhost:8080/");
 // set the view engine to ejs
@@ -48,6 +59,13 @@ function createPost(post, tableRow) {
 }
 
 app.get('/index.html', function(req, res) {
+    var sess = req.session;
+    if (sess.loggedIn){
+      console.log("Already loggedIn");
+    }
+    else {
+      console.log("haven't logged yet");
+    }
     var categoriesPosts = [];
 
     db.all('select * from posts order by postID desc', handler);
@@ -123,6 +141,7 @@ app.get('/read_post.html/id=:id', function(req, res) {
 // login / register
 app.post('/login', loginRequestHandler);
 function loginRequestHandler(req, res) {
+    var sess = req.session;
     var body = "";
     req.on('data', add);
     req.on('end', end);
@@ -143,6 +162,8 @@ function loginRequestHandler(req, res) {
               response.loginResponse = "No such user";
             }
             else if(row.password === body.password) {
+              sess.userName = body.userName;
+              sess.loggedIn = true;
               response.loginResponse = "Successfully LoggedIn";
               response.imageIcon = row.imgURL;
             }
