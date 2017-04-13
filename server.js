@@ -4,6 +4,8 @@
 
 var express = require("express");
 var session = require('express-session');
+var validator = require('validator');
+
 var app = express();
 var fs = require("fs");
 var path = require("path");
@@ -24,14 +26,13 @@ app.use("/admin.html", auth);
 var options = { setHeaders: deliverXHTML };
 app.use(express.static("public", options));
 
-console.log("About to initialise the session");
+// initialise session
 app.use(session({
   secret: 'ssshhhh',
   resave: false,
   saveUninitialized: true,
   cookie: {maxAge: 60000}
 }));
-console.log("session initialised");
 
 app.listen(8080, "localhost");
 console.log("Visit http://localhost:8080/");
@@ -60,8 +61,11 @@ function createPost(post, tableRow) {
 
 app.get('/index.html', function(req, res) {
     var sess = req.session;
+    console.log("rep.session.id -> " + sess.id);
+    console.log("req.sessionID -> " + req.sessionID);
     if (sess.loggedIn){
       console.log("Already loggedIn");
+      console.log("Username -> " + sess.userName);
     }
     else {
       console.log("haven't logged yet");
@@ -141,7 +145,16 @@ app.get('/read_post.html/id=:id', function(req, res) {
 // login / register
 app.post('/login', loginRequestHandler);
 function loginRequestHandler(req, res) {
+    console.log("request received");
     var sess = req.session;
+    console.log("Session ID -> " + sess.genid);
+
+    if (sess.loggedIn) {
+      console.log("Already loggedIn, Username -> " + sess.userName);
+    }
+    else {
+      console.log("Haven't loggedIn Yet");
+    }
     var body = "";
     req.on('data', add);
     req.on('end', end);
@@ -160,19 +173,58 @@ function loginRequestHandler(req, res) {
 
             if (row === undefined) {
               response.loginResponse = "No such user";
+              sess.loggedIn = false;
             }
             else if(row.password === body.password) {
-              sess.userName = body.userName;
-              sess.loggedIn = true;
               response.loginResponse = "Successfully LoggedIn";
               response.imageIcon = row.imgURL;
+              sess.userName = body.userName;
+              sess.loggedIn = true;
             }
             else {
               response.loginResponse = "Incorrect Password";
+              sess.loggedIn = false;
             }
             res.send(JSON.stringify(response));
         }
+    }
+}
 
+
+// register
+app.post('/register', registerRequestHandler);
+function registerRequestHandler(req, res) {
+    var sess = req.session;
+    var body = "";
+    req.on('data', add);
+    req.on('end', end);
+    var response = {};
+    function add(chunk){
+        body = body + chunk.toString();
+    }
+
+    function end(){
+        body = JSON.parse(body);
+        db.get("select * from user where username= ?", body.userName, handler);
+
+        function handler(err, row) {
+          if (err) throw err;
+
+          if (row === undefined) {
+            db.run("insert into user (username, password, imgURL) values (?, ?, ?)", [body.username, body.password, body.imgURL], insertHandler);
+
+            function insertHandler(err){
+              if (err) throw err;
+            }
+            sess.loggedIn = true;
+            sess.userName = body.userName;
+          }
+          else {
+            response.registerResponse = "Username Already Used";
+            sess.loggedIn = false;
+          }
+          res.send(JSON.stringify(response));
+        }
     }
 }
 
