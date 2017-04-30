@@ -80,7 +80,7 @@
                     <h2 class="topic"><a href="category.html/id=<%=categoriesPosts[category][0].categoryId%>"><%=categoriesPosts[category][0].categoryName%> ></a></h2>
                     <div class="row">
                         <a href="read_post.html/id=<%=categoriesPosts[category][0].id%>">
-                            <div class="col-sm-7 story clickable" onmouseover="displayDesc()" onmouseout="displayTitle()">
+                            <div class="col-sm-7 story clickable" onmouseover="displayDesc(1)" onmouseout="displayTitle(1)">
                                 <div class="bounding-box" id="story-2-1" style="background-image: url('../..<%=categoriesPosts[category][0].imageUrl%>')">
                                     <div id="story-2-1-title"><h3><%= categoriesPosts[category][0].title%></h3></div>
                                     <div id="story-2-1-desc" class="story-2-desc"><h3><%= categoriesPosts[category][0].description%></h3></div>
@@ -88,25 +88,28 @@
                             </div>
                         </a>
                         <a href="read_post.html/id=<%=categoriesPosts[category][1].id%>">
-                            <div class="col-sm-5 story clickable">
+                            <div class="col-sm-5 story clickable" onmouseover="displayDesc(2)" onmouseout="displayTitle(2)">
                                 <div class="bounding-box" id="story-2-2"  style="background-image: url('../..<%=categoriesPosts[category][1].imageUrl%>')">
-                                    <h3><%= categoriesPosts[category][1].title%></h3>
+                                    <div id="story-2-2-title"><h3><%= categoriesPosts[category][1].title%></h3></div>
+                                    <div id="story-2-2-desc" class="story-2-desc"><h3><%= categoriesPosts[category][1].description%></h3></div>
                                 </div>
                             </div>
                         </a>
                     </div>
                     <div class="row">
                         <a href="read_post.html/id=<%=categoriesPosts[category][2].id%>">
-                            <div class="col-sm-5 story clickable">
+                            <div class="col-sm-5 story clickable" onmouseover="displayDesc(3)" onmouseout="displayTitle(3)">
                                 <div class="bounding-box" id="story-2-3"  style="background-image: url('../..<%=categoriesPosts[category][2].imageUrl%>')">
-                                    <h3><%= categoriesPosts[category][2].title%></h3>
+                                    <div id="story-2-3-title"><h3><%= categoriesPosts[category][2].title%></h3></div>
+                                    <div id="story-2-3-desc" class="story-2-desc"><h3><%= categoriesPosts[category][2].description%></h3></div>
                                 </div>
                             </div>
                         </a>
                         <a href="read_post.html/id=<%=categoriesPosts[category][3].id%>">
-                            <div class="col-sm-7 story clickable">
+                            <div class="col-sm-7 story clickable" onmouseover="displayDesc(4)" onmouseout="displayTitle(4)">
                                 <div class="bounding-box" id="story-2-4"  style="background-image: url('../..<%=categoriesPosts[category][3].imageUrl%>')">
-                                    <h3><%= categoriesPosts[category][3].title%></h3>
+                                    <div id="story-2-4-title"><h3><%= categoriesPosts[category][3].title%></h3></div>
+                                    <div id="story-2-4-desc" class="story-2-desc"><h3><%= categoriesPosts[category][3].description%></h3></div>
                                 </div>
                             </div>
                         </a>
