@@ -1,20 +1,75 @@
 'use strict';
 
-var story_2_1_title = document.getElementById("story-2-1-title");
-var story_2_1_desc = document.getElementById("story-2-1-desc");
+function getStoryTitle(story){
+	var storyTitle = '';
 
-function displayDesc(){
-	story_2_1_title.style.visibility = "hidden";
-	story_2_1_desc.style.visibility = "visible";
-	fadeIn(story_2_1_desc);
-	// fadeOut(story_2_1_title);
+	if(story == 1){
+		storyTitle = "story-2-1-title";
+	} else if(story == 2){
+		storyTitle = "story-2-2-title";
+	} else if(story == 3){
+		storyTitle = "story-2-3-title";
+	} else {
+		storyTitle = "story-2-4-title";
+	}
+
+	return storyTitle;
 }
 
-function displayTitle(){
-	fadeOut(story_2_1_desc);
-	story_2_1_desc.style.visibility = "hidden";
-	story_2_1_title.style.visibility = "visible";
-	fadeIn(story_2_1_title);
+function getStoryDesc(story){
+	var storyDesc = '';
+
+	if(story == 1){
+		storyDesc = "story-2-1-desc";
+	} else if(story == 2){
+		storyDesc = "story-2-2-desc";
+	} else if(story == 3){
+		storyDesc = "story-2-3-desc";
+	} else {
+		storyDesc = "story-2-4-desc";
+	}
+
+	return storyDesc;
+}
+
+function displayDesc(story){
+	var storyTitleEl;
+	var storyDescEl;	
+	
+	var storyTitle = '';
+	var storyDesc = '';
+
+	storyTitle = getStoryTitle(story);
+	storyDesc = getStoryDesc(story);
+
+	storyTitleEl = document.getElementById(storyTitle);
+	storyDescEl = document.getElementById(storyDesc);
+
+	storyTitleEl.style.visibility = "hidden";
+	storyDescEl.style.visibility = "visible";
+	
+	fadeIn(storyDescEl);
+	fadeOut(storyTitleEl);
+}
+
+function displayTitle(story){
+	var storyTitleEl;
+	var storyDescEl;	
+	
+	var storyTitle = '';
+	var storyDesc = '';
+
+	storyTitle = getStoryTitle(story);
+	storyDesc = getStoryDesc(story);
+
+	storyTitleEl = document.getElementById(storyTitle);
+	storyDescEl = document.getElementById(storyDesc);
+
+	storyDescEl.style.visibility = "hidden";
+	storyTitleEl.style.visibility = "visible";
+	
+	fadeIn(storyDescEl);
+	fadeOut(storyTitleEl);
 }
 
 function fadeIn(el){
