@@ -44,7 +44,8 @@ function login() {
     var validationResult = userInfoValidation(userInfo);
     alert("Validated");
     if (validationResult.username === "valid" && validationResult.password === "valid"){
-        sendRequest('POST', '/login', true, userInfo);
+        var message = aesEncrypt_object(userInfo);
+        sendRequest('POST', '/login', true, message);
     }
     else {
       alert('Username : ' + validationResult.username);
@@ -70,7 +71,11 @@ function register(){
       var validationResult = userInfoValidation(userInfo);
       // alert("Validated");
       if (validationResult.username === "valid" && validationResult.password === "valid"){
-          sendRequest('POST', '/register', true, userInfo);
+          // Encrypt the object before sending it
+          alert("Ready for encryption");
+          var message = aesEncrypt_object(userInfo);
+          alert(message);
+          sendRequest('POST', '/register', true, message);
       }
       else {
         alert('Username : ' + validationResult.username);
@@ -83,7 +88,7 @@ function sendRequest(method, section, syncValue, data){
     var q = new XMLHttpRequest();
     q.onreadystatechange = receive;
     q.open(method, section, syncValue);
-    q.send(JSON.stringify(data));
+    q.send(data);
     function receive(){
         if (this.readyState == 4 && this.status == 200) {
             alert(this.responseText);
@@ -91,6 +96,9 @@ function sendRequest(method, section, syncValue, data){
     }
 }
 
+function aesEncrypt_object(object){
+  return CryptoJS.AES.encrypt(JSON.stringify(object), 'secret key 123');
+}
 // Animation
 $('.message a').click(function(){
     $('form').animate({height: "toggle", opacity: "toggle"}, "slow");

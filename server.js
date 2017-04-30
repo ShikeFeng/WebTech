@@ -6,6 +6,7 @@ var express = require("express");
 var session = require('express-session');
 var validator = require('validator');
 var url_Validator = require('valid-url');
+var crypto = require("crypto-js");
 
 var app = express();
 var fs = require("fs");
@@ -32,7 +33,7 @@ app.use(session({
   secret: 'ssshhhh',
   resave: false,
   saveUninitialized: true,
-  cookie: {maxAge: 60000}
+  cookie: {maxAge: 600000}
 }));
 
 app.listen(8080, "localhost");
@@ -179,12 +180,13 @@ function loginRequestHandler(req, res) {
     var response = {};
     function add(chunk){
         body = body + chunk.toString();
-        console.log(body);
+        console.log('Undecrypted Message : ', body);
+        body = crypto.AES.decrypt(body, 'secret key 123').toString(crypto.enc.Utf8);
+        console.log('Decrypted Message : ', body);
     }
 
     function end(){
         body = JSON.parse(body);
-
         db.get("select * from user where username= ?", body.username, handler);
 
         function handler(err, row){
@@ -221,16 +223,17 @@ function registerRequestHandler(req, res) {
     var response = {};
     function add(chunk){
         body = body + chunk.toString();
+        console.log('Undecrypted Message : ', body);
+        body = crypto.AES.decrypt(body, 'secret key 123').toString(crypto.enc.Utf8);
+        console.log("Decrypted Message : ", body);
     }
 
     function end(){
         body = JSON.parse(body);
-        console.log(body);
-        db.get("select * from user where username= ?", body.userName, handler);
+        db.get("select * from user where username= ?", body.username, handler);
 
         function handler(err, row) {
           if (err) throw err;
-          console.log(row);
           if (row === undefined) {
             db.run("insert into user (username, password) values (?, ?)", [body.username, body.password], insertHandler);
 
