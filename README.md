@@ -21,3 +21,10 @@ gained a lot of experience with SQL, or you've put a lot of effort into organisi
 
 #### Dynamic Pages
 Ajax, Login and Register an account
+
+#### Node Modules
+express
+express-session
+sqlite3
+valid-url
+crypto-js
