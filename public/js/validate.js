@@ -20,7 +20,7 @@ function userInfoValidation(userInfo){
     }
     switch (passwordValidate) {
         case 1:
-            validation.password = "Password length should be greater than 12";
+            validation.password = "Password length should be greater than 10";
             break;
         case 2:
             validation.password = "Password should contain at least 3 non-digits";

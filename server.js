@@ -5,6 +5,7 @@
 var express = require("express");
 var session = require('express-session');
 var validator = require('validator');
+var url_Validator = require('valid-url');
 
 var app = express();
 var fs = require("fs");
@@ -59,44 +60,61 @@ function createPost(post, tableRow) {
     return post;
 }
 
+function getFullURL(req){
+  return req.protocol + '://' + req.get('host') + req.originalUrl;
+}
+
+function urlValidation(req, res, next){
+  onsole.log("Request Type : ", req.method);
+  var fullURL = getFullURL(req);
+  console.log("Full URL : ", fullURL);
+  if (url_Validator.isUri(fullURL)){
+    console.log("Valid URL");
+    next();
+  } else {
+    res.send("Invalid URL !");
+  }
+}
+
+
 app.get('/index.html', function(req, res) {
-    var sess = req.session;
-    console.log("rep.session.id -> " + sess.id);
-    console.log("req.sessionID -> " + req.sessionID);
-    if (sess.loggedIn){
-      console.log("Already loggedIn");
-      console.log("Username -> " + sess.userName);
-    }
-    else {
-      console.log("haven't logged yet");
-    }
-    var categoriesPosts = [];
+      var sess = req.session;
+      console.log("rep.session.id -> " + sess.id);
+      console.log("req.sessionID -> " + req.sessionID);
+      if (sess.loggedIn){
+        console.log("Already loggedIn");
+        console.log("Username -> " + sess.userName);
+      }
+      else {
+        console.log("haven't logged yet");
+      }
+      var categoriesPosts = [];
 
-    db.all('select * from posts order by postID desc', handler);
+      db.all('select * from posts order by postID desc', handler);
 
-    //db.all("select * from posts where category = '1'", handler);
+      //db.all("select * from posts where category = '1'", handler);
 
-    function handler(err, table) {
-        if (err) throw err;
-        for(var categoryId = 1; categoryId<=categories.length; categoryId++) {
-            var posts = [];
-            for(var row = 0; row < table.length; row++) {
-                var post = {};
-                if(table[row].category == categoryId) {
-                    createPost(post, table[row]);
-                    if(posts.length < postsPerCategory[categoryId - 1]) {
-                        posts.push(post);
-                    } else {
-                        break;
-                    }
-                }
-            }
-            categoriesPosts.push(posts)
-        }
-        res.render('pages/index', {
-            categoriesPosts: categoriesPosts
-        });
-    }
+      function handler(err, table) {
+          if (err) throw err;
+          for(var categoryId = 1; categoryId<=categories.length; categoryId++) {
+              var posts = [];
+              for(var row = 0; row < table.length; row++) {
+                  var post = {};
+                  if(table[row].category == categoryId) {
+                      createPost(post, table[row]);
+                      if(posts.length < postsPerCategory[categoryId - 1]) {
+                          posts.push(post);
+                      } else {
+                          break;
+                      }
+                  }
+              }
+              categoriesPosts.push(posts)
+          }
+          res.render('pages/index', {
+              categoriesPosts: categoriesPosts
+          });
+      }
 });
 
 app.get('/category.html/id=:id', function(req, res) {

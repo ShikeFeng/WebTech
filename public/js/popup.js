@@ -33,7 +33,6 @@ window.onclick = function (event) {
 }
 
 function login() {
-    console.log("called this function!");
     var userInfo = {};
     var userName = document.getElementsByClassName('user-name')[0].value;
     var password = document.getElementsByClassName('password')[0].value;
@@ -41,7 +40,14 @@ function login() {
     userInfo['userName'] = userName;
     userInfo['password'] = password;
 
-    sendRequest('POST', '/login', true, userInfo);
+    var validationResult = userNameValidation(userInfo);
+    if (validationResult.username === "valid" && validationResult.password === "valid"){
+        sendRequest('POST', '/login', true, userInfo);
+    }
+    else {
+      alert('Username : ' + validationResult.username);
+      alert('Password : ' + validationResult.password);
+    }
 }
 
 function register(){
