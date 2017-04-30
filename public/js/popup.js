@@ -36,11 +36,13 @@ function login() {
     var userInfo = {};
     var userName = document.getElementsByClassName('user-name')[0].value;
     var password = document.getElementsByClassName('password')[0].value;
-
-    userInfo['userName'] = userName;
+    alert(userName);
+    alert(password);
+    userInfo['username'] = userName;
     userInfo['password'] = password;
 
-    var validationResult = userNameValidation(userInfo);
+    var validationResult = userInfoValidation(userInfo);
+    alert("Validated");
     if (validationResult.username === "valid" && validationResult.password === "valid"){
         sendRequest('POST', '/login', true, userInfo);
     }

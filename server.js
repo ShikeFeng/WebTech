@@ -12,8 +12,9 @@ var fs = require("fs");
 var path = require("path");
 var sql = require("sqlite3").verbose();
 var dbpath = path.resolve('public/db/', 'site.db');
+console.log(dbpath);
 var db = new sql.Database(dbpath);
-var session = require('express-session')
+
 var banned = [];
 banUpperCase("./public/", "");
 
@@ -23,12 +24,6 @@ banUpperCase("./public/", "");
 app.use(lower);
 app.use(ban)
 app.use("/admin.html", auth);
-app.use(session({
-    secret: 'ssshhh',
-    resave: false,
-    saveUninitialized: false
-}));
-
 var options = { setHeaders: deliverXHTML };
 app.use(express.static("public", options));
 
@@ -44,7 +39,6 @@ app.listen(8080, "localhost");
 console.log("Visit http://localhost:8080/");
 // set the view engine to ejs
 app.set('view engine', 'ejs');
-
 
 /*Global Variables*/
 var categories = [1,2,3];   //Hardcoded for the current category types
@@ -185,12 +179,13 @@ function loginRequestHandler(req, res) {
     var response = {};
     function add(chunk){
         body = body + chunk.toString();
+        console.log(body);
     }
 
     function end(){
         body = JSON.parse(body);
 
-        db.get("select * from user where username= ?", body.userName, handler);
+        db.get("select * from user where username= ?", body.username, handler);
 
         function handler(err, row){
             if (err)  throw err;
@@ -202,7 +197,7 @@ function loginRequestHandler(req, res) {
             else if(row.password === body.password) {
               response.loginResponse = "Successfully LoggedIn";
               response.imageIcon = row.imgURL;
-              sess.userName = body.userName;
+              sess.userName = body.username;
               sess.loggedIn = true;
             }
             else {
