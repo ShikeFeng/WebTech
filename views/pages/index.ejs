@@ -6,11 +6,12 @@
 	<meta name="viewpoint" content="width=device-width, initial-scale=1"></meta>
 	<meta name="description" content="Web Technology coursework"></meta>
 	<meta name="author" content="Shike and Silviu"></meta>
-	
+
 	<!-- Bootstrap CSS -->
 	<link href="../../css/bootstrap.min.css" rel="stylesheet"></link>
 	<!-- Custom CSS -->
 	<link href="../../css/customize.css" rel="stylesheet"></link>
+
 </head>
 <body>
 
@@ -20,7 +21,7 @@
 
     <!--Login popup-->
     <% include ../partials/auth-popup.ejs %>
-    
+
 	<div class="container content">
         <%  for(var category = 0; category < categoriesPosts.length; category++) { %>
             <%if(category == 0) { %>
@@ -193,13 +194,17 @@
             <%}%>
         <% }; %>
 	</div>
-	
+
 <!--	JavaScrip files included-->
 <!-- JQuery -->
 <script src="../../js/jquery-3.1.1.js"></script>
 <!-- Bootstrap -->
 <script src="../../js/bootstrap.min.js"></script>
+<!-- Validator -->
+<script src="../../js/validator.min.js"></script>
+
 <!-- Custom JS-->
+<script src="../../js/validate.js"></script>
 <script src="../../js/popup.js"></script>
 </body>
 </html>

@@ -196,6 +196,7 @@ app.post('/register', registerRequestHandler);
 function registerRequestHandler(req, res) {
     var sess = req.session;
     var body = "";
+    console.log("Register Request Received");
     req.on('data', add);
     req.on('end', end);
     var response = {};
@@ -205,19 +206,21 @@ function registerRequestHandler(req, res) {
 
     function end(){
         body = JSON.parse(body);
+        console.log(body);
         db.get("select * from user where username= ?", body.userName, handler);
 
         function handler(err, row) {
           if (err) throw err;
-
+          console.log(row);
           if (row === undefined) {
-            db.run("insert into user (username, password, imgURL) values (?, ?, ?)", [body.username, body.password, body.imgURL], insertHandler);
+            db.run("insert into user (username, password) values (?, ?)", [body.username, body.password], insertHandler);
 
             function insertHandler(err){
               if (err) throw err;
             }
+            sess.userName = body.username;
             sess.loggedIn = true;
-            sess.userName = body.userName;
+            response.registerResponse = "Successfully Registered";
           }
           else {
             response.registerResponse = "Username Already Used";

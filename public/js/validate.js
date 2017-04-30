@@ -37,12 +37,11 @@ function userInfoValidation(userInfo){
 
 function passwordValidation(password){
     //check the length of the password
-    if (password.length < 12) {
+    if (password.length < 10) {
         return 1;
     }
     //check the number of non-digits in the password
     else if (password.length - password.replace(/\D/g, '').length < 3) {
-
         return 2;
     }
     //password should not contain invalid characters
@@ -68,9 +67,3 @@ function userNameValidation(username){
         return 0
     }
 }
-
-var user = {
-    "username": "Robert",
-    "password": "feng19960113"
-}
-console.log(userInfoValidation(user));

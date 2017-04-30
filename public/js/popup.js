@@ -1,6 +1,7 @@
 /**
  * Created by root on 22/02/17.
  */
+'use strict'
 var popupModal = document.getElementsByClassName('popup-modal')[0];
 var signupLink = document.getElementById('signup');
 var loginLink = document.getElementById('login');
@@ -41,6 +42,33 @@ function login() {
     userInfo['password'] = password;
 
     sendRequest('POST', '/login', true, userInfo);
+}
+
+function register(){
+    // alert("Registration request");
+    var userInfo = {}
+    var userName = document.getElementsByClassName('register-username')[0].value;
+    var password = document.getElementsByClassName('register-password')[0].value;
+    var email = document.getElementsByClassName('register-email')[0].value;
+
+    // alert("Got the value");
+    if (!validator.isEmail(email)){
+        alert("Not Valid email");
+    }
+    else {
+      alert("Valid Email");
+      userInfo['username'] = userName;
+      userInfo['password'] = password;
+      var validationResult = userInfoValidation(userInfo);
+      // alert("Validated");
+      if (validationResult.username === "valid" && validationResult.password === "valid"){
+          sendRequest('POST', '/register', true, userInfo);
+      }
+      else {
+        alert('Username : ' + validationResult.username);
+        alert('Password : ' + validationResult.password);
+      }
+    }
 }
 
 function sendRequest(method, section, syncValue, data){
