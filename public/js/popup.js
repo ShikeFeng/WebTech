@@ -10,17 +10,22 @@ var registerForm = document.getElementsByClassName('register-form')[0];
 var loginForm = document.getElementsByClassName('login-form')[0];
 
 
-signupLink.onclick = function () {
-    loginForm.style.display = 'none';
-    popupModal.style.display = 'block';
-    registerForm.style.display = 'block';
+if(signupLink != null){
+    signupLink.onclick = function () {
+        loginForm.style.display = 'none';
+        popupModal.style.display = 'block';
+        registerForm.style.display = 'block';
+    }
 }
 
-loginLink.onclick = function () {
-    registerForm.style.display = 'none';
-    popupModal.style.display = 'block';
-    loginForm.style.display = 'block';
+if(loginLink != null){
+    loginLink.onclick = function () {
+        registerForm.style.display = 'none';
+        popupModal.style.display = 'block';
+        loginForm.style.display = 'block';
+    }
 }
+
 
 span.onclick = function () {
     popupModal.style.display = 'none';

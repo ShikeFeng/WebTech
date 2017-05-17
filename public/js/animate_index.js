@@ -45,11 +45,10 @@ function displayDesc(story){
 	storyTitleEl = document.getElementById(storyTitle);
 	storyDescEl = document.getElementById(storyDesc);
 
-	storyTitleEl.style.visibility = "hidden";
-	storyDescEl.style.visibility = "visible";
+	storyTitleEl.style.display = "none";
+	storyDescEl.style.display = "block";
 	
 	fadeIn(storyDescEl);
-	fadeOut(storyTitleEl);
 }
 
 function displayTitle(story){
@@ -65,17 +64,17 @@ function displayTitle(story){
 	storyTitleEl = document.getElementById(storyTitle);
 	storyDescEl = document.getElementById(storyDesc);
 
-	storyDescEl.style.visibility = "hidden";
-	storyTitleEl.style.visibility = "visible";
-	
-	fadeIn(storyDescEl);
-	fadeOut(storyTitleEl);
+	storyDescEl.style.display = "none";
+	storyTitleEl.style.display = "block";
+
+    //console.log("I am already displaying the title!");
+	fadeIn(storyTitleEl);
 }
 
 function fadeIn(el){
   el.style.opacity = 0;
   var tick = function(){
-  	el.style.opacity = +el.style.opacity + 0.01;
+  	el.style.opacity = +el.style.opacity + 0.03;
   	if (+el.style.opacity < 1){
       (window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16)
     }
@@ -83,13 +82,13 @@ function fadeIn(el){
   tick();
 }
 
-function fadeOut(el){
-	el.style.opacity = 1;
-	var tick = function(){
-		el.style.opacity = -el.style.opacity - 0.01;
-		if(-el.style.opacity > 0){
-			(window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16) 
-		}
-	};
-	tick();
-}
+// function fadeOut(el){
+// 	el.style.opacity = 1;
+// 	var tick = function(){
+// 		el.style.opacity = -el.style.opacity - 0.01;
+// 		if(-el.style.opacity > 0){
+// 			(window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16)
+// 		}
+// 	};
+// 	tick();
+// }
