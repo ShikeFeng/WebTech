@@ -1,8 +1,10 @@
 'use strict'
 var userInfo = document.getElementById('UserInfo');
 
-userInfo.onclick = function() {
-    document.getElementById("myDropdown").classList.toggle("show");
+if(userInfo != null){
+    userInfo.onclick = function() {
+        document.getElementById("myDropdown").classList.toggle("show");
+    }
 }
 
 window.onclick = function(event) {

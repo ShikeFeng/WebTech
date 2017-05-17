@@ -220,6 +220,13 @@ function loginRequestHandler(req, res) {
               sess.loggedIn = false;
             }
             res.send(JSON.stringify(response));
+
+            //if the user is loged in, we pass the session object through ejs
+            if(sess.loggedIn == true){
+                res.render('pages/index', {
+                   session: sess
+                });
+            }
         }
     }
 }
