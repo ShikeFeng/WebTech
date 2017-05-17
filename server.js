@@ -29,18 +29,19 @@ var options = { setHeaders: deliverXHTML };
 app.use(express.static("public", options));
 
 // URL validation
-app.use(function(req, res, next){
-  console.log("Request Type : ", req.method);
-  var fullURL = getFullURL(req);
-  console.log("Full URL : ", fullURL);
-  if (url_Validator.isUri(fullURL)){
-    console.log("Valid URL");
-    next();
-  } else {
-    res.send("Invalid URL !");
-  }
-})
+// app.use(function(req, res, next){
+//   console.log("Request Type : ", req.method);
+//   var fullURL = getFullURL(req);
+//   console.log("Full URL : ", fullURL);
+//   if (url_Validator.isUri(fullURL)){
+//     console.log("Valid URL");
+//     next();
+//   } else {
+//     res.send("Invalid URL !");
+//   }
+// });
 
+app.use(urlValidation);
 // initialise session
 app.use(session({
   secret: 'ssshhhh',
@@ -91,7 +92,9 @@ function urlValidation(req, res, next){
 }
 
 
-app.get('/index.html', function(req, res) {
+app.get('/index.html', indexHandler);
+
+function indexHandler(req, res) {
       var sess = req.session;
       console.log("rep.session.id -> " + sess.id);
       console.log("req.sessionID -> " + req.sessionID);
@@ -129,7 +132,7 @@ app.get('/index.html', function(req, res) {
               categoriesPosts: categoriesPosts
           });
       }
-});
+}
 
 app.get('/category.html/id=:id', function(req, res) {
     var posts = [];
@@ -227,6 +230,7 @@ function loginRequestHandler(req, res) {
 
 // register
 app.post('/register', registerRequestHandler);
+
 function registerRequestHandler(req, res) {
     var sess = req.session;
     var body = "";
@@ -264,6 +268,18 @@ function registerRequestHandler(req, res) {
           res.send(JSON.stringify(response));
         }
     }
+}
+
+app.post('/logout', logoutHandler);
+
+function logoutHandler(req, res){
+  console.log("Logout Request Received");
+  var sess = req.session;
+  var response = {};
+  sess.userName = "";
+  sess.loggedIn = false;
+  response.logoutResponse = "Logged Out Already";
+  res.send(JSON.stringify(response));
 }
 
 // Make the URL lower case.

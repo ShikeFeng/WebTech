@@ -1,10 +1,14 @@
 'use strict'
 var userInfo = document.getElementById('UserInfo');
+var logoutButton = document.getElementById('logout');
 
 userInfo.onclick = function() {
-    document.getElementById("myDropdown").classList.toggle("show");
+  document.getElementById("myDropdown").classList.toggle("show");
 }
 
+logoutButton.onclick = function() {
+  sendRequest('POST', '/logout', true, null);
+}
 window.onclick = function(event) {
   if (!event.target.matches('.dropbtn')) {
 
