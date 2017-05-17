@@ -62,6 +62,7 @@ var categoriesNames = {
     2: 'Digital Device',
     3: 'Software'
 };
+var categoriesPosts = [];
 
 function createPost(post, tableRow) {
     post['id'] = tableRow.postID;
@@ -90,7 +91,6 @@ function urlValidation(req, res, next){
   }
 }
 
-
 app.get('/index.html', function(req, res) {
       var sess = req.session;
       console.log("rep.session.id -> " + sess.id);
@@ -102,7 +102,6 @@ app.get('/index.html', function(req, res) {
       else {
         console.log("haven't logged yet");
       }
-      var categoriesPosts = [];
 
       db.all('select * from posts order by postID desc', handler);
 
@@ -208,25 +207,22 @@ function loginRequestHandler(req, res) {
             if (row === undefined) {
               response.loginResponse = "No such user";
               sess.loggedIn = false;
+              response.loggedIn = false;
             }
             else if(row.password === body.password) {
               response.loginResponse = "Successfully LoggedIn";
               response.imageIcon = row.imgURL;
               sess.userName = body.username;
               sess.loggedIn = true;
+              response.loggedIn = true;
             }
             else {
               response.loginResponse = "Incorrect Password";
               sess.loggedIn = false;
+              response.loggedIn = false;
             }
-            res.send(JSON.stringify(response));
 
-            //if the user is loged in, we pass the session object through ejs
-            if(sess.loggedIn == true){
-                res.render('pages/index', {
-                   session: sess
-                });
-            }
+            res.send(JSON.stringify(response));
         }
     }
 }

@@ -97,6 +97,7 @@ function sendRequest(method, section, syncValue, data){
     function receive(){
         if (this.readyState == 4 && this.status == 200) {
             alert(this.responseText);
+
         }
     }
 }
