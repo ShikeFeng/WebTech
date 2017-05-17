@@ -125,7 +125,8 @@ app.get('/index.html', function(req, res) {
               categoriesPosts.push(posts)
           }
           res.render('pages/index', {
-              categoriesPosts: categoriesPosts
+              categoriesPosts: categoriesPosts,
+              session: sess
           });
       }
 });

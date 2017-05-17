@@ -9,7 +9,6 @@ var span = document.getElementsByClassName('close')[0];
 var registerForm = document.getElementsByClassName('register-form')[0];
 var loginForm = document.getElementsByClassName('login-form')[0];
 
-
 if(signupLink != null){
     signupLink.onclick = function () {
         loginForm.style.display = 'none';
@@ -96,10 +95,8 @@ function sendRequest(method, section, syncValue, data){
     q.send(data);
     function receive(){
         if (this.readyState == 4 && this.status == 200) {
-            // var loggedInNavbar = document.getElementById('login_navbar');
-            // var defaultNavbar = document.getElementById('default_navbar');
-            // loggedInNavbar.style.display = 'block';
-            // defaultNavbar.style.display = 'none';
+            var response = JSON.parse(this.responseText);
+            //do something with response
         }
     }
 }
