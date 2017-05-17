@@ -28,6 +28,19 @@ app.use("/admin.html", auth);
 var options = { setHeaders: deliverXHTML };
 app.use(express.static("public", options));
 
+// URL validation
+app.use(function(req, res, next){
+  console.log("Request Type : ", req.method);
+  var fullURL = getFullURL(req);
+  console.log("Full URL : ", fullURL);
+  if (url_Validator.isUri(fullURL)){
+    console.log("Valid URL");
+    next();
+  } else {
+    res.send("Invalid URL !");
+  }
+})
+
 // initialise session
 app.use(session({
   secret: 'ssshhhh',
@@ -66,7 +79,7 @@ function getFullURL(req){
 }
 
 function urlValidation(req, res, next){
-  onsole.log("Request Type : ", req.method);
+  console.log("Request Type : ", req.method);
   var fullURL = getFullURL(req);
   console.log("Full URL : ", fullURL);
   if (url_Validator.isUri(fullURL)){
@@ -161,7 +174,7 @@ app.get('/read_post.html/id=:id', function(req, res) {
     }
 });
 
-// login / register
+// login
 app.post('/login', loginRequestHandler);
 function loginRequestHandler(req, res) {
     console.log("request received");
