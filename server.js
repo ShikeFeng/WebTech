@@ -64,6 +64,12 @@ var categoriesNames = {
     3: 'Software'
 };
 
+var categoryNumber = {
+  'Programming' : 1,
+  'Digital Device' : 2,
+  'Software' : 3
+};
+
 function createPost(post, tableRow) {
     post['id'] = tableRow.postID;
     post['title'] = tableRow.title;
@@ -282,6 +288,41 @@ function logoutHandler(req, res){
   res.send(JSON.stringify(response));
 }
 
+
+app.post('/writePost', writePostHandler);
+
+function writePostHandler(req, res){
+  console.log("Request Received");
+  var userName = req.session.userName; // get the username of the current user
+  // The write post page will only be accessed for users which have already loggedIn
+  var body = "";
+  req.on('data', add);
+  req.on('end', end);
+  var response = {};
+  function add(chunk){
+      body = body + chunk.toString();
+  }
+  function end(){
+      console.log("Before Split -->");
+      console.log(body);
+      var fields = body.split("&");
+      var messages;
+      console.log("After Split --> ");
+      console.log(fields);
+      for (var i = 0; i < fields.length; i++){
+        messages = fields[i].split("=");
+        console.log(messages);
+      }
+
+      db.each("select * from users where username= ?", userName, handler);
+      function handler(err,row){
+        if (err) throw err;
+
+      }
+      res.send("ok");
+  }
+
+}
 // Make the URL lower case.
 function lower(req, res, next) {
     req.url = req.url.toLowerCase();

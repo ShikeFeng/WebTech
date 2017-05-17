@@ -25,15 +25,18 @@
 <div class="container-fluid edit-content">
     <div class="row">
         <div class="col-md-12">
-            <form action="some-action">
+            <form action="/writePost" method="post">
                 <div class="container title-textarea">
-                    <textarea name="title" rows="1" cols="30" placeholder="Title"></textarea>
+                    <textarea name="Title" rows="1" cols="30" placeholder="Title"></textarea>
+                </div>
+                <div class="container article-textarea">
+                    <textarea name="Intro" rows="2" cols="30" placeholder="Short Introduction"></textarea>
                 </div>
                 <div class="container article-textarea">
                     <textarea name="Article" rows="10" cols="100" placeholder="Content"></textarea>
                 </div>
                 <div class="container category-drop">
-                    <input list="categories" placeholder="Choose a category"/>
+                    <input name="Category", list="categories" placeholder="Choose a category"/>
                     <datalist id="categories">
                         <option value="Technology"/>
                         <option value="Science"/>
@@ -42,7 +45,7 @@
                     </datalist>
                 </div>
                 <div class="container">
-                    <input class="button" type="file"/>
+                    <input name="Image" class="button" type="file"/>
                 </div>
                 <div class="container">
                     <input class="button submit-button" type="submit" value="Submit article"/>
