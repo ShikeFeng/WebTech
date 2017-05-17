@@ -62,7 +62,6 @@ var categoriesNames = {
     2: 'Digital Device',
     3: 'Software'
 };
-var categoriesPosts = [];
 
 function createPost(post, tableRow) {
     post['id'] = tableRow.postID;
@@ -103,6 +102,7 @@ app.get('/index.html', function(req, res) {
         console.log("haven't logged yet");
       }
 
+      var categoriesPosts = [];
       db.all('select * from posts order by postID desc', handler);
 
       //db.all("select * from posts where category = '1'", handler);

@@ -96,8 +96,10 @@ function sendRequest(method, section, syncValue, data){
     q.send(data);
     function receive(){
         if (this.readyState == 4 && this.status == 200) {
-            alert(this.responseText);
-
+            // var loggedInNavbar = document.getElementById('login_navbar');
+            // var defaultNavbar = document.getElementById('default_navbar');
+            // loggedInNavbar.style.display = 'block';
+            // defaultNavbar.style.display = 'none';
         }
     }
 }
