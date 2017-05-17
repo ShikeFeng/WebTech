@@ -1,3 +1,4 @@
+'use strict'
 var userInfo = document.getElementById('UserInfo');
 
 userInfo.onclick = function() {
