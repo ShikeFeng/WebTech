@@ -124,7 +124,6 @@ app.get('/index.html', function(req, res) {
               }
               categoriesPosts.push(posts)
           }
-          console.log("the session is: " + sess);
           res.render('pages/index', {
               categoriesPosts: categoriesPosts,
               session: sess
