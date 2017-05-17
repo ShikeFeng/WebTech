@@ -378,6 +378,6 @@ body {
 
 /*Used for the animated posts in category 2*/
 .story-2-desc{
-    position: absolute;
-    visibility: hidden;
+    position: relative;
+    display: none;
 }

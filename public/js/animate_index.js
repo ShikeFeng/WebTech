@@ -45,8 +45,8 @@ function displayDesc(story){
 	storyTitleEl = document.getElementById(storyTitle);
 	storyDescEl = document.getElementById(storyDesc);
 
-	storyTitleEl.style.visibility = "hidden";
-	storyDescEl.style.visibility = "visible";
+	storyTitleEl.style.display = "none";
+	storyDescEl.style.display = "block";
 	
 	fadeIn(storyDescEl);
 	fadeOut(storyTitleEl);
@@ -65,8 +65,8 @@ function displayTitle(story){
 	storyTitleEl = document.getElementById(storyTitle);
 	storyDescEl = document.getElementById(storyDesc);
 
-	storyDescEl.style.visibility = "hidden";
-	storyTitleEl.style.visibility = "visible";
+	storyDescEl.style.display = "none";
+	storyTitleEl.style.display = "block";
 	
 	fadeIn(storyDescEl);
 	fadeOut(storyTitleEl);
