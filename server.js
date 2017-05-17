@@ -134,6 +134,7 @@ app.get('/index.html', function(req, res) {
 app.get('/category.html/id=:id', function(req, res) {
     var posts = [];
     var categoryId = req.params.id;
+    var sess = req.session;
 
     db.all('select * from posts order by postID desc', handler);
 
@@ -147,7 +148,8 @@ app.get('/category.html/id=:id', function(req, res) {
             }
         }
         res.render('pages/category', {
-            posts: posts
+            posts: posts,
+            session: sess
         });
     }
 });
@@ -159,6 +161,7 @@ app.get('/edit_post.html', function(req, res) {
 app.get('/read_post.html/id=:id', function(req, res) {
     var content = {};
     var postId = req.params.id;
+    var sess = req.session;
 
     db.get('select * from posts where postId= ?', postId, handler);
 
@@ -169,7 +172,8 @@ app.get('/read_post.html/id=:id', function(req, res) {
         content['textContent'] = row.content;
 
         res.render('pages/read_post', {
-            content: content
+            content: content,
+            session: sess
         });
     }
 });

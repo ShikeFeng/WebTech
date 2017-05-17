@@ -15,9 +15,13 @@
 </head>
 <body>
 
-    <header>
-        <% include ../partials/header %>
-    </header>
+	<header>
+		<% if(session.loggedIn) {%>
+			<% include ../partials/header1 %>
+		<% } else { %>
+			<% include ../partials/header %>
+		<% } %>
+	</header>
 
     <!--Login popup-->
     <% include ../partials/auth-popup.ejs %>

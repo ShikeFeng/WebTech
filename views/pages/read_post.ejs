@@ -16,7 +16,11 @@
 <body>
 
 <header>
-    <% include ../partials/header %>
+    <% if(session.loggedIn) {%>
+        <% include ../partials/header1 %>
+    <% } else { %>
+        <% include ../partials/header %>
+    <% } %>
 </header>
 
 <!--Login popup-->
