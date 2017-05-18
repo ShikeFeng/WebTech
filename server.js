@@ -10,6 +10,7 @@ var crypto = require("crypto-js");
 
 var app = express();
 var fs = require("fs");
+var http = require('http');
 var path = require("path");
 var sql = require("sqlite3").verbose();
 var dbpath = path.resolve('public/db/', 'site.db');
@@ -136,6 +137,7 @@ app.get('/category.html/id=:id', function(req, res) {
     var categoryId = req.params.id;
     var sess = req.session;
 
+    console.log("the session logged in value is: " + sess.loggedIn);
     db.all('select * from posts order by postID desc', handler);
 
     function handler(err, table) {
@@ -165,8 +167,7 @@ app.get('/read_post.html/id=:id', function(req, res) {
 
     db.get('select * from posts where postId= ?', postId, handler);
 
-    function handler(err, row)
-    {
+    function handler(err, row) {
         content['title'] = row.title;
         content['imagePath'] = row.imagePath;
         content['textContent'] = row.content;
@@ -177,6 +178,27 @@ app.get('/read_post.html/id=:id', function(req, res) {
         });
     }
 });
+
+// app.get('/my_stories.html/userId=:id', function(req, res){
+//    var userId = req.params.id;
+//
+//    db.get('select * from posts where userID= ?', userId, handler);
+//
+//    function handler(err, row) {
+//        if (err) throw err;
+//        for(var row = 0; row < table.length; row++) {
+//            var post = {};
+//            createPost(post, table[row]);
+//            if(categoryId == post['categoryId']) {
+//                posts.push(post);
+//            }
+//        }
+//        res.render('pages/category', {
+//            posts: posts,
+//            session: sess
+//        });
+//    }
+// });
 
 // login
 app.post('/login', loginRequestHandler);
@@ -220,7 +242,6 @@ function loginRequestHandler(req, res) {
               sess.userName = body.username;
               sess.loggedIn = true;
               sess.imageUrl = row.imgURL;
-              console.log(sess.imageUrl);
               response.loggedIn = true;
             }
             else {
