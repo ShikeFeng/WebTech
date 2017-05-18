@@ -216,9 +216,11 @@ function loginRequestHandler(req, res) {
             }
             else if(row.password === body.password) {
               response.loginResponse = "Successfully LoggedIn";
-              response.imageIcon = row.imgURL;
+              // response.imageIcon = row.imgURL;  -- this is not needed as imageUrl is kept on sess obj
               sess.userName = body.username;
               sess.loggedIn = true;
+              sess.imageUrl = row.imgURL;
+              console.log(sess.imageUrl);
               response.loggedIn = true;
             }
             else {
