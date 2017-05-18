@@ -15,9 +15,15 @@
 </head>
 <body>
 
-    <header>
-        <% include ../partials/header %>
-    </header>
+	<header>
+		<% if(session.loggedIn) {%>
+        	<% var userName = session.userName%>
+			<% var userImgPath = session.imageUrl%>
+			<% include ../partials/header1 %>
+		<% } else { %>
+			<% include ../partials/header %>
+		<% } %>
+	</header>
 
     <!--Login popup-->
     <% include ../partials/auth-popup.ejs %>
@@ -73,7 +79,11 @@
 	<script src="../../js/jquery-3.1.1.js"></script>
 <!-- Bootstrap -->
 	<script src="../../js/bootstrap.min.js"></script>
+<!-- AES Encrption -->
+<script src="../../js/crypto-js/crypto-js.js"></script>
 <!-- Custom JS-->
+	<script src="../../js/validate.js"></script>
+	<script src="../../js/navbar.js"></script>
 	<script src="../../js/popup.js"></script>
 </body>
 </html>

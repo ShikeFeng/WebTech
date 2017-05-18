@@ -15,8 +15,14 @@
 </head>
 <body>
 
-    <header id="nav_bar">
-        <% include ../partials/header %>
+    <header>
+        <% if(session.loggedIn) {%>
+            <% var userName = session.userName%>
+            <% var userImgPath = session.imageUrl%>
+            <% include ../partials/header1 %>
+        <% } else { %>
+            <% include ../partials/header %>
+        <% } %>
     </header>
 
     <!--Login popup-->

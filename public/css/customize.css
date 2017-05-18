@@ -18,6 +18,10 @@ body {
 .dropbtn:hover, .dropbtn:focus {
 }
 
+.login-navbar{
+    display: none;
+}
+
 .dropdown {
     position: relative;
     display: inline-block;

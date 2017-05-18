@@ -10,6 +10,7 @@ var crypto = require("crypto-js");
 
 var app = express();
 var fs = require("fs");
+var http = require('http');
 var path = require("path");
 var sql = require("sqlite3").verbose();
 var dbpath = path.resolve('public/db/', 'site.db');
@@ -62,7 +63,6 @@ var categoriesNames = {
     2: 'Digital Device',
     3: 'Software'
 };
-var categoriesPosts = [];
 
 function createPost(post, tableRow) {
     post['id'] = tableRow.postID;
@@ -103,6 +103,7 @@ app.get('/index.html', function(req, res) {
         console.log("haven't logged yet");
       }
 
+      var categoriesPosts = [];
       db.all('select * from posts order by postID desc', handler);
 
       //db.all("select * from posts where category = '1'", handler);
@@ -125,7 +126,8 @@ app.get('/index.html', function(req, res) {
               categoriesPosts.push(posts)
           }
           res.render('pages/index', {
-              categoriesPosts: categoriesPosts
+              categoriesPosts: categoriesPosts,
+              session: sess
           });
       }
 });
@@ -133,7 +135,9 @@ app.get('/index.html', function(req, res) {
 app.get('/category.html/id=:id', function(req, res) {
     var posts = [];
     var categoryId = req.params.id;
+    var sess = req.session;
 
+    console.log("the session logged in value is: " + sess.loggedIn);
     db.all('select * from posts order by postID desc', handler);
 
     function handler(err, table) {
@@ -146,7 +150,8 @@ app.get('/category.html/id=:id', function(req, res) {
             }
         }
         res.render('pages/category', {
-            posts: posts
+            posts: posts,
+            session: sess
         });
     }
 });
@@ -158,20 +163,42 @@ app.get('/edit_post.html', function(req, res) {
 app.get('/read_post.html/id=:id', function(req, res) {
     var content = {};
     var postId = req.params.id;
+    var sess = req.session;
 
     db.get('select * from posts where postId= ?', postId, handler);
 
-    function handler(err, row)
-    {
+    function handler(err, row) {
         content['title'] = row.title;
         content['imagePath'] = row.imagePath;
         content['textContent'] = row.content;
 
         res.render('pages/read_post', {
-            content: content
+            content: content,
+            session: sess
         });
     }
 });
+
+// app.get('/my_stories.html/userId=:id', function(req, res){
+//    var userId = req.params.id;
+//
+//    db.get('select * from posts where userID= ?', userId, handler);
+//
+//    function handler(err, row) {
+//        if (err) throw err;
+//        for(var row = 0; row < table.length; row++) {
+//            var post = {};
+//            createPost(post, table[row]);
+//            if(categoryId == post['categoryId']) {
+//                posts.push(post);
+//            }
+//        }
+//        res.render('pages/category', {
+//            posts: posts,
+//            session: sess
+//        });
+//    }
+// });
 
 // login
 app.post('/login', loginRequestHandler);
@@ -211,9 +238,10 @@ function loginRequestHandler(req, res) {
             }
             else if(row.password === body.password) {
               response.loginResponse = "Successfully LoggedIn";
-              response.imageIcon = row.imgURL;
+              // response.imageIcon = row.imgURL;  -- this is not needed as imageUrl is kept on sess obj
               sess.userName = body.username;
               sess.loggedIn = true;
+              sess.imageUrl = row.imgURL;
               response.loggedIn = true;
             }
             else {
