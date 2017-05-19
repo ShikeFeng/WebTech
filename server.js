@@ -172,6 +172,7 @@ app.get('/read_post.html/id=:id', function(req, res) {
         content['title'] = row.title;
         content['imagePath'] = row.imagePath;
         content['textContent'] = row.content;
+        content['userName'] = row.userName
 
         res.render('pages/read_post', {
             content: content,
