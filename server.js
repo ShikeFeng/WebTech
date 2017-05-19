@@ -33,19 +33,7 @@ app.use(fileUpload());
 var options = { setHeaders: deliverXHTML };
 app.use(express.static("public", options));
 
-// URL validation
-// app.use(function(req, res, next){
-//   console.log("Request Type : ", req.method);
-//   var fullURL = getFullURL(req);
-//   console.log("Full URL : ", fullURL);
-//   if (url_Validator.isUri(fullURL)){
-//     console.log("Valid URL");
-//     next();
-//   } else {
-//     res.send("Invalid URL !");
-//   }
-// });
-
+// url validation
 app.use(urlValidation);
 // initialise session
 app.use(session({
