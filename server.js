@@ -72,6 +72,7 @@ function createPost(post, tableRow) {
     post['categoryId'] = tableRow.category;
     post['categoryName'] = categoriesNames[tableRow.category];
     post['userName'] = tableRow.userName;
+    post['userId'] = tableRow.userID;
 
     return post;
 }
@@ -179,26 +180,27 @@ app.get('/read_post.html/id=:id', function(req, res) {
     }
 });
 
-// app.get('/my_stories.html/userId=:id', function(req, res){
-//    var userId = req.params.id;
-//
-//    db.get('select * from posts where userID= ?', userId, handler);
-//
-//    function handler(err, row) {
-//        if (err) throw err;
-//        for(var row = 0; row < table.length; row++) {
-//            var post = {};
-//            createPost(post, table[row]);
-//            if(categoryId == post['categoryId']) {
-//                posts.push(post);
-//            }
-//        }
-//        res.render('pages/category', {
-//            posts: posts,
-//            session: sess
-//        });
-//    }
-// });
+app.get('/my_stories.html/userName=:name', function(req, res){
+    var posts = [];
+    var sess = req.session;
+    var userName = req.params.name;
+
+    db.all('select * from posts where userName= ?', userName, handler);
+
+    function handler(err, table) {
+        if (err) throw err;
+        for(var row = 0; row < table.length; row++) {
+           var post = {};
+           createPost(post, table[row]);
+           posts.push(post);
+       }
+
+       res.render('pages/category', {
+           posts: posts,
+           session: sess
+       });
+   }
+});
 
 // login
 app.post('/login', loginRequestHandler);
