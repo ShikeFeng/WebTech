@@ -71,6 +71,7 @@ function createPost(post, tableRow) {
     post['imageUrl'] = tableRow.imagePath;
     post['categoryId'] = tableRow.category;
     post['categoryName'] = categoriesNames[tableRow.category];
+    post['userName'] = tableRow.userName;
 
     return post;
 }
@@ -137,7 +138,6 @@ app.get('/category.html/id=:id', function(req, res) {
     var categoryId = req.params.id;
     var sess = req.session;
 
-    console.log("the session logged in value is: " + sess.loggedIn);
     db.all('select * from posts order by postID desc', handler);
 
     function handler(err, table) {
