@@ -71,6 +71,7 @@ function createPost(post, tableRow) {
     post['imageUrl'] = tableRow.imagePath;
     post['categoryId'] = tableRow.category;
     post['categoryName'] = categoriesNames[tableRow.category];
+    post['userName'] = tableRow.userName;
 
     return post;
 }
