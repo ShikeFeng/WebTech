@@ -4,6 +4,10 @@
 
 var express = require("express");
 var session = require('express-session');
+var fileUpload = require('express-fileupload');
+var multer = require('multer');
+var upload = multer({dest: 'public/img/'});
+
 var validator = require('validator');
 var url_Validator = require('valid-url');
 var crypto = require("crypto-js");
@@ -25,6 +29,7 @@ banUpperCase("./public/", "");
 app.use(lower);
 app.use(ban)
 app.use("/admin.html", auth);
+app.use(fileUpload());
 var options = { setHeaders: deliverXHTML };
 app.use(express.static("public", options));
 
@@ -185,6 +190,7 @@ app.get('/read_post.html/id=:id', function(req, res) {
 
 // login
 app.post('/login', loginRequestHandler);
+
 function loginRequestHandler(req, res) {
     console.log("request received");
     var sess = req.session;
@@ -292,37 +298,41 @@ function logoutHandler(req, res){
 app.post('/writePost', writePostHandler);
 
 function writePostHandler(req, res){
+  console.log(req.body);
+  console.log(req.files);
   console.log("Request Received");
-  var userName = req.session.userName; // get the username of the current user
+  var userName = "Robert";
+  //var userName = req.session.userName; // get the username of the current user
   // The write post page will only be accessed for users which have already loggedIn
-  var body = "";
-  req.on('data', add);
-  req.on('end', end);
-  var response = {};
-  function add(chunk){
-      body = body + chunk.toString();
-  }
-  function end(){
-      console.log("Before Split -->");
-      console.log(body);
-      var fields = body.split("&");
-      var messages;
-      console.log("After Split --> ");
-      console.log(fields);
-      for (var i = 0; i < fields.length; i++){
-        messages = fields[i].split("=");
-        console.log(messages);
-      }
 
-      db.each("select * from users where username= ?", userName, handler);
-      function handler(err,row){
-        if (err) throw err;
-
-      }
-      res.send("ok");
+  var body = req.body;
+  req.files.Image.name = userName.toLowerCase() + '_' + body.Title + '_' + Date.now() + ".png";
+  console.log("Modified Image File Name", req.files.Image.name);
+  var imagePath = "/img/" + req.files.Image.name;
+  req.files.Image.mv("public" + imagePath, exceptionHandler);
+  function exceptionHandler(err){
+    console.log("Sth Wrong");
   }
 
+  console.log(req.body.Title);
+  db.each("select * from user where username= ?", userName, handler);
+  function handler(err,row){
+    if (err) throw err;
+    // var userID = row.userID;
+    // messages.push(userID);
+    console.log("userID ", row.userID);
+    db.run("insert into posts (title, introduction, content, category, imagePath, userID) values (?, ?, ?, ?, ?, ?)", [body.Title, body.Intro, body.Article, categoryNumber[body.Category], imagePath,row.userID], insertHandler);
+
+    function insertHandler(err, row){
+      console.log("Insertion Finished");
+      if (err) throw err;
+    }
+  }
+      res.redirect('index.html');
+      // res.send("OK");
+  // }
 }
+
 // Make the URL lower case.
 function lower(req, res, next) {
     req.url = req.url.toLowerCase();

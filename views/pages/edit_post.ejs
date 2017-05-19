@@ -25,23 +25,22 @@
 <div class="container-fluid edit-content">
     <div class="row">
         <div class="col-md-12">
-            <form action="/writePost" method="post">
+            <form action="/writePost" id="postForm" method="post" encType="multipart/form-data">
                 <div class="container title-textarea">
-                    <textarea name="Title" rows="1" cols="30" placeholder="Title"></textarea>
+                    <textarea name="Title" rows="1" cols="30" type="text" placeholder="Title" form="postForm"></textarea>
                 </div>
                 <div class="container article-textarea">
-                    <textarea name="Intro" rows="2" cols="30" placeholder="Short Introduction"></textarea>
+                    <textarea name="Intro" rows="2" cols="30" placeholder="Short Introduction" form="postForm"></textarea>
                 </div>
                 <div class="container article-textarea">
-                    <textarea name="Article" rows="10" cols="100" placeholder="Content"></textarea>
+                    <textarea name="Article" type="text" rows="10" cols="100" placeholder="Content" form="postForm"></textarea>
                 </div>
                 <div class="container category-drop">
-                    <input name="Category", list="categories" placeholder="Choose a category"/>
+                    <input name="Category", list="categories" placeholder="Choose a category" type="text"/>
                     <datalist id="categories">
-                        <option value="Technology"/>
-                        <option value="Science"/>
-                        <option value="Future"/>
-                        <option value="Biology"/>
+                        <option value="Programming"/>
+                        <option value="Degital Device"/>
+                        <option value="Software"/>
                     </datalist>
                 </div>
                 <div class="container">
