@@ -137,7 +137,6 @@ app.get('/category.html/id=:id', function(req, res) {
     var categoryId = req.params.id;
     var sess = req.session;
 
-    console.log("the session logged in value is: " + sess.loggedIn);
     db.all('select * from posts order by postID desc', handler);
 
     function handler(err, table) {

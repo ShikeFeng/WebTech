@@ -33,23 +33,25 @@
 			<div class="col-md-7" id="stories-column">
                 <% for(var post = 0; post < posts.length; post++) { %>
 					<div class="short-story-container">
-						<div class="container short-profile-details">
-							<object type="image/svg+xml" data="../../svg/user-icon-resized.svg">
-								Your browser does not support SVG
-							</object>
-							<span class="user-name">John Smith</span>
-							in
-							<span class="category"><%=posts[post].categoryName%></span>
-						</div>
-						<div class = "container short-post-picture">
-							<img src="../..<%=posts[post].imageUrl%>"/>
-						</div>
-						<div class = "container short-post-title">
-							<h2><%=posts[post].title%></h2>
-						</div>
-						<div class = "container short-post-story">
-							<h4><%=posts[post].description%></h4>
-						</div>
+						<a href="/read_post.html/id=<%=posts[post].id%>">
+							<div class="container short-profile-details">
+								<object type="image/svg+xml" data="../../svg/user-icon-resized.svg">
+									Your browser does not support SVG
+								</object>
+								<span class="user-name">John Smith</span>
+								in
+								<span class="category"><%=posts[post].categoryName%></span>
+							</div>
+							<div class = "container short-post-picture">
+								<img src="../..<%=posts[post].imageUrl%>"/>
+							</div>
+							<div class = "container short-post-title">
+								<h2><%=posts[post].title%></h2>
+							</div>
+							<div class = "container short-post-story">
+								<h4><%=posts[post].description%></h4>
+							</div>
+						</a>
 					</div>
                 <% } %>
 			</div>

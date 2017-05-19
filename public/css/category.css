@@ -19,6 +19,15 @@ svg {
 }
 
 /*Short stories box*/
+
+.short-story-container a {
+    text-decoration: none;
+}
+
+.short-story-container a:hover {
+    text-decoration: none;
+}
+
 #stories-column {
     padding-top: 3%;
 }
