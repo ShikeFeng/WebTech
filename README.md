@@ -18,7 +18,7 @@ URL validation
 manipulate the session object
 
 #### Database
-gained a lot of experience with SQL, or you've put a lot of effort into organising database access (e.g. into a separate server-side module) or you've put a lot of effort into database design or details of handling your data
+gained a lot of experience with SQL, or you've put a lot of effort into organizing database access (e.g. into a separate server-side module) or you've put a lot of effort into database design or details of handling your data
 
 #### Dynamic Pages
 EJS template
@@ -30,3 +30,4 @@ express-session
 sqlite3
 valid-url
 crypto-js
+multer

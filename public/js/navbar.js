@@ -1,13 +1,17 @@
 'use strict'
 var userInfo = document.getElementById('UserInfo');
+var logoutButton = document.getElementById('logout');
 
-if(userInfo != null){
-    userInfo.onclick = function() {
-        document.getElementById("myDropdown").classList.toggle("show");
-    }
+userInfo.onclick = function() {
+  document.getElementById("myDropdown").classList.toggle("show");
 }
 
+logoutButton.onclick = function() {
+  sendRequest('POST', '/logout', true, null);
+}
 document.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+
     var dropdowns = document.getElementsByClassName("dropdown-content");
     if (!event.target.matches('.dropbtn')) {
         for (var i = 0; i < dropdowns.length; i++) {

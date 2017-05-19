@@ -4,6 +4,10 @@
 
 var express = require("express");
 var session = require('express-session');
+var fileUpload = require('express-fileupload');
+var multer = require('multer');
+var upload = multer({dest: 'public/img/'});
+
 var validator = require('validator');
 var url_Validator = require('valid-url');
 var crypto = require("crypto-js");
@@ -26,22 +30,12 @@ banUpperCase("./public/", "");
 app.use(lower);
 app.use(ban)
 app.use("/admin.html", auth);
+app.use(fileUpload());
 var options = { setHeaders: deliverXHTML };
 app.use(express.static("public", options));
 
-// URL validation
-app.use(function(req, res, next){
-  console.log("Request Type : ", req.method);
-  var fullURL = getFullURL(req);
-  console.log("Full URL : ", fullURL);
-  if (url_Validator.isUri(fullURL)){
-    console.log("Valid URL");
-    next();
-  } else {
-    res.send("Invalid URL !");
-  }
-})
-
+// url validation
+app.use(urlValidation);
 // initialise session
 app.use(session({
   secret: 'ssshhhh',
@@ -62,6 +56,12 @@ var categoriesNames = {
     1: 'Programming',
     2: 'Digital Device',
     3: 'Software'
+};
+
+var categoryNumber = {
+  'Programming' : 1,
+  'Digital Device' : 2,
+  'Software' : 3
 };
 
 function createPost(post, tableRow) {
@@ -93,7 +93,10 @@ function urlValidation(req, res, next){
   }
 }
 
-app.get('/index.html', function(req, res) {
+
+app.get('/index.html', indexHandler);
+
+function indexHandler(req, res) {
       var sess = req.session;
       console.log("rep.session.id -> " + sess.id);
       console.log("req.sessionID -> " + req.sessionID);
@@ -132,7 +135,7 @@ app.get('/index.html', function(req, res) {
               session: sess
           });
       }
-});
+}
 
 app.get('/category.html/id=:id', function(req, res) {
     var posts = [];
@@ -206,6 +209,7 @@ app.get('/my_stories.html/userName=:name', function(req, res){
 
 // login
 app.post('/login', loginRequestHandler);
+
 function loginRequestHandler(req, res) {
     console.log("request received");
     var sess = req.session;
@@ -262,6 +266,7 @@ function loginRequestHandler(req, res) {
 
 // register
 app.post('/register', registerRequestHandler);
+
 function registerRequestHandler(req, res) {
     var sess = req.session;
     var body = "";
@@ -299,6 +304,57 @@ function registerRequestHandler(req, res) {
           res.send(JSON.stringify(response));
         }
     }
+}
+
+app.post('/logout', logoutHandler);
+
+function logoutHandler(req, res){
+  console.log("Logout Request Received");
+  var sess = req.session;
+  var response = {};
+  sess.userName = "";
+  sess.loggedIn = false;
+  response.logoutResponse = "Logged Out Already";
+  res.send(JSON.stringify(response));
+}
+
+
+app.post('/writePost', writePostHandler);
+
+function writePostHandler(req, res){
+  console.log(req.body);
+  console.log(req.files);
+  console.log("Request Received");
+  var userName = "Robert";
+  //var userName = req.session.userName; // get the username of the current user
+  // The write post page will only be accessed for users which have already loggedIn
+
+  var body = req.body;
+  req.files.Image.name = userName.toLowerCase() + '_' + body.Title + '_' + Date.now() + ".png";
+  console.log("Modified Image File Name", req.files.Image.name);
+  var imagePath = "/img/" + req.files.Image.name;
+  req.files.Image.mv("public" + imagePath, exceptionHandler);
+  function exceptionHandler(err){
+    console.log("Sth Wrong");
+  }
+
+  console.log(req.body.Title);
+  db.each("select * from user where username= ?", userName, handler);
+  function handler(err,row){
+    if (err) throw err;
+    // var userID = row.userID;
+    // messages.push(userID);
+    console.log("userID ", row.userID);
+    db.run("insert into posts (title, introduction, content, category, imagePath, userID) values (?, ?, ?, ?, ?, ?)", [body.Title, body.Intro, body.Article, categoryNumber[body.Category], imagePath,row.userID], insertHandler);
+
+    function insertHandler(err, row){
+      console.log("Insertion Finished");
+      if (err) throw err;
+    }
+  }
+      res.redirect('index.html');
+      // res.send("OK");
+  // }
 }
 
 // Make the URL lower case.
