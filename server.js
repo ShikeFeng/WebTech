@@ -161,7 +161,10 @@ app.get('/category.html/id=:id', function(req, res) {
 });
 
 app.get('/edit_post.html', function(req, res) {
-    res.render('pages/edit_post');
+    var sess = req.session;
+    res.render('pages/edit_post',{
+        session: sess
+    });
 });
 
 app.get('/read_post.html/id=:id', function(req, res) {
@@ -325,8 +328,8 @@ function writePostHandler(req, res){
   console.log(req.body);
   console.log(req.files);
   console.log("Request Received");
-  var userName = "Robert";
-  //var userName = req.session.userName; // get the username of the current user
+  //var userName = "Robert";
+  var userName = req.session.userName; // get the username of the current user
   // The write post page will only be accessed for users which have already loggedIn
 
   var body = req.body;
@@ -345,7 +348,7 @@ function writePostHandler(req, res){
     // var userID = row.userID;
     // messages.push(userID);
     console.log("userID ", row.userID);
-    db.run("insert into posts (title, introduction, content, category, imagePath, userID) values (?, ?, ?, ?, ?, ?)", [body.Title, body.Intro, body.Article, categoryNumber[body.Category], imagePath,row.userID], insertHandler);
+    db.run("insert into posts (title, introduction, content, category, imagePath, userID, userName) values (?, ?, ?, ?, ?, ?, ?)", [body.Title, body.Intro, body.Article, categoryNumber[body.Category], imagePath,row.userID, userName], insertHandler);
 
     function insertHandler(err, row){
       console.log("Insertion Finished");
