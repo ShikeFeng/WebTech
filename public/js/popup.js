@@ -1,7 +1,7 @@
 /**
  * Created by root on 22/02/17.
  */
-'use strict'
+'use strict';
 var popupModal = document.getElementsByClassName('popup-modal')[0];
 var signupLink = document.getElementById('signup');
 var loginLink = document.getElementById('login');
@@ -97,6 +97,7 @@ function sendRequest(method, section, syncValue, data){
         if (this.readyState == 4 && this.status == 200) {
             //var response = JSON.parse(this.responseText);
             //do something with response
+            location.reload();
         }
     }
 }

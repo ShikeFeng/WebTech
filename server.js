@@ -333,12 +333,17 @@ function writePostHandler(req, res){
   // The write post page will only be accessed for users which have already loggedIn
 
   var body = req.body;
-  req.files.Image.name = userName.toLowerCase() + '_' + body.Title + '_' + Date.now() + ".png";
-  console.log("Modified Image File Name", req.files.Image.name);
-  var imagePath = "/img/" + req.files.Image.name;
-  req.files.Image.mv("public" + imagePath, exceptionHandler);
-  function exceptionHandler(err){
-    console.log("Sth Wrong");
+  var imagePath = "/img/default.png";
+  console.log(req.files);
+  if (!req.files) {
+    console.log("There is an Image");
+    req.files.Image.name = userName.toLowerCase() + '_' + body.Title + '_' + Date.now() + ".png";
+    console.log("Modified Image File Name", req.files.Image.name);
+    var imagePath = "/img/" + req.files.Image.name;
+    req.files.Image.mv("public" + imagePath, exceptionHandler);
+    function exceptionHandler(err){
+      console.log("Sth Wrong");
+    }
   }
 
   console.log(req.body.Title);

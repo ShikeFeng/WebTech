@@ -33,10 +33,14 @@
         <div class="col-md-12">
             <form action="/writePost" id="postForm" method="post" encType="multipart/form-data">
                 <div class="container title-textarea">
-                    <textarea name="Title" rows="1" cols="30" type="text" placeholder="Title" form="postForm"></textarea>
+                    <textarea name="Title" rows="1" cols="50" maxlength="50" type="text" placeholder="Title" form="postForm" id= "titleText"></textarea> <br>
+                    (Maximum characters : 50) <br>
+                    You have <span class="charLeft" id="titleCharLeft">50</span> characters left
                 </div>
                 <div class="container article-textarea">
-                    <textarea name="Intro" rows="2" cols="30" placeholder="Short Introduction" form="postForm"></textarea>
+                    <textarea name="Intro" rows="2" cols="50" maxlength="100" placeholder="Short Introduction" form="postForm" id="introText"></textarea><br>
+                    (Maximum characters : 100) <br>
+                    You have <span class="charLeft" id="introCharLeft">100</span> characters left
                 </div>
                 <div class="container article-textarea">
                     <textarea name="Article" type="text" rows="10" cols="100" placeholder="Content" form="postForm"></textarea>
@@ -71,5 +75,6 @@
 <script src="../../js/validate.js"></script>
 <script src="../../js/navbar.js"></script>
 <script src="../../js/popup.js"></script>
+<script src="../../js/editpost.js"></script>
 </body>
 </html>
