@@ -337,7 +337,7 @@ body {
 
 .validationMessage {
   float: right;
-  font-size: 1em;
+  font-size: 0.8em;
   font-weight: bold;
 }
 .authentification-form input {

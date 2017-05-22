@@ -1,16 +1,16 @@
 <div class="popup-modal">
     <div class="authentification-form">
         <span class="close">&#10005;</span>
-        <form class="register-form" method="post" enctype="multipart/form-data" id="registerForm">
+        <form action="/register" class="register-form" method="post" enctype="multipart/form-data" id="registerForm">
             <span class="fieldName"> Username : </span>
             <span class="validationMessage" id="usernameValidate"></span>
-            <input type="text" id="usernameText" placeholder="username" class="register-username"/>
+            <input name="username" type="text" id="usernameText" placeholder="username" class="register-username"/>
             <span class="fieldName"> Password : </span>
             <span class="validationMessage" id="passwordValidate"></span>
-            <input type="password" id="passwordText"placeholder="password" class="register-password"/>
+            <input name="password" type="password" id="passwordText"placeholder="password" class="register-password"/>
             <span class="fieldName"> Email : </span>
             <span class="validationMessage" id="emailValidate"></span>
-            <input type="text" id="emailText" placeholder="email address" class="register-email"/>
+            <input name="Email" type="text" id="emailText" placeholder="email address" class="register-email"/>
             <span class="fieldName"> Header Image : </span>
             <input name="headImage" type="file" />
             <button type="submit" form="registerForm" value="Submit">create</button>

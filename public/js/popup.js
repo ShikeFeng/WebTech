@@ -77,6 +77,7 @@ function validate_email(){
     emailValidate.style.color = "green";
   }
 }
+
 if(signupLink != null){
     signupLink.onclick = function () {
         loginForm.style.display = 'none';
