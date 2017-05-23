@@ -28,36 +28,36 @@
 <!--Login popup-->
 <% include ../partials/auth-popup.ejs %>
 
-<div class="container-fluid edit-content">
-    <div class="row">
+<div class="container edit-content">
+    <div class="row postArea">
       <div class="col-md-12">
-          <span class="editorHeader"><img src="..<%= userImgPath %>"> <%= userName %></span>
+          <div class="editorHeader"><img src="..<%= userImgPath %>"> <%= userName %></div>
       </div>
         <div class="col-md-12">
             <form action="/writePost" id="postForm" method="post" encType="multipart/form-data">
 
-                <div class="container title-textarea">
+                <div class="title-textarea">
                     <h4>Title : </h4>
-                    <textarea name="Title" rows="1" cols="50" maxlength="50" type="text" placeholder="Title" form="postForm" id= "titleText" autofocus="autofocus" required="required"></textarea> <br>
-                    <span class="reminder">(Maximum characters : 50)</span> &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-                    <span class="reminder">You have <span class="charLeft" id="titleCharLeft">50</span> characters left</span>
+                    <textarea name="Title" rows="1" cols="100" maxlength="50" type="text" placeholder="Title" form="postForm" id= "titleText" autofocus="autofocus" required="required"></textarea> <br>
+                    <span class="reminder reminder-left">(Maximum characters : 50)</span>
+                    <span class="reminder reminder-right">You have <span class="charLeft" id="titleCharLeft">50</span> characters left</span>
                 </div>
 
-                <div class="container article-textarea">
+                <div class="article-textarea">
                     <h4>Introduction : </h4>
-                    <textarea name="Intro" rows="2" cols="50" maxlength="100" placeholder="Short Introduction" form="postForm" id="introText" required="required"></textarea><br>
-                    <span class="reminder">(Maximum characters : 100)</span> &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-                    <span class="reminder">You have <span class="charLeft" id="introCharLeft">100</span> characters left</span>
+                    <textarea name="Intro" rows="2" cols="100" maxlength="100" placeholder="Short Introduction" form="postForm" id="introText" required="required"></textarea><br>
+                    <span class="reminder reminder-left">(Maximum characters : 100)</span>
+                    <span class="reminder reminder-right">You have <span class="charLeft" id="introCharLeft">100</span> characters left</span>
                 </div>
 
-                <div class="container article-textarea">
-                    <h4>Main Contents</h4>
-                    <textarea name="Article" type="text" rows="10" cols="100" placeholder="Content" form="postForm" required="required"></textarea>
+                <div class="article-textarea">
+                    <h4>Main Contents : </h4>
+                    <textarea name="Article" type="text" rows="20" cols="100" placeholder="Content" form="postForm" required="required"></textarea>
                 </div>
 
-                <div class="container category-drop">
+                <div class="category-drop">
                     <h4>Category : </h4>
-                    <input name="Category", list="categories" placeholder="Choose a category" type="text" required="required"/>
+                    <input name="Category" list="categories" placeholder="Choose a category" type="text" required="required"/>
                     <datalist id="categories">
                         <option value="Programming"/>
                         <option value="Degital Device"/>
@@ -65,14 +65,12 @@
                     </datalist>
                 </div>
 
-                <div class="container">
+                <div class="uploadPostImg">
                     <h4>Upload an Image : </h4>
                     <input name="Image" class="button" type="file"/>
                 </div>
 
-                <div class="container">
-                    <input class="button submit-button" type="submit" value="Submit article"/>
-                </div>
+                <input class="button submit-button" type="submit" value="Submit article"/>
             </form>
         </div>
     </div>
