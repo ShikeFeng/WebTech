@@ -17,6 +17,9 @@ var usenameValidate = document.getElementById('usernameValidate');
 var passwordValidate = document.getElementById('passwordValidate');
 var emailValidate = document.getElementById('emailValidate');
 
+var usernameText_login = document.getElementById('usernameText_login');
+var passwordText_login = document.getElementById('passwordText_login');
+
 usernameText.addEventListener('keyup', validate_username);
 passwordText.addEventListener('keyup', validate_password);
 emailText.addEventListener('keyup', validate_email);
@@ -78,6 +81,41 @@ function validate_email(){
   }
 }
 
+function validateRegistration(){
+  if (usernameValidate.style.color != "green") {
+      alert("Invalid Username !");
+      return false;
+  }
+  else if (passwordValidate.style.color != "green") {
+      alert("Invalid Password Format !");
+      return false;
+  }
+  else if (emailValidate.style.color != "green") {
+      alert("Invalid Email !");
+      return false;
+  }
+  else {
+    return true;
+  }
+}
+
+function clearValidationMesages(){
+  var messages = document.getElementsByClassName("validationMessage");
+  for (var i = 0; i < messages.length; i++) {
+    messages[i].innerHTML = "";
+  }
+}
+// function validateLogin(){
+//   if (userNameValidation(usernameText_login) != 0) {
+//       alert("Invalid Username Format!");
+//       return false;
+//   }
+//   else if (passwordValidation(passwordText_login) != 0) {
+//       alert("Invalid Password Format !");
+//       return false;
+//   }
+// }
+
 if(signupLink != null){
     signupLink.onclick = function () {
         loginForm.style.display = 'none';
@@ -102,6 +140,9 @@ span.onclick = function () {
 window.onclick = function (event) {
     if(event.target == popupModal) {
         popupModal.style.display = 'none';
+        clearValidationMesages();
+        registerForm.reset();
+        loginForm.reset();
     }
 }
 
@@ -109,53 +150,32 @@ function login() {
     var userInfo = {};
     var userName = document.getElementsByClassName('user-name')[0].value;
     var password = document.getElementsByClassName('password')[0].value;
-    alert(userName);
-    alert(password);
+    // alert(userName);
+    // alert(password);
     userInfo['username'] = userName;
     userInfo['password'] = password;
 
     var validationResult = userInfoValidation(userInfo);
-    alert("Validated");
-    if (validationResult.username === "valid" && validationResult.password === "valid"){
-        var message = aesEncrypt_object(userInfo);
-        sendRequest('POST', '/login', true, message);
+    // alert("Validated");
+    if (validationResult.username != "valid"){
+      alert(validationResult.username);
+    }
+    else if (validationResult.password != "valid"){
+      alert(validationResult.password);
     }
     else {
-      alert('Username : ' + validationResult.username);
-      alert('Password : ' + validationResult.password);
+      var message = aesEncrypt_object(userInfo);
+      sendRequest('POST', '/login', true, message);
     }
+    // if (validationResult.username === "valid" && validationResult.password === "valid"){
+    //     var message = aesEncrypt_object(userInfo);
+    //     sendRequest('POST', '/login', true, message);
+    // }
+    // else {
+    //   alert('Username : ' + validationResult.username);
+    //   alert('Password : ' + validationResult.password);
+    // }
 }
-
-// function register(){
-//     // alert("Registration request");
-//     var userInfo = {}
-//     var userName = document.getElementsByClassName('register-username')[0].value;
-//     var password = document.getElementsByClassName('register-password')[0].value;
-//     var email = document.getElementsByClassName('register-email')[0].value;
-//
-//     // alert("Got the value");
-//     if (!validator.isEmail(email)){
-//         alert("Not Valid email");
-//     }
-//     else {
-//       alert("Valid Email");
-//       userInfo['username'] = userName;
-//       userInfo['password'] = password;
-//       var validationResult = userInfoValidation(userInfo);
-//       // alert("Validated");
-//       if (validationResult.username === "valid" && validationResult.password === "valid"){
-//           // Encrypt the object before sending it
-//           alert("Ready for encryption");
-//           var message = aesEncrypt_object(userInfo);
-//           alert(message);
-//           sendRequest('POST', '/register', true, message);
-//       }
-//       else {
-//         alert('Username : ' + validationResult.username);
-//         alert('Password : ' + validationResult.password);
-//       }
-//     }
-// }
 
 function sendRequest(method, section, syncValue, data){
     var q = new XMLHttpRequest();

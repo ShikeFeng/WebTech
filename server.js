@@ -312,7 +312,7 @@ function registerRequestHandler(req, res){
 }
 
 
-app.post('/logout', logoutHandler);
+app.get('/logout', logoutHandler);
 
 function logoutHandler(req, res){
   console.log("Logout Request Received");
@@ -321,8 +321,9 @@ function logoutHandler(req, res){
   sess.userName = "";
   sess.imageUrl = "";
   sess.loggedIn = false;
-  response.logoutResponse = "Logged Out Already";
-  res.send(JSON.stringify(response));
+  //response.logoutResponse = "Logged Out Already";
+  //res.send(JSON.stringify(response));
+  res.redirect("/index.html");
 }
 
 

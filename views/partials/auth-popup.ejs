@@ -1,7 +1,7 @@
 <div class="popup-modal">
     <div class="authentification-form">
         <span class="close">&#10005;</span>
-        <form action="/register" class="register-form" method="post" enctype="multipart/form-data" id="registerForm">
+        <form action="/register" onsubmit="return validateRegistration()" class="register-form" method="post" enctype="multipart/form-data" id="registerForm">
             <span class="fieldName"> Username : </span>
             <span class="validationMessage" id="usernameValidate"></span>
             <input name="username" type="text" id="usernameText" placeholder="username" class="register-username"/>
@@ -19,9 +19,9 @@
         </form>
         <form class="login-form">
             <span class="fieldName"> Username : </span>
-            <input type="text" placeholder="username" class="user-name"/>
+            <input type="text" placeholder="username" class="user-name" id="usernameText_login"/>
             <span class="fieldName"> Password : </span>
-            <input type="password" placeholder="password" class="password"/>
+            <input type="password" placeholder="password" class="password" id="passwordText_login"/>
             <button onclick="login()">login</button>
             <p class="message">Not registered? <a href="#">Create an account</a></p>
         </form>
