@@ -29,6 +29,28 @@ body {
     color: deepskyblue;
 }
 
+.reminder {
+  font-size: 0.8em;
+  font-family: "Montserrat", "sans-serif";
+
+}
+
+.title-textarea, .article-textarea {
+  margin-bottom: 1.5em;
+}
 textarea{
-    border: none;
+  border: 3px solid #cccccc;
+  padding: 0.5em;
+  font-family: "Montserrat", "sans-serif";
+  font-size: 1em ;
+}
+
+.editorHeader {
+  font-weight: bold;
+  font-size: 1.5em;
+}
+.editorHeader img{
+  width: 2em;
+  height: 2em;
+  border-radius: 50%;
 }
