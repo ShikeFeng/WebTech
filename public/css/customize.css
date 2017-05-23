@@ -145,6 +145,18 @@ body {
     background: orange;
 }
 
+#category4:hover:before{
+    background: red;
+}
+
+#category5:hover:before{
+    background: green;
+}
+
+#category6:hover:before{
+    background: deeppink;
+}
+
 .icon-bar{
     background-color: black !important;
 }

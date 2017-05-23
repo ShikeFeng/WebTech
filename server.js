@@ -53,9 +53,12 @@ app.set('view engine', 'ejs');
 var categories = [1,2,3];   //Hardcoded for the current category types
 var postsPerCategory = [4, 4, 6];    //Hardcoded for the current layout
 var categoriesNames = {
-    1: 'Programming',
-    2: 'Digital Device',
-    3: 'Software'
+    1: 'Crypto',
+    2: 'Machine Intelligence',
+    3: 'Algorithms',
+    4: 'Enterprise',
+    5: 'Research',
+    6: 'Others'
 };
 
 var categoryNumber = {
