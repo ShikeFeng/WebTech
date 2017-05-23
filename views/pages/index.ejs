@@ -30,7 +30,7 @@
 
 	<div class="container content">
         <%  for(var category = 0; category < categoriesPosts.length; category++) { %>
-            <%if(category == 0) { %>
+            <%if(category == 0 || category == 3) { %>
                 <!--The first section-->
                 <section class="container-fluid module model-1" id="programming">
                     <h2 class="topic"><a  href="category.html/id=<%=categoriesPosts[category][0].categoryId%>"><%=categoriesPosts[category][0].categoryName%> ></a></h2>
@@ -92,7 +92,7 @@
                         </div>
                     </div>
                 </section>
-            <%} else if(category == 1){%>
+            <%} else if(category == 1 || category == 4){%>
                 <!--The Second section-->
                 <section class="container-fluid module model-2" id="digital">
                     <h2 class="topic"><a href="category.html/id=<%=categoriesPosts[category][0].categoryId%>"><%=categoriesPosts[category][0].categoryName%> ></a></h2>
@@ -133,7 +133,7 @@
                         </a>
                     </div>
                 </section>
-            <%} else {%>
+            <%} else if(category == 2 || category == 5) {%>
                 <!--The third section-->
                 <section class="container-fluid" id="">
                     <h2 class="topic"><a href="category.html/id=<%=categoriesPosts[category][0].categoryId%>"><%=categoriesPosts[category][0].categoryName%> ></a></h2>
