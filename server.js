@@ -167,6 +167,13 @@ app.get('/edit_post.html', function(req, res) {
     });
 });
 
+app.get('/profile.html', function(req, res) {
+  var sess = req.session;
+  res.render('pages/profile', {
+    session: sess
+  });
+});
+
 app.get('/read_post.html/id=:id', function(req, res) {
     var content = {};
     var postId = req.params.id;
@@ -253,6 +260,8 @@ function loginRequestHandler(req, res) {
               sess.userName = body.username;
               sess.loggedIn = true;
               sess.imageUrl = row.imgURL;
+              sess.userEmail = row.emailAddress;
+              sess.password = row.password;
               response.loggedIn = true;
             }
             else {
@@ -294,15 +303,17 @@ function registerRequestHandler(req, res){
       }
 
       // Insert into the database
-      db.run("insert into user (username, password, imgURL) values (?, ?, ?)", [body.username, body.password, imagePath], insertHandler);
+      db.run("insert into user (username, password, imgURL, emailAddress) values (?, ?, ?, ?)", [body.username, body.password, imagePath, body.Email.toLowerCase()], insertHandler);
 
-      function insertHandler(err) {
+      function insertHandler(err){
         if (err) throw err;
       }
 
       sess.userName = body.username;
       sess.loggedIn = true;
+      sess.userEmail = body.Email.toLowerCase();
       sess.imageUrl = imagePath;
+      sess.password = body.password;
       res.redirect('/index.html');
     }
     else {
@@ -320,6 +331,8 @@ function logoutHandler(req, res){
   var response = {};
   sess.userName = "";
   sess.imageUrl = "";
+  sess.userEmail = "";
+  sess.password = "";
   sess.loggedIn = false;
   //response.logoutResponse = "Logged Out Already";
   //res.send(JSON.stringify(response));
