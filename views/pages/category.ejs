@@ -60,7 +60,7 @@
                 <% } %>
 			</div>
 			<div class="col-md-5">
-				<div class="most-recent-stories container">
+				<div class="most-recent-stories container" style="display: none">
 					<h3>Most recent stories</h3>
 					<div class="container recent-story">
 						<div class="most-recent-stories-user-icon">
@@ -75,6 +75,23 @@
 							<i>John Smith</i>
 						</div>
 					</div>
+				</div>
+				<div style="position: absolute;">
+                    <% if(categoryId == 0) {%>
+						<img src="../../svg/blog-post.svg"/>
+					<% } else if(categoryId == 1) {%>
+                    	<img src="../../img/colored-key.png"/>
+					<% } else if(categoryId == 2) { %>
+						<img src="../../svg/brain-animated.svg"/>
+                    <% } else if(categoryId == 3) { %>
+						<img src="../../svg/graph.svg"/>
+                    <% } else if(categoryId == 4) { %>
+						<img src="../../svg/enterprise-resized.svg"/>
+                    <% } else if(categoryId == 5) { %>
+						<img src="../../img/research-shadow.png"/>
+                    <% } else { %>
+						<img src="../../svg/raspberry-animated.svg"/>
+					<% } %>
 				</div>
 			</div>
 		</div>
@@ -91,5 +108,6 @@
 	<script src="../../js/validate.js"></script>
 	<script src="../../js/navbar.js"></script>
 	<script src="../../js/popup.js"></script>
+	<script src="../../js/recent_stories.js"></script>
 </body>
 </html>
