@@ -11,6 +11,7 @@
     <link href="../../css/bootstrap.min.css" rel="stylesheet"></link>
     <!-- Custom CSS -->
     <link href="../../css/customize.css" rel="stylesheet"></link>
+    <link href="../../css/edit-post.css" rel="stylesheet"></link>
     <link href="../../css/profile.css" rel="stylesheet"></link>
 </head>
 <body>
@@ -41,26 +42,34 @@
       <div class="row">
         <div class="col-md-6 infoContainer" id="textInfoContainer">
           <div class="profileInfo" >
+            <h3>UserInfo</h3>
+            <hr />
             <div class="textInfo">
               <span class="fieldName">Username : </span>
               <span class="validationMessage" id="validationMessage_username"></span>
               <br />
-              <input type="text" name="username_profile" id="profile_username" required="required" value="<%= userName %>" />
+              <div class="fields">
+                <input type="text" name="username_profile" id="profile_username" required="required" value="<%= userName %>" />
+              </div>
             </div>
 
             <div class="textInfo">
               <span class="fieldName">Password : </span>
               <span class="validationMessage" id="validationMessage_password"></span>
               <br />
-              <input type="password" name="password_profile" id="profile_password" value="<%= userPassword %>" required="required"/>
-              <span id="password_show_button"><i class="fa fa-eye-slash" aria-hidden="true"></i></span>
+              <div class="fields">
+                <input type="password" name="password_profile" id="profile_password" value="<%= userPassword %>" required="required"/>
+                <span id="password_show_button"><i class="fa fa-eye-slash" aria-hidden="true"></i></span>
+              </div>
             </div>
 
             <div class="textInfo">
               <span class="fieldName">Email : </span>
               <span class="validationMessage" id="validationMessage_email"></span>
               <br />
-              <input id="profile_email" type="text" name="email_profile" required="required" value="<%= userEmail %>" />
+              <div class="fields">
+                <input id="profile_email" type="text" name="email_profile" required="required" value="<%= userEmail %>" />
+              </div>
             </div>
 
           </div>
@@ -69,13 +78,14 @@
 
         <div class="col-md-6 infoContainer" id="imageInfoContainer">
           <div class="profileInfo" id="imageInfo">
-            <h4>Profile Picture</h4>
+            <h3>Profile Picture</h3>
+            <hr />
             <img id="profile_image" alt="<%=userName %>" src="..<%=userImgPath %>">
             <input style="margin: 1.5em 1.5em" type="file" name="image_profile"/>
           </div>
         </div>
       </div>
-      <button type="submit" form="profileUpdate" value="Submit">Update</button>
+      <button class="button submit-button" id="profileButton" type="submit" form="profileUpdate" value="Submit">Update</button>
     </form>
 
 </div>

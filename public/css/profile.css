@@ -36,7 +36,7 @@ hr {
 
 .profileInfo {
     padding: 1em 1em;
-    width: 50%;
+    width: 80%;
     margin: 0 auto;
 }
 
@@ -47,10 +47,28 @@ hr {
 #imageInfoTitle {
 text-align: center;
 }
-.textInfo {
-  margin: 1em 1em;
+
+.profileInfo h3 {
+  text-align: center;
 }
 
-input{
+
+h3 {
+  font-weight: bold;
+}
+.textInfo {
+  width: 50%;
+  margin: 0 auto;
+}
+
+.fields{
   margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+#profileButton {
+  text-align: center;
+  display: block;
+  margin: 0 auto;
+  margin-top: 2em;
 }
