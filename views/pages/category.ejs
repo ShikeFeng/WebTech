@@ -76,12 +76,22 @@
 						</div>
 					</div>
 				</div>
-				<div style="position: relative;">
-                    <% if(categoryId == 1) {%>
+				<div style="position: absolute;">
+                    <% if(categoryId == 0) {%>
+						<img src="../../svg/blog-post.svg"/>
+					<% } else if(categoryId == 1) {%>
                     	<img src="../../img/colored-key.png"/>
 					<% } else if(categoryId == 2) { %>
 						<img src="../../svg/brain-animated.svg"/>
-                    <% } %>
+                    <% } else if(categoryId == 3) { %>
+						<img src="../../svg/graph.svg"/>
+                    <% } else if(categoryId == 4) { %>
+						<img src="../../svg/enterprise-resized.svg"/>
+                    <% } else if(categoryId == 5) { %>
+						<img src="../../img/research-shadow.png"/>
+                    <% } else { %>
+						<img src="../../svg/raspberry-animated.svg"/>
+					<% } %>
 				</div>
 			</div>
 		</div>

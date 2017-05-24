@@ -195,6 +195,7 @@ app.get('/my_stories.html/userName=:name', function(req, res){
     var posts = [];
     var sess = req.session;
     var userName = req.params.name;
+    var categoryId = 0;
     userName = userName.charAt(0).toUpperCase() + userName.slice(1);
 
     db.all('select * from posts where userName= ?', userName, handler);
@@ -209,7 +210,8 @@ app.get('/my_stories.html/userName=:name', function(req, res){
 
        res.render('pages/category', {
            posts: posts,
-           session: sess
+           session: sess,
+           categoryId: categoryId
        });
    }
 });
