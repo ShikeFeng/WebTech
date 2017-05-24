@@ -1,0 +1,22 @@
+.profile {
+  margin-top: 65px;
+  text-align: center;
+}
+
+input:focus {
+  outline: none !important;
+  border:3px solid lightblue;
+  box-shadow: 0 0 10px #719ECE;
+  background: #f4f7f8;
+}
+
+.form-group {
+  width: 50%;
+  margin: 0 auto;
+}
+
+#profile_image {
+  width: 100%;
+  margin: 0 auto;
+  margin: 1.5em 1.5em;
+}

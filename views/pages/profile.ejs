@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-GB" xml:lang="en-GB">
+<head>
+    <title>Profile</title>
+    <meta charset="utf-8"></meta>
+    <meta name="viewpoint" content="width=device-width, initial-scale=1"></meta>
+    <meta name="description" content="This is the profile page; users can check and modify their profiles in this page"></meta>
+    <meta name="author" content="Shike and Silviu"></meta>
+
+    <!-- Bootstrap CSS -->
+    <link href="../../css/bootstrap.min.css" rel="stylesheet"></link>
+    <!-- Custom CSS -->
+    <link href="../../css/customize.css" rel="stylesheet"></link>
+    <link href="../../css/profile.css" rel="stylesheet"></link>
+</head>
+<body>
+
+<header>
+    <% if(session.loggedIn) {%>
+        <% var userName = session.userName%>
+        <% var userImgPath = session.imageUrl%>
+        <% var userEmail = session.userEmail%>
+        <% var userPassword = session.password%>
+
+        <% include ../partials/header1 %>
+    <% } else { %>
+        <% include ../partials/header %>
+    <% } %>
+</header>
+
+<!--Login popup-->
+<% include ../partials/auth-popup.ejs %>
+
+<div class="container profile">
+    <h2>Profile</h2>
+    <form action="/updateProfile" method="post" onsubmit="return validateUpdate()" enctype="multipart/form-data" id="profileUpdate">
+      <div class="row">
+        <div class="col-md-6">
+
+          <dl class="form-group">
+            <dt>
+              <h4>Username</h4>
+            </dt>
+            <dd>
+              <input type="text" name="username_profile" id="profile_username" required="required" value="<%= userName %>" />
+            </dd>
+          </dl>
+
+          <dl class="form-group">
+            <dt>
+              <h4>Password</h4>
+            </dt>
+            <dd>
+              <input type="password" name="password_profile" id="profile_password" value="<%= userPassword %>" required="required"/>
+              <span id="password_show_button"><i class="fa fa-eye-slash" aria-hidden="true"></i></span>
+            </dd>
+          </dl>
+
+          <dl class="form-group">
+            <dt>
+              <h4>Email</h4>
+            </dt>
+            <dd>
+              <input id="profile_email" type="text" name="email_profile" required="required" value="<%= userEmail %>" />
+            </dd>
+          </dl>
+
+        </div>
+
+        <div class="col-md-6">
+          <dl class="form-group">
+            <dt>
+              <h4>Profile Picture</h4>
+            </dt>
+            <dd>
+              <img id="profile_image" alt="<%=userName %>" src="..<%=userImgPath %>">
+              <input type="file" name="image_profile"/>
+            </dd>
+          </dl>
+        </div>
+      </div>
+      <button type="submit" form="profileUpdate" value="Submit">Update</button>
+    </form>
+
+</div>
+
+<!--	JavaScrip files included-->
+<!-- JQuery -->
+<script src="../../js/jquery-3.1.1.js"></script>
+<!-- Bootstrap -->
+<script src="../../js/bootstrap.min.js"></script>
+<!-- AES Encrption -->
+<script src="../../js/crypto-js/crypto-js.js"></script>
+<!-- Custom JS-->
+<script src="../../js/validate.js"></script>
+<script src="../../js/navbar.js"></script>
+<script src="../../js/popup.js"></script>
+<script src="../../js/profile.js"></script>
+
+</script>
+
+<script src="https://use.fontawesome.com/fd9dba5260.js"></script>
+</body>
+</html>

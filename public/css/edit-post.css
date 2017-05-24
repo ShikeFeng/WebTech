@@ -4,7 +4,7 @@ body {
 
 .edit-content{
     align-self: center;
-    margin-top: 10%;
+    margin-top: 65px;
 }
 
 .button{
@@ -23,12 +23,67 @@ body {
     transition-duration: 0.2s;
     font-weight: bold;
     padding: 1% 1% 1% 1%;
+    width: 10em;
+    text-align: center;
+    margin-bottom: 1em;
 }
 
 .submit-button:hover{
     color: deepskyblue;
 }
 
+.reminder {
+  font-size: 0.8em;
+  font-family: "Montserrat", "sans-serif";
+  position: absolute;
+  width: 100%;
+  display: block;
+}
+
+form * {
+  text-align: initial;
+  width: 100%;
+}
+
+.reminder-left {
+  text-align: left;
+}
+
+.reminder-right {
+  text-align: right;
+}
+
+.title-textarea, .article-textarea, .uploadPostImg, .category-drop{
+  margin-bottom: 3em;
+  text-align: center;
+  position: relative;
+}
+
 textarea{
-    border: none;
+  border: 3px solid #cccccc;
+  padding: 0.5em;
+  font-family: "Montserrat", "sans-serif";
+  font-size: 1em ;
+}
+
+textarea:focus{
+    outline: none !important;
+    border:3px solid lightblue;
+    box-shadow: 0 0 10px #719ECE;
+    background: #f4f7f8;
+}
+
+.category-drop {
+  width: 15em;
+}
+.editorHeader {
+  font-weight: bold;
+  font-size: 1.5em;
+  text-align: center;
+}
+
+.editorHeader img{
+  width: 2em;
+  height: 2em;
+  border-radius: 50%;
 }

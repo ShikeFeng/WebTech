@@ -171,6 +171,13 @@ app.get('/edit_post.html', function(req, res) {
     });
 });
 
+app.get('/profile.html', function(req, res) {
+  var sess = req.session;
+  res.render('pages/profile', {
+    session: sess
+  });
+});
+
 app.get('/read_post.html/id=:id', function(req, res) {
     var content = {};
     var postId = req.params.id;
@@ -259,6 +266,8 @@ function loginRequestHandler(req, res) {
               sess.userName = body.username;
               sess.loggedIn = true;
               sess.imageUrl = row.imgURL;
+              sess.userEmail = row.emailAddress;
+              sess.password = row.password;
               response.loggedIn = true;
             }
             else {
@@ -276,55 +285,64 @@ function loginRequestHandler(req, res) {
 // register
 app.post('/register', registerRequestHandler);
 
-function registerRequestHandler(req, res) {
-    var sess = req.session;
-    var body = "";
-    console.log("Register Request Received");
-    req.on('data', add);
-    req.on('end', end);
-    var response = {};
-    function add(chunk){
-        body = body + chunk.toString();
-        console.log('Undecrypted Message : ', body);
-        body = crypto.AES.decrypt(body, 'secret key 123').toString(crypto.enc.Utf8);
-        console.log("Decrypted Message : ", body);
-    }
+function registerRequestHandler(req, res){
+  var sess = req.session;
 
-    function end(){
-        body = JSON.parse(body);
-        db.get("select * from user where username= ?", body.username, handler);
+  console.log(req.body);
+  console.log(req.files);
+  console.log("Request Received");
+  var body = req.body;
 
-        function handler(err, row) {
+  db.get("select * from user where username= ?", body.username, handler);
+  function handler(err, row) {
+    if (err) throw err;
+    if (row === undefined) {
+      var imagePath = "/img/default.png";
+      if (!isEmpty(req.files)){
+        req.files.headImage.name = req.body.username.toLowerCase() + '_header.png';
+        console.log("Modified Image File Name", req.files.headImage.name);
+        imagePath = "/img/" + req.files.headImage.name;
+        req.files.headImage.mv("public" + imagePath, fileMove);
+        function fileMove(err){
           if (err) throw err;
-          if (row === undefined) {
-            db.run("insert into user (username, password) values (?, ?)", [body.username, body.password], insertHandler);
-
-            function insertHandler(err){
-              if (err) throw err;
-            }
-            sess.userName = body.username;
-            sess.loggedIn = true;
-            response.registerResponse = "Successfully Registered";
-          }
-          else {
-            response.registerResponse = "Username Already Used";
-            sess.loggedIn = false;
-          }
-          res.send(JSON.stringify(response));
         }
+      }
+
+      // Insert into the database
+      db.run("insert into user (username, password, imgURL, emailAddress) values (?, ?, ?, ?)", [body.username, body.password, imagePath, body.Email.toLowerCase()], insertHandler);
+
+      function insertHandler(err){
+        if (err) throw err;
+      }
+
+      sess.userName = body.username;
+      sess.loggedIn = true;
+      sess.userEmail = body.Email.toLowerCase();
+      sess.imageUrl = imagePath;
+      sess.password = body.password;
+      res.redirect('/index.html');
     }
+    else {
+      res.send("Username Already in Use");
+    }
+  }
 }
 
-app.post('/logout', logoutHandler);
+
+app.get('/logout', logoutHandler);
 
 function logoutHandler(req, res){
   console.log("Logout Request Received");
   var sess = req.session;
   var response = {};
   sess.userName = "";
+  sess.imageUrl = "";
+  sess.userEmail = "";
+  sess.password = "";
   sess.loggedIn = false;
-  response.logoutResponse = "Logged Out Already";
-  res.send(JSON.stringify(response));
+  //response.logoutResponse = "Logged Out Already";
+  //res.send(JSON.stringify(response));
+  res.redirect("/index.html");
 }
 
 
@@ -341,17 +359,16 @@ function writePostHandler(req, res){
   var body = req.body;
   var imagePath = "/img/default.png";
   console.log(req.files);
-  if (!req.files) {
+  if (!isEmpty(req.files)){
     console.log("There is an Image");
     req.files.Image.name = userName.toLowerCase() + '_' + body.Title + '_' + Date.now() + ".png";
     console.log("Modified Image File Name", req.files.Image.name);
-    var imagePath = "/img/" + req.files.Image.name;
+    imagePath = "/img/" + req.files.Image.name;
     req.files.Image.mv("public" + imagePath, exceptionHandler);
     function exceptionHandler(err){
       console.log("Sth Wrong");
     }
   }
-
   console.log(req.body.Title);
   db.each("select * from user where username= ?", userName, handler);
   function handler(err,row){
@@ -369,6 +386,97 @@ function writePostHandler(req, res){
       res.redirect('index.html');
       // res.send("OK");
   // }
+}
+
+app.post('/updateProfile', profileUpdateHandler);
+
+function profileUpdateHandler(req,res){
+  console.log(req.body);
+  var sess = req.session;
+  var originalUserName = sess.userName;
+
+  if (isEmpty(req.files)) {
+    console.log("No uploaded files");
+    db.each("select * from user where username = ?", originalUserName, withoutImage);
+    function withoutImage(err, row){
+      if (err) throw err;
+      if (row != undefined){
+        db.run("update user set username = ?, password = ?, emailAddress = ? where userID = ?", [req.body.username_profile, req.body.password_profile, req.body.email_profile, row.userID], updateHandler);
+
+        function updateHandler(err, row){
+          if (err) throw err;
+          sess.userName = req.body.username_profile;
+          sess.userEmail = req.body.email_profile;
+          sess.userPassword = req.body.password_profile;
+          console.log('Updated');
+          res.redirect('index.html');
+        }
+      }
+    }
+  }
+  else { // The case where the header image changed
+    console.log("There is a new header image file");
+    db.each("select * from user where username = ?", originalUserName, withImage);
+    function withImage(err, row){
+      if (err) throw err;
+      if (row != undefined) {
+        var imagePath = 'public' + row.imgURL;
+        req.files.image_profile.name = req.body.username_profile.toLowerCase() + '_header.png';
+        var newImgPath = '/img/' + req.files.image_profile.name;
+        fs.unlink(imagePath, unlinkHander);
+
+        function unlinkHander(err) {
+          if (err) throw err;
+          console.log("unlinked original File");
+          req.files.image_profile.mv('public' + newImgPath, afterSaveImage);
+
+          function afterSaveImage(err){
+            db.run("update user set username = ?, password = ?, emailAddress = ? , imgURL = ? where userID = ?", [req.body.username_profile, req.body.password_profile, req.body.email_profile, newImgPath, row.userID], updateHandler);
+
+            function updateHandler(err, row){
+              if (err) throw err;
+              sess.userName = req.body.username_profile;
+              sess.userEmail = req.body.email_profile;
+              sess.userPassword = req.body.password_profile;
+              console.log('Updated');
+              res.redirect('index.html');
+            }
+          }
+        }
+      }
+    }
+    // req.files.profile_image.name = req.body.username.toLowerCase() + '_header.png';
+    // console.log("Modified Image File Name", req.files.headImage.name);
+    // imagePath = "/img/" + req.files.headImage.name;
+  }
+  console.log(req.files);
+  console.log("Request Received");
+  //res.redirect('index.html');
+}
+
+function isEmpty(obj) {
+
+    // null and undefined are "empty"
+    if (obj == null) return true;
+
+    // Assume if it has a length property with a non-zero value
+    // that that property is correct.
+    if (obj.length > 0)    return false;
+    if (obj.length === 0)  return true;
+
+    // If it isn't an object at this point
+    // it is empty, but it can't be anything *but* empty
+    // Is it empty?  Depends on your application.
+    if (typeof obj !== "object") return true;
+
+    // Otherwise, does it have any properties of its own?
+    // Note that this doesn't handle
+    // toString and valueOf enumeration bugs in IE < 9
+    for (var key in obj) {
+        if (hasOwnProperty.call(obj, key)) return false;
+    }
+
+    return true;
 }
 
 // Make the URL lower case.
