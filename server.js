@@ -158,7 +158,8 @@ app.get('/category.html/id=:id', function(req, res) {
         }
         res.render('pages/category', {
             posts: posts,
-            session: sess
+            session: sess,
+            categoryId: categoryId
         });
     }
 });

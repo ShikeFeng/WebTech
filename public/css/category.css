@@ -85,6 +85,7 @@ svg {
 
 .most-recent-stories{
     margin-top: 6%;
+    position: fixed;
 }
 
 .most-recent-stories-author{
