@@ -382,6 +382,42 @@ function writePostHandler(req, res){
   // }
 }
 
+app.post('/updateProfile', profileUpdateHandler);
+
+function profileUpdateHandler(req,res){
+  console.log(req.body);
+  var sess = req.session;
+  var originalUserName = sess.userName;
+
+  if (isEmpty(req.files)) {
+    console.log("No uploaded files");
+    db.each("select * from user where username = ?", originalUserName, withoutImage);
+    function withoutImage(err, row){
+      if (err) throw err;
+      if (row != undefined){
+        db.run("update user set username = ?, password = ?, emailAddress = ? where userID = ?", [req.body.username_profile, req.body.password_profile, req.body.email_profile, row.userID], updateHandler);
+
+        function updateHandler(err, row){
+          if (err) throw err
+          sess.userName = req.body.username_profile;
+          sess.userEmail = req.body.email_profile;
+          sess.userPassword = req.body.password_profile;
+          console.log('Updated');
+          res.redirect('index.html');
+        }
+      }
+    }
+  }
+  else { // The case where the header image changed
+    // req.files.profile_image.name = req.body.username.toLowerCase() + '_header.png';
+    // console.log("Modified Image File Name", req.files.headImage.name);
+    // imagePath = "/img/" + req.files.headImage.name;
+  }
+  console.log(req.files);
+  console.log("Request Received");
+  //res.redirect('index.html');
+}
+
 function isEmpty(obj) {
 
     // null and undefined are "empty"

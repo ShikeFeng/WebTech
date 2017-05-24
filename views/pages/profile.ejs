@@ -33,35 +33,40 @@
 
 <div class="container profile">
     <h2>Profile</h2>
-    <form action="/updateProfile" method="post" onsubmit="return valudateUpdate()" enctype="multipart/form-data" id="profileUpdate">
+    <form action="/updateProfile" method="post" onsubmit="return validateUpdate()" enctype="multipart/form-data" id="profileUpdate">
       <div class="row">
         <div class="col-md-6">
+
           <dl class="form-group">
             <dt>
               <h4>Username</h4>
             </dt>
             <dd>
-              <input type="text" name="username_profile" id="profile_username" value="<%= userName %>" />
+              <input type="text" name="username_profile" id="profile_username" required="required" value="<%= userName %>" />
             </dd>
           </dl>
+
           <dl class="form-group">
             <dt>
               <h4>Password</h4>
             </dt>
             <dd>
-              <input type="password" name="password_profile" id="profile_password" value="<%= userPassword %>" />
+              <input type="password" name="password_profile" id="profile_password" value="<%= userPassword %>" required="required"/>
               <span id="password_show_button"><i class="fa fa-eye-slash" aria-hidden="true"></i></span>
             </dd>
           </dl>
+
           <dl class="form-group">
             <dt>
               <h4>Email</h4>
             </dt>
             <dd>
-              <input id="profile_image" type="text" name="email_profile" size="30" value="<%= userEmail %>" />
+              <input id="profile_image" type="text" name="email_profile" required="required" value="<%= userEmail %>" />
             </dd>
           </dl>
+
         </div>
+
         <div class="col-md-6">
           <dl class="form-group">
             <dt>
