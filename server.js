@@ -147,6 +147,7 @@ function indexHandler(req, res) {
                     categoriesPosts[category][post].userImgPath = row.imgURL;
                     categoriesPosts[category][post].userName = row.username;
                     callbackCount++;
+                    console.log("session image path: " + sess.imageUrl);
                     if(callbackCount == noOfPosts) {
                         res.render('pages/index', {
                             categoriesPosts: categoriesPosts,
