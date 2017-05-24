@@ -32,51 +32,46 @@
 <% include ../partials/auth-popup.ejs %>
 
 <div class="container profile">
-    <h2>Profile</h2>
+    <h2 id="PageTitle">Public Profile</h2>
+
+    <hr />
+
     <form action="/updateProfile" method="post" onsubmit="return validateUpdate()" enctype="multipart/form-data" id="profileUpdate">
       <div class="row">
-        <div class="col-md-6">
-
-          <dl class="form-group">
-            <dt>
-              <h4>Username</h4>
-            </dt>
-            <dd>
+        <div class="col-md-6 infoContainer" id="textInfoContainer">
+          <div class="profileInfo" >
+            <div class="textInfo">
+              <span class="fieldName">Username : </span>
+              <span class="validationMessage" id="validationMessage_username"></span>
+              <br />
               <input type="text" name="username_profile" id="profile_username" required="required" value="<%= userName %>" />
-            </dd>
-          </dl>
+            </div>
 
-          <dl class="form-group">
-            <dt>
-              <h4>Password</h4>
-            </dt>
-            <dd>
+            <div class="textInfo">
+              <span class="fieldName">Password : </span>
+              <span class="validationMessage" id="validationMessage_password"></span>
+              <br />
               <input type="password" name="password_profile" id="profile_password" value="<%= userPassword %>" required="required"/>
               <span id="password_show_button"><i class="fa fa-eye-slash" aria-hidden="true"></i></span>
-            </dd>
-          </dl>
+            </div>
 
-          <dl class="form-group">
-            <dt>
-              <h4>Email</h4>
-            </dt>
-            <dd>
+            <div class="textInfo">
+              <span class="fieldName">Email : </span>
+              <span class="validationMessage" id="validationMessage_email"></span>
+              <br />
               <input id="profile_email" type="text" name="email_profile" required="required" value="<%= userEmail %>" />
-            </dd>
-          </dl>
+            </div>
+
+          </div>
 
         </div>
 
-        <div class="col-md-6">
-          <dl class="form-group">
-            <dt>
-              <h4>Profile Picture</h4>
-            </dt>
-            <dd>
-              <img id="profile_image" alt="<%=userName %>" src="..<%=userImgPath %>">
-              <input type="file" name="image_profile"/>
-            </dd>
-          </dl>
+        <div class="col-md-6 infoContainer" id="imageInfoContainer">
+          <div class="profileInfo" id="imageInfo">
+            <h4>Profile Picture</h4>
+            <img id="profile_image" alt="<%=userName %>" src="..<%=userImgPath %>">
+            <input style="margin: 1.5em 1.5em" type="file" name="image_profile"/>
+          </div>
         </div>
       </div>
       <button type="submit" form="profileUpdate" value="Submit">Update</button>
@@ -89,6 +84,8 @@
 <script src="../../js/jquery-3.1.1.js"></script>
 <!-- Bootstrap -->
 <script src="../../js/bootstrap.min.js"></script>
+<!-- Validator -->
+<script src="../../js/validator.min.js"></script>
 <!-- AES Encrption -->
 <script src="../../js/crypto-js/crypto-js.js"></script>
 <!-- Custom JS-->

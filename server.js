@@ -62,9 +62,12 @@ var categoriesNames = {
 };
 
 var categoryNumber = {
-  'Programming' : 1,
-  'Digital Device' : 2,
-  'Software' : 3
+  'Crypto' : 1,
+  'Machine Intelligence' : 2,
+  'Algorithms' : 3,
+  'Enterprise' : 4,
+  'Research' : 5,
+  'Others' : 6
 };
 
 function createPost(post, tableRow) {
@@ -438,6 +441,7 @@ function profileUpdateHandler(req,res){
               sess.userName = req.body.username_profile;
               sess.userEmail = req.body.email_profile;
               sess.userPassword = req.body.password_profile;
+              sess.imageUrl = newImgPath;
               console.log('Updated');
               res.redirect('index.html');
             }
