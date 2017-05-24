@@ -77,7 +77,6 @@ function createPost(post, tableRow) {
     post['imageUrl'] = tableRow.imagePath;
     post['categoryId'] = tableRow.category;
     post['categoryName'] = categoriesNames[tableRow.category];
-    post['userName'] = tableRow.userName;
     post['userId'] = tableRow.userID;
 
     return post;
@@ -115,9 +114,8 @@ function indexHandler(req, res) {
       }
 
       var categoriesPosts = [];
+      var noOfPosts = 0;
       db.all('select * from posts order by postID desc', handler);
-
-      //db.all("select * from posts where category = '1'", handler);
 
       function handler(err, table) {
           if (err) throw err;
@@ -129,19 +127,42 @@ function indexHandler(req, res) {
                       createPost(post, table[row]);
                       if(posts.length < postsPerCategory[categoryId - 1]) {
                           posts.push(post);
+                          noOfPosts++;
                       } else {
                           break;
                       }
                   }
               }
-              categoriesPosts.push(posts)
+              categoriesPosts.push(posts);
           }
-          res.render('pages/index', {
-              categoriesPosts: categoriesPosts,
-              session: sess
-          });
+          getUserImg(categoriesPosts, noOfPosts);
       }
+
+    function getUserImg(categoriesPosts, noOfPosts) {
+        var callbackCount = 0;
+
+        for(let category = 0; category < categoriesPosts.length; category++) {
+            for(let post = 0; post < categoriesPosts[category].length; post++) {
+                db.each('select * from user where userID= ?', categoriesPosts[category][post].userId, handler);
+
+                function handler(err, row) {
+                    if(err) throw err;
+                    categoriesPosts[category][post].userImgPath = row.imgURL;
+                    categoriesPosts[category][post].userName = row.username;
+                    callbackCount++;
+                    console.log("session image path: " + sess.imageUrl);
+                    if(callbackCount == noOfPosts) {
+                        res.render('pages/index', {
+                            categoriesPosts: categoriesPosts,
+                            session: sess
+                        });
+                    }
+                }
+            }
+        }
+    }
 }
+
 
 app.get('/category.html/id=:id', function(req, res) {
     var posts = [];
@@ -159,11 +180,29 @@ app.get('/category.html/id=:id', function(req, res) {
                 posts.push(post);
             }
         }
-        res.render('pages/category', {
-            posts: posts,
-            session: sess,
-            categoryId: categoryId
-        });
+
+        getUserName(posts, posts.length);
+    }
+
+    function getUserName(posts, noOfPosts) {
+        var callbackCount = 0;
+
+        for(let post = 0; post < posts.length; post++) {
+            db.each('select * from user where userID= ?', posts[post].userId, handler);
+
+            function handler(err, row) {
+                if(err) throw err;
+                posts[post].userName = row.username;
+                callbackCount++;
+                if(callbackCount == noOfPosts) {
+                    res.render('pages/category', {
+                        posts: posts,
+                        session: sess,
+                        categoryId: categoryId
+                    });
+                }
+            }
+        }
     }
 });
 
@@ -189,26 +228,37 @@ app.get('/read_post.html/id=:id', function(req, res) {
     db.get('select * from posts where postId= ?', postId, handler);
 
     function handler(err, row) {
+        content['postId'] = postId;
         content['title'] = row.title;
         content['imagePath'] = row.imagePath;
         content['textContent'] = row.content;
-        content['userName'] = row.userName
+        content['userId'] = row.userID;
 
-        res.render('pages/read_post', {
-            content: content,
-            session: sess
-        });
+        getUserData(content);
+    }
+
+    function getUserData(content) {
+        db.each('select * from user where userID= ?', content.userId, handler);
+
+        function handler(err, row) {
+            if(err) throw err;
+            content['userName'] = row.username;
+            content['userImgPath'] = row.imgURL;
+            res.render('pages/read_post', {
+                content: content,
+                session: sess
+            });
+        }
     }
 });
 
-app.get('/my_stories.html/userName=:name', function(req, res){
+app.get('/my_stories.html/userId=:id', function(req, res){
     var posts = [];
     var sess = req.session;
-    var userName = req.params.name;
+    var userId = req.params.id;
     var categoryId = 0;
-    userName = userName.charAt(0).toUpperCase() + userName.slice(1);
 
-    db.all('select * from posts where userName= ?', userName, handler);
+    db.all('select * from posts where userId= ?', userId, handler);
 
     function handler(err, table) {
         if (err) throw err;
@@ -217,13 +267,29 @@ app.get('/my_stories.html/userName=:name', function(req, res){
            createPost(post, table[row]);
            posts.push(post);
        }
-
-       res.render('pages/category', {
-           posts: posts,
-           session: sess,
-           categoryId: categoryId
-       });
+       getUserName(posts, posts.length);
    }
+
+    function getUserName(posts, noOfPosts) {
+        var callbackCount = 0;
+
+        for(let post = 0; post < posts.length; post++) {
+            db.each('select * from user where userID= ?', posts[post].userId, handler);
+
+            function handler(err, row) {
+                if(err) throw err;
+                posts[post].userName = row.username;
+                callbackCount++;
+                if(callbackCount == noOfPosts) {
+                    res.render('pages/category', {
+                        posts: posts,
+                        session: sess,
+                        categoryId: categoryId
+                    });
+                }
+            }
+        }
+    }
 });
 
 // login
@@ -264,14 +330,14 @@ function loginRequestHandler(req, res) {
               response.loggedIn = false;
             }
             else if(row.password === body.password) {
-              response.loginResponse = "Successfully LoggedIn";
-              // response.imageIcon = row.imgURL;  -- this is not needed as imageUrl is kept on sess obj
-              sess.userName = body.username;
-              sess.loggedIn = true;
-              sess.imageUrl = row.imgURL;
-              sess.userEmail = row.emailAddress;
-              sess.password = row.password;
-              response.loggedIn = true;
+                response.loginResponse = "Successfully LoggedIn";
+                // response.imageIcon = row.imgURL;  -- this is not needed as imageUrl is kept on sess obj
+                sess.loggedIn = true;
+                sess.userName = body.username;
+                sess.userId = row.userID;
+                sess.imageUrl = row.imgURL;
+                sess.userEmail = row.emailAddress;
+                sess.password = row.password;
             }
             else {
               response.loginResponse = "Incorrect Password";

@@ -19,6 +19,7 @@
     <% if(session.loggedIn) {%>
         <% var userName = session.userName%>
         <% var userImgPath = session.imageUrl%>
+        <% var userId = session.userId%>
         <% include ../partials/header1 %>
     <% } else { %>
         <% include ../partials/header %>
