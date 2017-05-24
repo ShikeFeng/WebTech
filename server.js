@@ -431,7 +431,7 @@ function writePostHandler(req, res){
   console.log(req.files);
   if (!isEmpty(req.files)){
     console.log("There is an Image");
-    req.files.Image.name = userName.toLowerCase() + '_' + body.Title + '_' + Date.now() + ".png";
+    req.files.Image.name = userName.toLowerCase() + '_' + body.Title + '_' + Date.now() + ".jpg";
     console.log("Modified Image File Name", req.files.Image.name);
     imagePath = "/img/" + req.files.Image.name;
     req.files.Image.mv("public" + imagePath, exceptionHandler);
