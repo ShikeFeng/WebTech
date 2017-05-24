@@ -398,7 +398,7 @@ function profileUpdateHandler(req,res){
         db.run("update user set username = ?, password = ?, emailAddress = ? where userID = ?", [req.body.username_profile, req.body.password_profile, req.body.email_profile, row.userID], updateHandler);
 
         function updateHandler(err, row){
-          if (err) throw err
+          if (err) throw err;
           sess.userName = req.body.username_profile;
           sess.userEmail = req.body.email_profile;
           sess.userPassword = req.body.password_profile;
@@ -409,6 +409,36 @@ function profileUpdateHandler(req,res){
     }
   }
   else { // The case where the header image changed
+    console.log("There is a new header image file");
+    db.each("select * from user where username = ?", originalUserName, withImage);
+    function withImage(err, row){
+      if (err) throw err;
+      if (row != undefined) {
+        var imagePath = 'public' + row.imgURL;
+        req.files.image_profile.name = req.body.username_profile.toLowerCase() + '_header.png';
+        var newImgPath = '/img/' + req.files.image_profile.name;
+        fs.unlink(imagePath, unlinkHander);
+
+        function unlinkHander(err) {
+          if (err) throw err;
+          console.log("unlinked original File");
+          req.files.image_profile.mv('public' + newImgPath, afterSaveImage);
+
+          function afterSaveImage(err){
+            db.run("update user set username = ?, password = ?, emailAddress = ? , imgURL = ? where userID = ?", [req.body.username_profile, req.body.password_profile, req.body.email_profile, newImgPath, row.userID], updateHandler);
+
+            function updateHandler(err, row){
+              if (err) throw err;
+              sess.userName = req.body.username_profile;
+              sess.userEmail = req.body.email_profile;
+              sess.userPassword = req.body.password_profile;
+              console.log('Updated');
+              res.redirect('index.html');
+            }
+          }
+        }
+      }
+    }
     // req.files.profile_image.name = req.body.username.toLowerCase() + '_header.png';
     // console.log("Modified Image File Name", req.files.headImage.name);
     // imagePath = "/img/" + req.files.headImage.name;
