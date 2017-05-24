@@ -10,6 +10,19 @@ body {
     Style sheet for the fixed navigation bar at top
 */
 
+.website-name {
+    margin-left: auto!important;
+    color: rgb(0, 173, 239)!important;
+}
+
+.logo {
+    vertical-align: middle;
+    height: 50px;
+    width: 50px;
+    position: relative;
+    float: left;
+}
+
 .dropbtn {
     border: none;
     cursor: pointer;
@@ -85,7 +98,7 @@ body {
 }
 
 .navbar-brand {
-    color: black !important;
+    color: black;
 }
 
 /* Underline Reveal */
