@@ -19,6 +19,7 @@
     <% if(session.loggedIn) {%>
         <% var userName = session.userName%>
         <% var userImgPath = session.imageUrl%>
+        <% var userId = session.userId%>
         <% include ../partials/header1 %>
     <% } else { %>
         <% include ../partials/header %>
@@ -56,8 +57,8 @@
 <!--User info-->
 <div class="container user-info">
     <div class="story-author-info">
-        <a href="/my_stories.html/userName=<%=content.userName %>">
-            <img src="../../img/shikefeng.jpg" />
+        <a href="/my_stories.html/userId=<%=content.userId %>">
+            <img src="../..<%=content.userImgPath%>" />
             <%= content.userName %>
         </a>
     </div>

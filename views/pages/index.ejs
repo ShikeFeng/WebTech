@@ -19,6 +19,7 @@
         <% if(session.loggedIn) {%>
             <% var userName = session.userName%>
             <% var userImgPath = session.imageUrl%>
+            <% var userId = session.userId%>
             <% include ../partials/header1 %>
         <% } else { %>
             <% include ../partials/header %>
@@ -43,7 +44,7 @@
                             </a>
                             <div class="topStory-author-info clickable">
                                 <img src="../..<%= categoriesPosts[category][0].userImgPath %>" />
-                                    <a href="/my_stories.html/userName=<%= categoriesPosts[category][0].userName %>">
+                                    <a href="/my_stories.html/userId=<%= categoriesPosts[category][0].userId %>">
                                         <%=categoriesPosts[category][0].userName%>
                                     </a>
                             </div>
@@ -59,7 +60,7 @@
                             </a>
                             <div class="story-author-info">
                                 <img src="../..<%= categoriesPosts[category][1].userImgPath %>" />
-                                    <a href="/my_stories.html/userName=<%= categoriesPosts[category][1].userName %>">
+                                    <a href="/my_stories.html/userId=<%= categoriesPosts[category][1].userId %>">
                                         <%=categoriesPosts[category][1].userName%>
                                     </a>
                             </div>
@@ -72,7 +73,7 @@
                             </a>
                             <div class="story-author-info">
                                 <img src="../..<%= categoriesPosts[category][2].userImgPath %>" />
-                                    <a href="/my_stories.html/userName=<%= categoriesPosts[category][2].userName %>">
+                                    <a href="/my_stories.html/userId=<%= categoriesPosts[category][2].userId %>">
                                         <%=categoriesPosts[category][2].userName%>
                                     </a>
                             </div>
@@ -85,7 +86,7 @@
                             </a>
                             <div class="story-author-info">
                                 <img src="../..<%= categoriesPosts[category][3].userImgPath %>" />
-                                    <a href="/my_stories.html/userName=<%= categoriesPosts[category][3].userName %>">
+                                    <a href="/my_stories.html/userId=<%= categoriesPosts[category][3].userId %>">
                                         <%=categoriesPosts[category][3].userName%>
                                     </a>
                             </div>
@@ -147,7 +148,7 @@
                                 </a>
                                 <div class="story-author-info">
                                     <img src="../..<%= categoriesPosts[category][0].userImgPath %>" />
-                                        <a href="/my_stories.html/userName=<%= categoriesPosts[category][0].userName %>">
+                                        <a href="/my_stories.html/userId=<%= categoriesPosts[category][0].userId %>">
                                             <%=categoriesPosts[category][0].userName%>
                                         </a>
                                 </div>
@@ -162,7 +163,7 @@
                                 </a>
                                 <div class="story-author-info">
                                     <img src="../..<%= categoriesPosts[category][1].userImgPath %>" />
-                                        <a href="/my_stories.html/userName=<%= categoriesPosts[category][1].userName %>">
+                                        <a href="/my_stories.html/userId=<%= categoriesPosts[category][1].userId %>">
                                             <%=categoriesPosts[category][1].userName%>
                                         </a>
                                 </div>
@@ -177,7 +178,7 @@
                                 </a>
                                 <div class="story-author-info">
                                     <img src="../..<%= categoriesPosts[category][2].userImgPath %>" />
-                                        <a href="/my_stories.html/userName=<%= categoriesPosts[category][2].userName %>">
+                                        <a href="/my_stories.html/userId=<%= categoriesPosts[category][2].userId %>">
                                             <%=categoriesPosts[category][2].userName%>
                                         </a>
                                 </div>
@@ -194,7 +195,7 @@
                                 </a>
                                 <div class="story-author-info">
                                     <img src="../..<%= categoriesPosts[category][3].userImgPath %>" />
-                                        <a href="/my_stories.html/userName=<%= categoriesPosts[category][3].userName %>">
+                                        <a href="/my_stories.html/userId=<%= categoriesPosts[category][3].userId %>">
                                             <%=categoriesPosts[category][3].userName%>
                                         </a>
                                 </div>
@@ -209,7 +210,7 @@
                                 </a>
                                 <div class="story-author-info">
                                     <img src="../..<%= categoriesPosts[category][4].userImgPath %>" />
-                                        <a href="/my_stories.html/userName=<%= categoriesPosts[category][4].userName %>">
+                                        <a href="/my_stories.html/userId=<%= categoriesPosts[category][4].userId %>">
                                             <%=categoriesPosts[category][4].userName%>
                                         </a>
                                 </div>
@@ -224,7 +225,7 @@
                                 </a>
                                 <div class="story-author-info">
                                     <img src="../..<%= categoriesPosts[category][5].userImgPath %>" />
-                                        <a href="/my_stories.html/userName=<%= categoriesPosts[category][5].userName %>">
+                                        <a href="/my_stories.html/userId=<%= categoriesPosts[category][5].userId %>">
                                             <%=categoriesPosts[category][5].userName%>
                                         </a>
                                 </div>
