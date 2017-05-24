@@ -112,9 +112,8 @@ function indexHandler(req, res) {
       }
 
       var categoriesPosts = [];
+      var noOfPosts = 0;
       db.all('select * from posts order by postID desc', handler);
-
-      //db.all("select * from posts where category = '1'", handler);
 
       function handler(err, table) {
           if (err) throw err;
@@ -126,19 +125,40 @@ function indexHandler(req, res) {
                       createPost(post, table[row]);
                       if(posts.length < postsPerCategory[categoryId - 1]) {
                           posts.push(post);
+                          noOfPosts++;
                       } else {
                           break;
                       }
                   }
               }
-              categoriesPosts.push(posts)
+              categoriesPosts.push(posts);
           }
-          res.render('pages/index', {
-              categoriesPosts: categoriesPosts,
-              session: sess
-          });
+          getUserImg(categoriesPosts, noOfPosts);
       }
+
+    function getUserImg(categoriesPosts, noOfPosts) {
+        var callbackCount = 0;
+
+        for(let category = 0; category < categoriesPosts.length; category++) {
+            for(let post = 0; post < categoriesPosts[category].length; post++) {
+                db.each('select * from user where userID= ?', categoriesPosts[category][post].userId, handler);
+
+                function handler(err, row) {
+                    if(err) throw err;
+                    categoriesPosts[category][post].userImgPath = row.imgURL;
+                    callbackCount++;
+                    if(callbackCount == noOfPosts) {
+                        res.render('pages/index', {
+                            categoriesPosts: categoriesPosts,
+                            session: sess
+                        });
+                    }
+                }
+            }
+        }
+    }
 }
+
 
 app.get('/category.html/id=:id', function(req, res) {
     var posts = [];
