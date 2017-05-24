@@ -231,6 +231,7 @@ app.get('/read_post.html/id=:id', function(req, res) {
         content['postId'] = postId;
         content['title'] = row.title;
         content['imagePath'] = row.imagePath;
+        content['intro'] = row.introduction;
         content['textContent'] = row.content;
         content['userId'] = row.userID;
 
@@ -385,7 +386,7 @@ function registerRequestHandler(req, res){
       }
 
       sess.userName = body.username;
-      sess.loggedIn = true;
+      //sess.loggedIn = true;
       sess.userEmail = body.Email.toLowerCase();
       sess.imageUrl = imagePath;
       sess.password = body.password;
