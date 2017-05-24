@@ -176,11 +176,29 @@ app.get('/category.html/id=:id', function(req, res) {
                 posts.push(post);
             }
         }
-        res.render('pages/category', {
-            posts: posts,
-            session: sess,
-            categoryId: categoryId
-        });
+
+        getUserName(posts, posts.length);
+    }
+
+    function getUserName(posts, noOfPosts) {
+        var callbackCount = 0;
+
+        for(let post = 0; post < posts.length; post++) {
+            db.each('select * from user where userID= ?', posts[post].userId, handler);
+
+            function handler(err, row) {
+                if(err) throw err;
+                posts[post].userName = row.username;
+                callbackCount++;
+                if(callbackCount == noOfPosts) {
+                    res.render('pages/category', {
+                        posts: posts,
+                        session: sess,
+                        categoryId: categoryId
+                    });
+                }
+            }
+        }
     }
 });
 
