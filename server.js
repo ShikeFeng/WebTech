@@ -74,7 +74,6 @@ function createPost(post, tableRow) {
     post['imageUrl'] = tableRow.imagePath;
     post['categoryId'] = tableRow.category;
     post['categoryName'] = categoriesNames[tableRow.category];
-    post['userName'] = tableRow.userName;
     post['userId'] = tableRow.userID;
 
     return post;
@@ -146,6 +145,7 @@ function indexHandler(req, res) {
                 function handler(err, row) {
                     if(err) throw err;
                     categoriesPosts[category][post].userImgPath = row.imgURL;
+                    categoriesPosts[category][post].userName = row.username;
                     callbackCount++;
                     if(callbackCount == noOfPosts) {
                         res.render('pages/index', {
