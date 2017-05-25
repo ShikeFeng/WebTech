@@ -69,8 +69,8 @@ app.all('*', function(req,res,next){
   res.redirect('https://' + req.hostname + ":" + app.get('port_https') + req.url);
 });
 /*Global Variables*/
-var categories = [1,2,3];   //Hardcoded for the current category types
-var postsPerCategory = [4, 4, 6];    //Hardcoded for the current layout
+var categories = [1,2,3, 4, 5, 6];   //Hardcoded for the current category types
+var postsPerCategory = [4, 4, 6, 4, 4, 6];    //Hardcoded for the current layout
 var categoriesNames = {
     1: 'Crypto',
     2: 'Machine Intelligence',
