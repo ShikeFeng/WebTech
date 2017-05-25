@@ -34,6 +34,27 @@ var httpPort = 8080;
 var httpsServer = https.createServer(httpsOptions, app).listen(httpsPort);
 var httpServer = http.createServer(app).listen(httpPort);
 
+/*Global Variables*/
+var categories = [1,2,3, 4, 5, 6];   //Hardcoded for the current category types
+var postsPerCategory = [4, 4, 6, 4, 4, 6];    //Hardcoded for the current layout
+var categoriesNames = {
+    1: 'Crypto',
+    2: 'Machine Intelligence',
+    3: 'Algorithms',
+    4: 'Enterprise',
+    5: 'Research',
+    6: 'Others'
+};
+
+var categoryNumber = {
+  'Crypto' : 1,
+  'Machine Intelligence' : 2,
+  'Algorithms' : 3,
+  'Enterprise' : 4,
+  'Research' : 5,
+  'Others' : 6
+};
+
 var banned = [];
 banUpperCase("./public/", "");
 
@@ -71,294 +92,33 @@ app.all('*', function(req,res,next){
   res.redirect('https://' + req.hostname + ":" + app.get('port_https') + req.url);
 });
 
-/*Global Variables*/
-var categories = [1,2,3, 4, 5, 6];   //Hardcoded for the current category types
-var postsPerCategory = [4, 4, 6, 4, 4, 6];    //Hardcoded for the current layout
-var categoriesNames = {
-    1: 'Crypto',
-    2: 'Machine Intelligence',
-    3: 'Algorithms',
-    4: 'Enterprise',
-    5: 'Research',
-    6: 'Others'
-};
 
-var categoryNumber = {
-  'Crypto' : 1,
-  'Machine Intelligence' : 2,
-  'Algorithms' : 3,
-  'Enterprise' : 4,
-  'Research' : 5,
-  'Others' : 6
-};
 
 app.get('/', redirectHandler);
+app.get('/index.html', indexHandler);
+app.get('/logout', logoutHandler);
+app.get('/edit_post.html', editPostHandler);
+app.get('/profile.html', getProfileHandler);
+app.get('/read_post.html/id=:id', readPostHandler);
+app.get('/my_stories.html/userId=:id', getMyStoriesHandler);
+app.get('/category.html/id=:id', categoryHandler);
+
+
+app.post('/login', loginRequestHandler);
+app.post('/register', registerRequestHandler)
+app.post('/writePost', writePostHandler);
+app.post('/updateProfile', profileUpdateHandler);
+
+
+// Callback Handlers
 
 function redirectHandler(req, res){
   res.redirect('/index.html');
 }
 
-app.get('/index.html', indexHandler);
-
-function indexHandler(req, res) {
-      var sess = req.session;
-
-      var categoriesPosts = [];
-      var noOfPosts = 0;
-      db.all('select * from posts order by postID desc', handler);
-
-      function handler(err, table) {
-          if (err) throw err;
-          for(var categoryId = 1; categoryId<=categories.length; categoryId++) {
-              var posts = [];
-              for(var row = 0; row < table.length; row++) {
-                  var post = {};
-                  if(table[row].category == categoryId) {
-                      createPost(post, table[row]);
-                      if(posts.length < postsPerCategory[categoryId - 1]) {
-                          posts.push(post);
-                          noOfPosts++;
-                      } else {
-                          break;
-                      }
-                  }
-              }
-              categoriesPosts.push(posts);
-          }
-          getUserImg(categoriesPosts, noOfPosts);
-      }
-
-    function getUserImg(categoriesPosts, noOfPosts) {
-        var callbackCount = 0;
-
-        for(let category = 0; category < categoriesPosts.length; category++) {
-            for(let post = 0; post < categoriesPosts[category].length; post++) {
-                db.each('select * from user where userID= ?', categoriesPosts[category][post].userId, handler);
-
-                function handler(err, row) {
-                    if(err) throw err;
-                    categoriesPosts[category][post].userImgPath = row.imgURL;
-                    categoriesPosts[category][post].userName = row.username;
-                    callbackCount++;
-
-                    if(callbackCount == noOfPosts) {
-                        res.render('pages/index', {
-                            categoriesPosts: categoriesPosts,
-                            session: sess
-                        });
-                    }
-                }
-            }
-        }
-    }
-}
-
-
-app.get('/category.html/id=:id', function(req, res) {
-    var posts = [];
-    var categoryId = req.params.id;
-    var sess = req.session;
-
-    db.all('select * from posts order by postID desc', handler);
-
-    function handler(err, table) {
-        if (err) throw err;
-        for(var row = 0; row < table.length; row++) {
-            var post = {};
-            createPost(post, table[row]);
-            if(categoryId == post['categoryId']) {
-                posts.push(post);
-            }
-        }
-
-        getUserData(posts, posts.length);
-    }
-
-    function getUserData(posts, noOfPosts) {
-        var callbackCount = 0;
-
-        for(let post = 0; post < posts.length; post++) {
-            db.each('select * from user where userID= ?', posts[post].userId, handler);
-
-            function handler(err, row) {
-                if(err) throw err;
-                posts[post].userName = row.username;
-                posts[post].userImgPath = row.imgURL;
-                callbackCount++;
-                if(callbackCount == noOfPosts) {
-                    getMostRecentStories();
-                }
-            }
-        }
-    }
-
-    function getMostRecentStories() {
-        var recentPosts = [];
-
-        db.all('select * from posts order by postID desc', handleRecentStories);
-
-        function handleRecentStories(err, rows) {
-            if(err) throw err;
-            for(var row = 0; row < 5; row++) {
-                var post = {};
-                createPost(post, rows[row]);
-                recentPosts.push(post);
-            }
-            getUserIcons();
-        }
-
-        function getUserIcons() {
-            var callbackCount = 0;
-            for(let post = 0; post < recentPosts.length; post++) {
-                db.each('select * from user where userID= ?', recentPosts[post].userId, handleUserIcon);
-
-                function handleUserIcon(err, row){
-                    if(err) throw err;
-                    recentPosts[post].userImgPath = row.imgURL;
-                    recentPosts[post].userName = row.username;
-                    callbackCount++;
-                    if(callbackCount == recentPosts.length) {
-                        res.render('pages/category', {
-                            posts: posts,
-                            recentPosts: recentPosts,
-                            session: sess,
-                            categoryId: categoryId
-                        });
-                    }
-                }
-            }
-        }
-    }
-});
-
-app.get('/edit_post.html', function(req, res) {
-    var sess = req.session;
-    res.render('pages/edit_post',{
-        session: sess
-    });
-});
-
-app.get('/profile.html', function(req, res) {
-  var sess = req.session;
-  res.render('pages/profile', {
-    session: sess
-  });
-});
-
-app.get('/read_post.html/id=:id', function(req, res) {
-    var content = {};
-    var postId = req.params.id;
-    var sess = req.session;
-
-    db.get('select * from posts where postId= ?', postId, handler);
-
-    function handler(err, row) {
-        content['postId'] = postId;
-        content['title'] = row.title;
-        content['imagePath'] = row.imagePath;
-        content['intro'] = row.introduction;
-        content['textContent'] = row.content;
-        content['userId'] = row.userID;
-
-        getUserData(content);
-    }
-
-    function getUserData(content) {
-        db.each('select * from user where userID= ?', content.userId, handler);
-
-        function handler(err, row) {
-            if(err) throw err;
-            content['userName'] = row.username;
-            content['userImgPath'] = row.imgURL;
-            res.render('pages/read_post', {
-                content: content,
-                session: sess
-            });
-        }
-    }
-});
-
-app.get('/my_stories.html/userId=:id', function(req, res){
-    var posts = [];
-    var sess = req.session;
-    var userId = req.params.id;
-    var categoryId = 0;
-
-    db.all('select * from posts where userId= ?', userId, handler);
-
-    function handler(err, table) {
-        if (err) throw err;
-        for(var row = 0; row < table.length; row++) {
-           var post = {};
-           createPost(post, table[row]);
-           posts.push(post);
-       }
-       getUserData(posts, posts.length);
-   }
-
-    function getUserData(posts, noOfPosts) {
-        var callbackCount = 0;
-
-        for(let post = 0; post < posts.length; post++) {
-            db.each('select * from user where userID= ?', posts[post].userId, handler);
-
-            function handler(err, row) {
-                if(err) throw err;
-                posts[post].userName = row.username;
-                posts[post].userImgPath = row.imgURL;
-                callbackCount++;
-                if(callbackCount == noOfPosts) {
-                    getMostRecentStories();
-                }
-            }
-        }
-    }
-
-    function getMostRecentStories() {
-        var recentPosts = [];
-
-        db.all('select * from posts order by postID desc', handleRecentStories);
-
-        function handleRecentStories(err, rows) {
-            if(err) throw err;
-            for(var row = 0; row < 5; row++) {
-                var post = {};
-                createPost(post, rows[row]);
-                recentPosts.push(post);
-            }
-            getUserIcons();
-        }
-
-        function getUserIcons() {
-            var callbackCount = 0;
-            for(let post = 0; post < recentPosts.length; post++) {
-                db.each('select * from user where userID= ?', recentPosts[post].userId, handleUserIcon);
-
-                function handleUserIcon(err, row){
-                    if(err) throw err;
-                    recentPosts[post].userImgPath = row.imgURL;
-                    recentPosts[post].userName = row.username;
-                    callbackCount++;
-                    if(callbackCount == recentPosts.length) {
-                        res.render('pages/category', {
-                            posts: posts,
-                            recentPosts: recentPosts,
-                            session: sess,
-                            categoryId: categoryId
-                        });
-                    }
-                }
-            }
-        }
-    }
-});
-
 // login
-app.post('/login', loginRequestHandler);
-
 function loginRequestHandler(req, res) {
     var sess = req.session;
-
     var body = "";
     req.on('data', add);
     req.on('end', end);
@@ -404,12 +164,8 @@ function loginRequestHandler(req, res) {
 }
 
 // register
-app.post('/register', registerRequestHandler);
-
 function registerRequestHandler(req, res){
   var sess = req.session;
-
-
   var body = req.body;
   var ps = db.prepare("select * from user where username= ?")
   ps.get(body.username, handler);
@@ -459,8 +215,7 @@ function registerRequestHandler(req, res){
 }
 
 
-app.get('/logout', logoutHandler);
-
+// logout
 function logoutHandler(req, res){
   var sess = req.session;
   var response = {};
@@ -475,8 +230,7 @@ function logoutHandler(req, res){
 }
 
 
-app.post('/writePost', writePostHandler);
-
+// Write post
 function writePostHandler(req, res){
 
   if (req.session.loggedIn === false){
@@ -488,13 +242,10 @@ function writePostHandler(req, res){
     // The write post page will only be accessed for users which have already loggedIn
     var body = req.body;
     var imagePath = "/svg/default.svg";
-    console.log(req.files);
     if (!isEmpty(req.files)){
-      console.log("There is an Image");
       var imageExtension = getExtension(req.files.Image.name);
       var validTitle = validateName(body.Title);
       req.files.Image.name = userName.toLowerCase() + '_' + body.Title.toLowerCase() + '_' + Date.now() + imageExtension;
-      console.log("Modified Image File Name", req.files.Image.name);
       imagePath = "/img/" + req.files.Image.name;
       req.files.Image.mv("public" + imagePath, exceptionHandler);
       function exceptionHandler(err){
@@ -502,18 +253,6 @@ function writePostHandler(req, res){
         console.log("File Uploaded");
       }
     }
-
-    // var body = req.body;
-    // var imagePath = "/img/default.png";
-    // if (!isEmpty(req.files)){
-    //   req.files.Image.name = userName.toLowerCase() + '_' + body.Title + '_' + Date.now() + ".jpg";
-    //   imagePath = "/img/" + req.files.Image.name;
-    //   req.files.Image.mv("public" + imagePath, exceptionHandler);
-    //   function exceptionHandler(err){
-    //     if (err) throw err;
-    //     console.log("File Uploaded");
-    //   }
-    // }
 
     var ps = db.prepare("select * from user where username= ?");
     ps.each(userName, handler);
@@ -535,8 +274,7 @@ function writePostHandler(req, res){
 
 }
 
-app.post('/updateProfile', profileUpdateHandler);
-
+// Update profile
 function profileUpdateHandler(req,res){
   var sess = req.session;
   var originalUserName = sess.userName;
@@ -596,6 +334,260 @@ function profileUpdateHandler(req,res){
   //res.redirect('index.html');
 }
 
+function indexHandler(req, res) {
+      var sess = req.session;
+
+      var categoriesPosts = [];
+      var noOfPosts = 0;
+      db.all('select * from posts order by postID desc', handler);
+
+      function handler(err, table) {
+          if (err) throw err;
+          for(var categoryId = 1; categoryId<=categories.length; categoryId++) {
+              var posts = [];
+              for(var row = 0; row < table.length; row++) {
+                  var post = {};
+                  if(table[row].category == categoryId) {
+                      createPost(post, table[row]);
+                      if(posts.length < postsPerCategory[categoryId - 1]) {
+                          posts.push(post);
+                          noOfPosts++;
+                      } else {
+                          break;
+                      }
+                  }
+              }
+              categoriesPosts.push(posts);
+          }
+          getUserImg(categoriesPosts, noOfPosts);
+      }
+
+    function getUserImg(categoriesPosts, noOfPosts) {
+        var callbackCount = 0;
+
+        for(let category = 0; category < categoriesPosts.length; category++) {
+            for(let post = 0; post < categoriesPosts[category].length; post++) {
+                db.each('select * from user where userID= ?', categoriesPosts[category][post].userId, handler);
+
+                function handler(err, row) {
+                    if(err) throw err;
+                    categoriesPosts[category][post].userImgPath = row.imgURL;
+                    categoriesPosts[category][post].userName = row.username;
+                    callbackCount++;
+
+                    if(callbackCount == noOfPosts) {
+                        res.render('pages/index', {
+                            categoriesPosts: categoriesPosts,
+                            session: sess
+                        });
+                    }
+                }
+            }
+        }
+    }
+}
+
+function categoryHandler(req, res){
+  var posts = [];
+  var categoryId = req.params.id;
+  var sess = req.session;
+
+  db.all('select * from posts order by postID desc', handler);
+
+  function handler(err, table) {
+      if (err) throw err;
+      for(var row = 0; row < table.length; row++) {
+          var post = {};
+          createPost(post, table[row]);
+          if(categoryId == post['categoryId']) {
+              posts.push(post);
+          }
+      }
+
+      getUserData(posts, posts.length);
+  }
+
+  function getUserData(posts, noOfPosts) {
+      var callbackCount = 0;
+
+      for(let post = 0; post < posts.length; post++) {
+          db.each('select * from user where userID= ?', posts[post].userId, handler);
+
+          function handler(err, row) {
+              if(err) throw err;
+              posts[post].userName = row.username;
+              posts[post].userImgPath = row.imgURL;
+              callbackCount++;
+              if(callbackCount == noOfPosts) {
+                  getMostRecentStories();
+              }
+          }
+      }
+  }
+
+  function getMostRecentStories() {
+      var recentPosts = [];
+
+      db.all('select * from posts order by postID desc', handleRecentStories);
+
+      function handleRecentStories(err, rows) {
+          if(err) throw err;
+          for(var row = 0; row < 5; row++) {
+              var post = {};
+              createPost(post, rows[row]);
+              recentPosts.push(post);
+          }
+          getUserIcons();
+      }
+
+      function getUserIcons() {
+          var callbackCount = 0;
+          for(let post = 0; post < recentPosts.length; post++) {
+              db.each('select * from user where userID= ?', recentPosts[post].userId, handleUserIcon);
+
+              function handleUserIcon(err, row){
+                  if(err) throw err;
+                  recentPosts[post].userImgPath = row.imgURL;
+                  recentPosts[post].userName = row.username;
+                  callbackCount++;
+                  if(callbackCount == recentPosts.length) {
+                      res.render('pages/category', {
+                          posts: posts,
+                          recentPosts: recentPosts,
+                          session: sess,
+                          categoryId: categoryId
+                      });
+                  }
+              }
+          }
+      }
+  }
+}
+
+function editPostHandler(req, res){
+  var sess = req.session;
+  res.render('pages/edit_post',{
+      session: sess
+  });
+}
+
+function getProfileHandler(req, res){
+  var sess = req.session;
+  res.render('pages/profile', {
+    session: sess
+  });
+}
+
+function readPostHandler(req, res){
+  var content = {};
+  var postId = req.params.id;
+  var sess = req.session;
+
+  db.get('select * from posts where postId= ?', postId, handler);
+
+  function handler(err, row) {
+      content['postId'] = postId;
+      content['title'] = row.title;
+      content['imagePath'] = row.imagePath;
+      content['intro'] = row.introduction;
+      content['textContent'] = row.content;
+      content['userId'] = row.userID;
+
+      getUserData(content);
+  }
+
+  function getUserData(content) {
+      db.each('select * from user where userID= ?', content.userId, handler);
+
+      function handler(err, row) {
+          if(err) throw err;
+          content['userName'] = row.username;
+          content['userImgPath'] = row.imgURL;
+          res.render('pages/read_post', {
+              content: content,
+              session: sess
+          });
+      }
+  }
+}
+
+function getMyStoriesHandler(req, res){
+  var posts = [];
+  var sess = req.session;
+  var userId = req.params.id;
+  var categoryId = 0;
+
+  db.all('select * from posts where userId= ?', userId, handler);
+
+  function handler(err, table) {
+      if (err) throw err;
+      for(var row = 0; row < table.length; row++) {
+         var post = {};
+         createPost(post, table[row]);
+         posts.push(post);
+     }
+     getUserData(posts, posts.length);
+ }
+
+  function getUserData(posts, noOfPosts) {
+      var callbackCount = 0;
+
+      for(let post = 0; post < posts.length; post++) {
+          db.each('select * from user where userID= ?', posts[post].userId, handler);
+
+          function handler(err, row) {
+              if(err) throw err;
+              posts[post].userName = row.username;
+              posts[post].userImgPath = row.imgURL;
+              callbackCount++;
+              if(callbackCount == noOfPosts) {
+                  getMostRecentStories();
+              }
+          }
+      }
+  }
+
+  function getMostRecentStories() {
+      var recentPosts = [];
+
+      db.all('select * from posts order by postID desc', handleRecentStories);
+
+      function handleRecentStories(err, rows) {
+          if(err) throw err;
+          for(var row = 0; row < 5; row++) {
+              var post = {};
+              createPost(post, rows[row]);
+              recentPosts.push(post);
+          }
+          getUserIcons();
+      }
+
+      function getUserIcons() {
+          var callbackCount = 0;
+          for(let post = 0; post < recentPosts.length; post++) {
+              db.each('select * from user where userID= ?', recentPosts[post].userId, handleUserIcon);
+
+              function handleUserIcon(err, row){
+                  if(err) throw err;
+                  recentPosts[post].userImgPath = row.imgURL;
+                  recentPosts[post].userName = row.username;
+                  callbackCount++;
+                  if(callbackCount == recentPosts.length) {
+                      res.render('pages/category', {
+                          posts: posts,
+                          recentPosts: recentPosts,
+                          session: sess,
+                          categoryId: categoryId
+                      });
+                  }
+              }
+          }
+      }
+  }
+}
+
+
+
 function validateName(fileName) {
     var validName = fileName.replace(' ', '_');
     return validName;
@@ -633,6 +625,7 @@ function urlValidation(req, res, next){
     }
 }
 
+// Check if an object is empty or not
 function isEmpty(obj) {
 
     // null and undefined are "empty"

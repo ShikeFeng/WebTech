@@ -73,7 +73,7 @@ body {
 
 .show {display:block;}
 
-@media (max-width: 860px) {
+@media (max-width: 945px) {
   .navbar-header {
       float: none;
   }
