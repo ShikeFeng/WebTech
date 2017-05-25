@@ -372,7 +372,6 @@ function loginRequestHandler(req, res) {
     }
 }
 
-
 // register
 app.post('/register', registerRequestHandler);
 
@@ -389,8 +388,9 @@ function registerRequestHandler(req, res){
     if (err) throw err;
     if (row === undefined) {
       var imagePath = "/img/default.png";
-      if (!isEmpty(req.files)){
-        req.files.headImage.name = req.body.username.toLowerCase() + '_header.png';
+      if (!isEmpty(req.files)) {
+         var imageExtension = getExtension(req.files.headImage.name);
+        req.files.headImage.name = req.body.username.toLowerCase() + imageExtension;
         console.log("Modified Image File Name", req.files.headImage.name);
         imagePath = "/img/" + req.files.headImage.name;
         req.files.headImage.mv("public" + imagePath, fileMove);
@@ -452,7 +452,9 @@ function writePostHandler(req, res){
   console.log(req.files);
   if (!isEmpty(req.files)){
     console.log("There is an Image");
-    req.files.Image.name = userName.toLowerCase() + '_' + body.Title + '_' + Date.now() + ".jpg";
+    var imageExtension = getExtension(req.files.Image.name);
+    var validTitle = validateName(body.Title);
+    req.files.Image.name = userName.toLowerCase() + '_' + body.Title + '_' + Date.now() + imageExtension;
     console.log("Modified Image File Name", req.files.Image.name);
     imagePath = "/img/" + req.files.Image.name;
     req.files.Image.mv("public" + imagePath, exceptionHandler);
@@ -512,7 +514,8 @@ function profileUpdateHandler(req,res){
       if (err) throw err;
       if (row != undefined) {
         var imagePath = 'public' + row.imgURL;
-        req.files.image_profile.name = req.body.username_profile.toLowerCase() + '_header.png';
+        var imageExtension = getExtension(req.files.image_profile.name);
+        req.files.image_profile.name = req.body.username_profile.toLowerCase() + imageExtension;
         var newImgPath = '/img/' + req.files.image_profile.name;
         fs.unlink(imagePath, unlinkHander);
 
@@ -544,6 +547,18 @@ function profileUpdateHandler(req,res){
   console.log(req.files);
   console.log("Request Received");
   //res.redirect('index.html');
+}
+
+function validateName(fileName) {
+    var validName = fileName.replace(' ', '_');
+    return validName;
+}
+
+function getExtension(fileName) {
+    var index = fileName.indexOf('.');
+    var extension = fileName.substring(index, fileName.length);
+
+    return extension;
 }
 
 function isEmpty(obj) {
