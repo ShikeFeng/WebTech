@@ -80,6 +80,9 @@ svg {
 
 /*Most recent stories*/
 
+.category-clipart {
+    position: absolute;
+}
 .recent-story{
     margin-top: 2%;
 }
@@ -87,6 +90,7 @@ svg {
 .most-recent-stories{
     margin-top: 6%;
     position: fixed;
+    display: none;
 }
 
 .most-recent-stories-author{

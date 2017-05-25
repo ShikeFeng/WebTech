@@ -3,15 +3,7 @@
 function getStoryTitle(story){
 	var storyTitle = '';
 
-	if(story == 1){
-		storyTitle = "story-2-1-title";
-	} else if(story == 2){
-		storyTitle = "story-2-2-title";
-	} else if(story == 3){
-		storyTitle = "story-2-3-title";
-	} else {
-		storyTitle = "story-2-4-title";
-	}
+	storyTitle = "title" + story;
 
 	return storyTitle;
 }
@@ -19,15 +11,7 @@ function getStoryTitle(story){
 function getStoryDesc(story){
 	var storyDesc = '';
 
-	if(story == 1){
-		storyDesc = "story-2-1-desc";
-	} else if(story == 2){
-		storyDesc = "story-2-2-desc";
-	} else if(story == 3){
-		storyDesc = "story-2-3-desc";
-	} else {
-		storyDesc = "story-2-4-desc";
-	}
+	storyDesc = "desc" + story
 
 	return storyDesc;
 }
@@ -42,8 +26,8 @@ function displayDesc(story){
 	storyTitle = getStoryTitle(story);
 	storyDesc = getStoryDesc(story);
 
-	storyTitleEl = document.getElementById(storyTitle);
-	storyDescEl = document.getElementById(storyDesc);
+	storyTitleEl = document.getElementsByName(storyTitle)[0];
+	storyDescEl = document.getElementsByName(storyDesc)[0];
 
 	storyTitleEl.style.display = "none";
 	storyDescEl.style.display = "block";
@@ -61,8 +45,8 @@ function displayTitle(story){
 	storyTitle = getStoryTitle(story);
 	storyDesc = getStoryDesc(story);
 
-	storyTitleEl = document.getElementById(storyTitle);
-	storyDescEl = document.getElementById(storyDesc);
+	storyTitleEl = document.getElementsByName(storyTitle)[0];
+	storyDescEl = document.getElementsByName(storyDesc)[0];
 
 	storyDescEl.style.display = "none";
 	storyTitleEl.style.display = "block";
