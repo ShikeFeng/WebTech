@@ -15,11 +15,23 @@ var crypto = require("crypto-js");
 var app = express();
 var fs = require("fs");
 var http = require('http');
+var https = require('https');
 var path = require("path");
 var sql = require("sqlite3").verbose();
 var dbpath = path.resolve('public/db/', 'site.db');
 console.log(dbpath);
 var db = new sql.Database(dbpath);
+
+var httpsOptions = {
+  key: fs.readFileSync('https/private.key'),
+  cert: fs.readFileSync('https/certificate.pem')
+};
+
+var httpsPort = 8000;
+var httpPort = 8080;
+
+var httpsServer = https.createServer(httpsOptions, app).listen(httpsPort);
+var httpServer = http.createServer(app).listen(httpPort);
 
 var banned = [];
 banUpperCase("./public/", "");
@@ -44,11 +56,18 @@ app.use(session({
   cookie: {maxAge: 600000}
 }));
 
-app.listen(8080, "localhost");
-console.log("Visit http://localhost:8080/");
+// app.listen(8080, "localhost");
+// console.log("Visit http://localhost:8080/");
 // set the view engine to ejs
 app.set('view engine', 'ejs');
+app.set('port_https', 8000);
 
+app.all('*', function(req,res,next){
+  if (req.secure) {
+    return next();
+  }
+  res.redirect('https://' + req.hostname + ":" + app.get('port_https') + req.url);
+});
 /*Global Variables*/
 var categories = [1,2,3];   //Hardcoded for the current category types
 var postsPerCategory = [4, 4, 6];    //Hardcoded for the current layout
