@@ -80,9 +80,14 @@ svg {
 
 /*Most recent stories*/
 
+.user-profile-pic-recent {
+    position: absolute;
+}
+
 .category-clipart {
     position: absolute;
 }
+
 .recent-story{
     margin-top: 2%;
 }
@@ -101,6 +106,8 @@ svg {
 .most-recent-stories-title{
     font-size: large;
     cursor: pointer;
+    position: relative;
+    margin-left: 1.5%;
 }
 .user-icon{
     float: left;
