@@ -17,6 +17,8 @@ var fs = require("fs");
 var http = require('http');
 var https = require('https');
 var path = require("path");
+
+var helmet = require('helmet');
 var sql = require("sqlite3").verbose();
 var dbpath = path.resolve('public/db/', 'site.db');
 console.log(dbpath);
@@ -46,14 +48,20 @@ app.use(fileUpload());
 var options = { setHeaders: deliverXHTML };
 app.use(express.static("public", options));
 
+app.use(helmet());
 // url validation
 app.use(urlValidation);
-// initialise session
+// initialise session and set cookie secure options
 app.use(session({
   secret: 'ssshhhh',
+  name: 'ourSession',
   resave: false,
   saveUninitialized: true,
-  cookie: {maxAge: 600000}
+  cookie: {
+    maxAge: 600000,
+    secure: true,
+    httpOnly: true,
+  }
 }));
 
 // app.listen(8080, "localhost");
