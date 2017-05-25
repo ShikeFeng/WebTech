@@ -122,7 +122,7 @@
                     <div class="row">
                         <a href="read_post.html/id=<%=categoriesPosts[category][2].id%>">
                             <div class="col-sm-5 story clickable" onmouseenter="displayDesc(<%=categoriesPosts[category][2].id%>)"
-                                                                  onmouseleave="displayTitle(2)">
+                                                                  onmouseleave="displayTitle(<%=categoriesPosts[category][2].id%>)">
                                 <div class="bounding-box" id="story-2-3" name="story<%=categoriesPosts[category][2].id%>" style="background-image: url('../..<%=categoriesPosts[category][2].imageUrl%>')">
                                     <div id="story-2-3-title" name="title<%=categoriesPosts[category][2].id%>"><h3><%= categoriesPosts[category][2].title%></h3></div>
                                     <div id="story-2-3-desc"  name="desc<%=categoriesPosts[category][2].id%>" class="story-2-desc"><h3><%= categoriesPosts[category][2].description%></h3></div>

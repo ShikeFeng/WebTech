@@ -21,10 +21,22 @@
             <ul class="nav navbar-nav navbar-right">
                  <li id="UserInfo" class="dropdown"><a href="#"><span class="dropbtn"><img class="dropbtn" src="..<%= userImgPath %>"> <%= userName %></span></a>
                      <div id="myDropdown" class="dropdown-content">
-                        <a href="/my_stories.html/userId=<%= userId %>">My Stories</a>
-                        <a href="/profile.html">Profile</a>
-                        <a href="/edit_post.html">Write Post</a>
-                        <a href="/logout">Log out</a>
+                        <a href="/my_stories.html/userId=<%= userId %>">
+                            <img src="../../svg/stories.svg"/>
+                            My Stories
+                        </a>
+                        <a href="/profile.html">
+                            <img src="../../svg/default.svg"/>
+                            Profile
+                        </a>
+                        <a href="/edit_post.html">
+                            <img src="../../svg/write-post.svg"/>
+                            Write Post
+                        </a>
+                        <a class="logout-element" href="/logout">
+                            <img src="../../svg/log-out.svg"/>
+                            Log out
+                        </a>
                     </div>
                 </li>
             </ul>

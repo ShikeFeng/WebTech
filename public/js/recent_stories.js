@@ -4,7 +4,7 @@
 
 $(document).scroll(function() {
     var y = $(this).scrollTop();
-    if (y > 800) {
+    if (y > 600) {
         $('.most-recent-stories').fadeIn();
     } else {
         $('.most-recent-stories').fadeOut();
