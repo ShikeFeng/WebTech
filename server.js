@@ -442,29 +442,20 @@ function writePostHandler(req, res){
 
   if (req.session.loggedIn === false){
     res.send("Session Expired, Please Login Again");
-  var body = req.body;
-  var imagePath = "/svg/default.svg";
-  console.log(req.files);
-  if (!isEmpty(req.files)){
-    console.log("There is an Image");
-    var imageExtension = getExtension(req.files.Image.name);
-    var validTitle = validateName(body.Title);
-    req.files.Image.name = userName.toLowerCase() + '_' + body.Title.toLowerCase() + '_' + Date.now() + imageExtension;
-    console.log("Modified Image File Name", req.files.Image.name);
-    imagePath = "/img/" + req.files.Image.name;
-    req.files.Image.mv("public" + imagePath, exceptionHandler);
-    function exceptionHandler(err){
-      console.log("Sth Wrong");
-    }
   }
+
   else {
     var userName = req.session.userName; // get the username of the current user
     // The write post page will only be accessed for users which have already loggedIn
-
     var body = req.body;
-    var imagePath = "/img/default.png";
+    var imagePath = "/svg/default.svg";
+    console.log(req.files);
     if (!isEmpty(req.files)){
-      req.files.Image.name = userName.toLowerCase() + '_' + body.Title + '_' + Date.now() + ".jpg";
+      console.log("There is an Image");
+      var imageExtension = getExtension(req.files.Image.name);
+      var validTitle = validateName(body.Title);
+      req.files.Image.name = userName.toLowerCase() + '_' + body.Title.toLowerCase() + '_' + Date.now() + imageExtension;
+      console.log("Modified Image File Name", req.files.Image.name);
       imagePath = "/img/" + req.files.Image.name;
       req.files.Image.mv("public" + imagePath, exceptionHandler);
       function exceptionHandler(err){
@@ -472,6 +463,19 @@ function writePostHandler(req, res){
         console.log("File Uploaded");
       }
     }
+
+    // var body = req.body;
+    // var imagePath = "/img/default.png";
+    // if (!isEmpty(req.files)){
+    //   req.files.Image.name = userName.toLowerCase() + '_' + body.Title + '_' + Date.now() + ".jpg";
+    //   imagePath = "/img/" + req.files.Image.name;
+    //   req.files.Image.mv("public" + imagePath, exceptionHandler);
+    //   function exceptionHandler(err){
+    //     if (err) throw err;
+    //     console.log("File Uploaded");
+    //   }
+    // }
+
     var ps = db.prepare("select * from user where username= ?");
     ps.each(userName, handler);
     function handler(err,row){
