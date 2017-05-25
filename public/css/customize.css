@@ -68,7 +68,7 @@ body {
 
 .show {display:block;}
 
-@media (max-width: 991px) {
+@media (max-width: 860px) {
   .navbar-header {
       float: none;
   }

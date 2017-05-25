@@ -355,7 +355,7 @@ function loginRequestHandler(req, res) {
             if (err)  throw err;
 
             if (row === undefined) {
-              response.loginResponse = "No such user";
+              response.loginResponse = "No Such User";
               sess.loggedIn = false;
               response.loggedIn = false;
             }
@@ -451,40 +451,45 @@ function writePostHandler(req, res){
   console.log(req.body);
   console.log(req.files);
   console.log("Request Received");
-  //var userName = "Robert";
-  var userName = req.session.userName; // get the username of the current user
-  // The write post page will only be accessed for users which have already loggedIn
-
-  var body = req.body;
-  var imagePath = "/img/default.png";
-  console.log(req.files);
-  if (!isEmpty(req.files)){
-    console.log("There is an Image");
-    req.files.Image.name = userName.toLowerCase() + '_' + body.Title + '_' + Date.now() + ".jpg";
-    console.log("Modified Image File Name", req.files.Image.name);
-    imagePath = "/img/" + req.files.Image.name;
-    req.files.Image.mv("public" + imagePath, exceptionHandler);
-    function exceptionHandler(err){
-      console.log("Sth Wrong");
-    }
+  if (req.session.loggedIn === false){
+    res.send("Session Expired, Please Login Again");
   }
-  console.log(req.body.Title);
-  db.each("select * from user where username= ?", userName, handler);
-  function handler(err,row){
-    if (err) throw err;
-    // var userID = row.userID;
-    // messages.push(userID);
-    console.log("userID ", row.userID);
-    db.run("insert into posts (title, introduction, content, category, imagePath, userID, userName) values (?, ?, ?, ?, ?, ?, ?)", [body.Title, body.Intro, body.Article, categoryNumber[body.Category], imagePath,row.userID, userName], insertHandler);
+  else {
+    var userName = req.session.userName; // get the username of the current user
+    // The write post page will only be accessed for users which have already loggedIn
 
-    function insertHandler(err, row){
-      console.log("Insertion Finished");
+    var body = req.body;
+    var imagePath = "/img/default.png";
+    console.log(req.files);
+    if (!isEmpty(req.files)){
+      console.log("There is an Image");
+      req.files.Image.name = userName.toLowerCase() + '_' + body.Title + '_' + Date.now() + ".jpg";
+      console.log("Modified Image File Name", req.files.Image.name);
+      imagePath = "/img/" + req.files.Image.name;
+      req.files.Image.mv("public" + imagePath, exceptionHandler);
+      function exceptionHandler(err){
+        console.log("Sth Wrong");
+      }
+    }
+    console.log(req.body.Title);
+    db.each("select * from user where username= ?", userName, handler);
+    function handler(err,row){
       if (err) throw err;
+      // var userID = row.userID;
+      // messages.push(userID);
+      console.log("userID ", row.userID);
+      db.run("insert into posts (title, introduction, content, category, imagePath, userID, userName) values (?, ?, ?, ?, ?, ?, ?)", [body.Title, body.Intro, body.Article, categoryNumber[body.Category], imagePath,row.userID, userName], insertHandler);
+
+      function insertHandler(err, row){
+        console.log("Insertion Finished");
+        if (err) throw err;
+      }
     }
+        res.redirect('index.html');
+        // res.send("OK");
+    // }
   }
-      res.redirect('index.html');
-      // res.send("OK");
-  // }
+
 }
 
 app.post('/updateProfile', profileUpdateHandler);
