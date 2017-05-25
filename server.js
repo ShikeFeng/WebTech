@@ -21,7 +21,6 @@ var path = require("path");
 var helmet = require('helmet');
 var sql = require("sqlite3").verbose();
 var dbpath = path.resolve('public/db/', 'site.db');
-console.log(dbpath);
 var db = new sql.Database(dbpath);
 
 var httpsOptions = {
@@ -65,7 +64,7 @@ app.use(session({
 }));
 
 // app.listen(8080, "localhost");
-// console.log("Visit http://localhost:8080/");
+console.log("Please Visit http://localhost:8080/ or https://localhost:8000/");
 // set the view engine to ejs
 app.set('view engine', 'ejs');
 app.set('port_https', 8000);
@@ -114,31 +113,24 @@ function getFullURL(req){
 }
 
 function urlValidation(req, res, next){
-  console.log("Request Type : ", req.method);
   var fullURL = getFullURL(req);
-  console.log("Full URL : ", fullURL);
   if (url_Validator.isUri(fullURL)){
-    console.log("Valid URL");
     next();
   } else {
     res.send("Invalid URL !");
   }
 }
 
+app.get('/', redirectHandler);
+
+function redirectHandler(req, res){
+  res.redirect('/index.html');
+}
 
 app.get('/index.html', indexHandler);
 
 function indexHandler(req, res) {
       var sess = req.session;
-      console.log("rep.session.id -> " + sess.id);
-      console.log("req.sessionID -> " + req.sessionID);
-      if (sess.loggedIn){
-        console.log("Already loggedIn");
-        console.log("Username -> " + sess.userName);
-      }
-      else {
-        console.log("haven't logged yet");
-      }
 
       var categoriesPosts = [];
       var noOfPosts = 0;
@@ -177,7 +169,7 @@ function indexHandler(req, res) {
                     categoriesPosts[category][post].userImgPath = row.imgURL;
                     categoriesPosts[category][post].userName = row.username;
                     callbackCount++;
-                    console.log("session image path: " + sess.imageUrl);
+
                     if(callbackCount == noOfPosts) {
                         res.render('pages/index', {
                             categoriesPosts: categoriesPosts,
@@ -326,30 +318,22 @@ app.get('/my_stories.html/userId=:id', function(req, res){
 app.post('/login', loginRequestHandler);
 
 function loginRequestHandler(req, res) {
-    console.log("request received");
     var sess = req.session;
-    console.log("Session ID -> " + sess.genid);
 
-    if (sess.loggedIn) {
-      console.log("Already loggedIn, Username -> " + sess.userName);
-    }
-    else {
-      console.log("Haven't loggedIn Yet");
-    }
     var body = "";
     req.on('data', add);
     req.on('end', end);
     var response = {};
     function add(chunk){
         body = body + chunk.toString();
-        console.log('Undecrypted Message : ', body);
         body = crypto.AES.decrypt(body, 'secret key 123').toString(crypto.enc.Utf8);
-        console.log('Decrypted Message : ', body);
     }
 
     function end(){
         body = JSON.parse(body);
-        db.get("select * from user where username= ?", body.username, handler);
+        var ps = db.prepare("select * from user where username= ?");
+        ps.get(body.username, handler);
+        //db.get("select * from user where username= ?", body.username, handler);
 
         function handler(err, row){
             if (err)  throw err;
@@ -361,7 +345,7 @@ function loginRequestHandler(req, res) {
             }
             else if(row.password === body.password) {
                 response.loginResponse = "Successfully LoggedIn";
-                // response.imageIcon = row.imgURL;  -- this is not needed as imageUrl is kept on sess obj
+
                 sess.loggedIn = true;
                 sess.userName = body.username;
                 sess.userId = row.userID;
@@ -387,19 +371,17 @@ app.post('/register', registerRequestHandler);
 function registerRequestHandler(req, res){
   var sess = req.session;
 
-  console.log(req.body);
-  console.log(req.files);
-  console.log("Request Received");
-  var body = req.body;
 
-  db.get("select * from user where username= ?", body.username, handler);
+  var body = req.body;
+  var ps = db.prepare("select * from user where username= ?")
+  ps.get(body.username, handler);
   function handler(err, row) {
     if (err) throw err;
     if (row === undefined) {
       var imagePath = "/img/default.png";
       if (!isEmpty(req.files)){
         req.files.headImage.name = req.body.username.toLowerCase() + '_header.png';
-        console.log("Modified Image File Name", req.files.headImage.name);
+
         imagePath = "/img/" + req.files.headImage.name;
         req.files.headImage.mv("public" + imagePath, fileMove);
         function fileMove(err){
@@ -408,18 +390,28 @@ function registerRequestHandler(req, res){
       }
 
       // Insert into the database
-      db.run("insert into user (username, password, imgURL, emailAddress) values (?, ?, ?, ?)", [body.username, body.password, imagePath, body.Email.toLowerCase()], insertHandler);
+      var pr = db.prepare("insert into user (username, password, imgURL, emailAddress) values (?, ?, ?, ?)");
+      pr.run([body.username, body.password, imagePath, body.Email.toLowerCase()], insertHandler);
 
       function insertHandler(err){
         if (err) throw err;
+        sess.userName = body.username;
+        sess.loggedIn = true;
+        sess.userEmail = body.Email.toLowerCase();
+        sess.imageUrl = imagePath;
+        sess.password = body.password;
+        var pr1 = db.prepare("select * from user where username= ?");
+        pr1.get(body.username, handler1);
+        function handler1(err, row2){
+          if (err) throw err;
+          sess.userId = row2.userID;
+          console.log(row2.userID);
+          res.redirect('/index.html');
+
+        }
       }
 
-      sess.userName = body.username;
-      //sess.loggedIn = true;
-      sess.userEmail = body.Email.toLowerCase();
-      sess.imageUrl = imagePath;
-      sess.password = body.password;
-      res.redirect('/index.html');
+
     }
     else {
       res.send("Username Already in Use");
@@ -431,7 +423,6 @@ function registerRequestHandler(req, res){
 app.get('/logout', logoutHandler);
 
 function logoutHandler(req, res){
-  console.log("Logout Request Received");
   var sess = req.session;
   var response = {};
   sess.userName = "";
@@ -448,9 +439,7 @@ function logoutHandler(req, res){
 app.post('/writePost', writePostHandler);
 
 function writePostHandler(req, res){
-  console.log(req.body);
-  console.log(req.files);
-  console.log("Request Received");
+
   if (req.session.loggedIn === false){
     res.send("Session Expired, Please Login Again");
   }
@@ -460,28 +449,25 @@ function writePostHandler(req, res){
 
     var body = req.body;
     var imagePath = "/img/default.png";
-    console.log(req.files);
     if (!isEmpty(req.files)){
-      console.log("There is an Image");
       req.files.Image.name = userName.toLowerCase() + '_' + body.Title + '_' + Date.now() + ".jpg";
-      console.log("Modified Image File Name", req.files.Image.name);
       imagePath = "/img/" + req.files.Image.name;
       req.files.Image.mv("public" + imagePath, exceptionHandler);
       function exceptionHandler(err){
-        console.log("Sth Wrong");
+        if (err) throw err;
+        console.log("File Uploaded");
       }
     }
-    console.log(req.body.Title);
-    db.each("select * from user where username= ?", userName, handler);
+    var ps = db.prepare("select * from user where username= ?");
+    ps.each(userName, handler);
     function handler(err,row){
       if (err) throw err;
       // var userID = row.userID;
       // messages.push(userID);
-      console.log("userID ", row.userID);
-      db.run("insert into posts (title, introduction, content, category, imagePath, userID, userName) values (?, ?, ?, ?, ?, ?, ?)", [body.Title, body.Intro, body.Article, categoryNumber[body.Category], imagePath,row.userID, userName], insertHandler);
+      var pr = db.prepare("insert into posts (title, introduction, content, category, imagePath, userID, userName) values (?, ?, ?, ?, ?, ?, ?)");
+      pr.run([body.Title, body.Intro, body.Article, categoryNumber[body.Category], imagePath,row.userID, userName], insertHandler);
 
       function insertHandler(err, row){
-        console.log("Insertion Finished");
         if (err) throw err;
       }
     }
@@ -495,32 +481,31 @@ function writePostHandler(req, res){
 app.post('/updateProfile', profileUpdateHandler);
 
 function profileUpdateHandler(req,res){
-  console.log(req.body);
   var sess = req.session;
   var originalUserName = sess.userName;
 
   if (isEmpty(req.files)) {
-    console.log("No uploaded files");
-    db.each("select * from user where username = ?", originalUserName, withoutImage);
+    var ps = db.prepare("select * from user where username = ?");
+    ps.each(originalUserName, withoutImage);
     function withoutImage(err, row){
       if (err) throw err;
       if (row != undefined){
-        db.run("update user set username = ?, password = ?, emailAddress = ? where userID = ?", [req.body.username_profile, req.body.password_profile, req.body.email_profile, row.userID], updateHandler);
+        var pr = db.prepare("update user set username = ?, password = ?, emailAddress = ? where userID = ?");
+        pr.run([req.body.username_profile, req.body.password_profile, req.body.email_profile, row.userID], updateHandler);
 
         function updateHandler(err, row){
           if (err) throw err;
           sess.userName = req.body.username_profile;
           sess.userEmail = req.body.email_profile;
           sess.userPassword = req.body.password_profile;
-          console.log('Updated');
           res.redirect('index.html');
         }
       }
     }
   }
   else { // The case where the header image changed
-    console.log("There is a new header image file");
-    db.each("select * from user where username = ?", originalUserName, withImage);
+    var ps = db.prepare("select * from user where username = ?");
+    ps.each(originalUserName, withImage);
     function withImage(err, row){
       if (err) throw err;
       if (row != undefined) {
@@ -531,11 +516,11 @@ function profileUpdateHandler(req,res){
 
         function unlinkHander(err) {
           if (err) throw err;
-          console.log("unlinked original File");
           req.files.image_profile.mv('public' + newImgPath, afterSaveImage);
 
           function afterSaveImage(err){
-            db.run("update user set username = ?, password = ?, emailAddress = ? , imgURL = ? where userID = ?", [req.body.username_profile, req.body.password_profile, req.body.email_profile, newImgPath, row.userID], updateHandler);
+            var pr = db.prepare("update user set username = ?, password = ?, emailAddress = ? , imgURL = ? where userID = ?");
+            pr.run([req.body.username_profile, req.body.password_profile, req.body.email_profile, newImgPath, row.userID], updateHandler);
 
             function updateHandler(err, row){
               if (err) throw err;
@@ -543,19 +528,13 @@ function profileUpdateHandler(req,res){
               sess.userEmail = req.body.email_profile;
               sess.userPassword = req.body.password_profile;
               sess.imageUrl = newImgPath;
-              console.log('Updated');
               res.redirect('index.html');
             }
           }
         }
       }
     }
-    // req.files.profile_image.name = req.body.username.toLowerCase() + '_header.png';
-    // console.log("Modified Image File Name", req.files.headImage.name);
-    // imagePath = "/img/" + req.files.headImage.name;
   }
-  console.log(req.files);
-  console.log("Request Received");
   //res.redirect('index.html');
 }
 
