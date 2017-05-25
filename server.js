@@ -186,11 +186,45 @@ app.get('/category.html/id=:id', function(req, res) {
                 posts[post].userImgPath = row.imgURL;
                 callbackCount++;
                 if(callbackCount == noOfPosts) {
-                    res.render('pages/category', {
-                        posts: posts,
-                        session: sess,
-                        categoryId: categoryId
-                    });
+                    getMostRecentStories();
+                }
+            }
+        }
+    }
+
+    function getMostRecentStories() {
+        var recentPosts = [];
+
+        db.all('select * from posts order by postID desc', handleRecentStories);
+
+        function handleRecentStories(err, rows) {
+            if(err) throw err;
+            for(var row = 0; row < 5; row++) {
+                var post = {};
+                createPost(post, rows[row]);
+                recentPosts.push(post);
+            }
+            getUserIcons();
+        }
+
+        function getUserIcons() {
+            var callbackCount = 0;
+            for(let post = 0; post < recentPosts.length; post++) {
+                db.each('select * from user where userID= ?', recentPosts[post].userId, handleUserIcon);
+
+                function handleUserIcon(err, row){
+                    if(err) throw err;
+                    recentPosts[post].userImgPath = row.imgURL;
+                    recentPosts[post].userName = row.username;
+                    callbackCount++;
+                    if(callbackCount == recentPosts.length) {
+                        res.render('pages/category', {
+                            posts: posts,
+                            recentPosts: recentPosts,
+                            session: sess,
+                            categoryId: categoryId
+                        });
+                    }
                 }
             }
         }
@@ -274,11 +308,45 @@ app.get('/my_stories.html/userId=:id', function(req, res){
                 posts[post].userImgPath = row.imgURL;
                 callbackCount++;
                 if(callbackCount == noOfPosts) {
-                    res.render('pages/category', {
-                        posts: posts,
-                        session: sess,
-                        categoryId: categoryId
-                    });
+                    getMostRecentStories();
+                }
+            }
+        }
+    }
+
+    function getMostRecentStories() {
+        var recentPosts = [];
+
+        db.all('select * from posts order by postID desc', handleRecentStories);
+
+        function handleRecentStories(err, rows) {
+            if(err) throw err;
+            for(var row = 0; row < 5; row++) {
+                var post = {};
+                createPost(post, rows[row]);
+                recentPosts.push(post);
+            }
+            getUserIcons();
+        }
+
+        function getUserIcons() {
+            var callbackCount = 0;
+            for(let post = 0; post < recentPosts.length; post++) {
+                db.each('select * from user where userID= ?', recentPosts[post].userId, handleUserIcon);
+
+                function handleUserIcon(err, row){
+                    if(err) throw err;
+                    recentPosts[post].userImgPath = row.imgURL;
+                    recentPosts[post].userName = row.username;
+                    callbackCount++;
+                    if(callbackCount == recentPosts.length) {
+                        res.render('pages/category', {
+                            posts: posts,
+                            recentPosts: recentPosts,
+                            session: sess,
+                            categoryId: categoryId
+                        });
+                    }
                 }
             }
         }

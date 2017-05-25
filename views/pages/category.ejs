@@ -64,19 +64,21 @@
 				<div class="most-recent-stories container">
 					<div>
 						<h3>Most recent stories</h3>
-						<div class="container recent-story">
-							<div class="most-recent-stories-user-icon">
-								<object class="user-icon" type="image/svg+xml" data="../../svg/user-icon-resized.svg">
-									Your browser does not support SVG
-								</object>
-							</div>
-							<div class="container most-recent-stories-title">
-								<b>This is a title</b>
-							</div>
-							<div class="container most-recent-stories-author">
-								<i>John Smith</i>
-							</div>
-						</div>
+						<% for(var recentPost = 0; recentPost < recentPosts.length; recentPost++) { %>
+							<a href="/read_post.html/id=<%= recentPosts[recentPost].id %>">
+								<div class="container recent-story">
+									<img class="user-profile-pic user-profile-pic-recent" src="../..<%= recentPosts[recentPost].userImgPath %>"/>
+									<div class="container most-recent-stories-title">
+										<b><%= recentPosts[recentPost].title %></b>
+										in
+										<%= recentPosts[recentPost].categoryName %>
+									</div>
+									<div class="container most-recent-stories-author">
+										<i><%= recentPosts[recentPost].userName %></i>
+									</div>
+								</div>
+							</a>
+						<% } %>
 					</div>
 				</div>
 				<div class="category-clipart">
