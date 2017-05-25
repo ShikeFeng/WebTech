@@ -47,10 +47,8 @@ app.use(fileUpload());
 var options = { setHeaders: deliverXHTML };
 app.use(express.static("public", options));
 
-app.use(helmet());
-// url validation
-app.use(urlValidation);
-// initialise session and set cookie secure options
+app.use(helmet()); // url validation
+app.use(urlValidation); // initialise session and set cookie secure options
 app.use(session({
   secret: 'ssshhhh',
   name: 'ourSession',
@@ -63,18 +61,16 @@ app.use(session({
   }
 }));
 
-// app.listen(8080, "localhost");
 console.log("Please Visit http://localhost:8080/ or https://localhost:8000/");
-// set the view engine to ejs
-app.set('view engine', 'ejs');
+app.set('view engine', 'ejs');  // set the view engine to ejs
 app.set('port_https', 8000);
-
 app.all('*', function(req,res,next){
   if (req.secure) {
     return next();
   }
   res.redirect('https://' + req.hostname + ":" + app.get('port_https') + req.url);
 });
+
 /*Global Variables*/
 var categories = [1,2,3, 4, 5, 6];   //Hardcoded for the current category types
 var postsPerCategory = [4, 4, 6, 4, 4, 6];    //Hardcoded for the current layout
@@ -95,31 +91,6 @@ var categoryNumber = {
   'Research' : 5,
   'Others' : 6
 };
-
-function createPost(post, tableRow) {
-    post['id'] = tableRow.postID;
-    post['title'] = tableRow.title;
-    post['description'] = tableRow.introduction;
-    post['imageUrl'] = tableRow.imagePath;
-    post['categoryId'] = tableRow.category;
-    post['categoryName'] = categoriesNames[tableRow.category];
-    post['userId'] = tableRow.userID;
-
-    return post;
-}
-
-function getFullURL(req){
-  return req.protocol + '://' + req.get('host') + req.originalUrl;
-}
-
-function urlValidation(req, res, next){
-  var fullURL = getFullURL(req);
-  if (url_Validator.isUri(fullURL)){
-    next();
-  } else {
-    res.send("Invalid URL !");
-  }
-}
 
 app.get('/', redirectHandler);
 
@@ -569,6 +540,31 @@ function getExtension(fileName) {
     return extension;
 }
 
+function createPost(post, tableRow) {
+    post['id'] = tableRow.postID;
+    post['title'] = tableRow.title;
+    post['description'] = tableRow.introduction;
+    post['imageUrl'] = tableRow.imagePath;
+    post['categoryId'] = tableRow.category;
+    post['categoryName'] = categoriesNames[tableRow.category];
+    post['userId'] = tableRow.userID;
+
+    return post;
+}
+
+function getFullURL(req){
+    return req.protocol + '://' + req.get('host') + req.originalUrl;
+}
+
+function urlValidation(req, res, next){
+    var fullURL = getFullURL(req);
+    if (url_Validator.isUri(fullURL)){
+        next();
+    } else {
+        res.send("Invalid URL !");
+    }
+}
+
 function isEmpty(obj) {
 
     // null and undefined are "empty"
@@ -642,9 +638,4 @@ function banUpperCase(root, folder) {
         if ((mode & folderBit) == 0) continue;
         banUpperCase(root, file);
     }
-}
-
-function generatePosts() {
-    /*insert database query here*/
-    /*create array of posts here*/
 }
