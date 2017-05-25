@@ -387,7 +387,7 @@ function registerRequestHandler(req, res){
   function handler(err, row) {
     if (err) throw err;
     if (row === undefined) {
-      var imagePath = "/img/default.png";
+      var imagePath = "/svg/default.svg";
       if (!isEmpty(req.files)) {
          var imageExtension = getExtension(req.files.headImage.name);
         req.files.headImage.name = req.body.username.toLowerCase() + imageExtension;
@@ -448,7 +448,7 @@ function writePostHandler(req, res){
   // The write post page will only be accessed for users which have already loggedIn
 
   var body = req.body;
-  var imagePath = "/img/default.png";
+  var imagePath = "/svg/default.svg";
   console.log(req.files);
   if (!isEmpty(req.files)){
     console.log("There is an Image");
