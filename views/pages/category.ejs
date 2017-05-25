@@ -35,9 +35,7 @@
                 <% for(var post = 0; post < posts.length; post++) { %>
 					<div class="short-story-container">
 						<div class="container short-profile-details">
-							<object type="image/svg+xml" data="../../svg/user-icon-resized.svg">
-								Your browser does not support SVG
-							</object>
+							<img class="user-profile-pic" src="../..<%= posts[post].userImgPath %>"/>
 							<span class="user-name">
 								<a href="/my_stories.html/userId=<%= posts[post].userId %>">
 									<%=posts[post].userName%>

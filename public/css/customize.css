@@ -23,6 +23,13 @@ body {
     float: left;
 }
 
+.user-profile-pic {
+    position: relative;
+    border-radius: 50%;
+    width: 1.5em!important;
+    height: 1.5em;
+}
+
 .dropbtn {
     border: none;
     cursor: pointer;

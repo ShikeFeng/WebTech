@@ -181,10 +181,10 @@ app.get('/category.html/id=:id', function(req, res) {
             }
         }
 
-        getUserName(posts, posts.length);
+        getUserData(posts, posts.length);
     }
 
-    function getUserName(posts, noOfPosts) {
+    function getUserData(posts, noOfPosts) {
         var callbackCount = 0;
 
         for(let post = 0; post < posts.length; post++) {
@@ -193,6 +193,7 @@ app.get('/category.html/id=:id', function(req, res) {
             function handler(err, row) {
                 if(err) throw err;
                 posts[post].userName = row.username;
+                posts[post].userImgPath = row.imgURL;
                 callbackCount++;
                 if(callbackCount == noOfPosts) {
                     res.render('pages/category', {

@@ -58,6 +58,7 @@ svg {
     font-size: 130%;
     margin-bottom: 1%;
     padding-top: 1%;
+    width: 100%;
 }
 .short-post-story{
     width: inherit;
