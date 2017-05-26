@@ -83,24 +83,28 @@
 				</div>
 				<div class="category-clipart">
                     <% if(categoryId == 0) {%>
-						<img src="../../svg/blog-post.svg"/>
+						<img class="show-false" src="../../svg/blog-post.svg"/>
 					<% } else if(categoryId == 1) {%>
-                    	<img src="../../img/colored-key.png"/>
+                    	<img class="show-false" src="../../img/colored-key.png"/>
 					<% } else if(categoryId == 2) { %>
-						<img src="../../svg/brain-animated.svg"/>
+						<img class="show-false" src="../../svg/brain-animated.svg"/>
                     <% } else if(categoryId == 3) { %>
-						<img src="../../svg/graph.svg"/>
+						<img class="show-false" src="../../svg/graph.svg"/>
                     <% } else if(categoryId == 4) { %>
-						<img src="../../svg/enterprise-resized.svg"/>
+						<img class="show-false" src="../../svg/enterprise-resized.svg"/>
                     <% } else if(categoryId == 5) { %>
-						<img src="../../img/research-shadow.png"/>
+						<img class="show-false" src="../../img/research-shadow.png"/>
                     <% } else { %>
-						<img src="../../svg/raspberry-animated.svg"/>
+						<img class="show-false" src="../../svg/raspberry-animated.svg"/>
 					<% } %>
 				</div>
 			</div>
 		</div>
 	</div>
+
+	<footer class=" container-fluid myfooter">
+        <% include ../partials/footer %>
+	</footer>
 
 <!--	JavaScrip files included-->
 <!-- JQuery -->
