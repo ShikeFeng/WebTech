@@ -114,3 +114,13 @@ svg {
     margin-right: 1%;
     margin-top: 1%;
 }
+
+/* Do not display artwork and most recent stories if the size
+ * is too small
+ */
+
+@media only screen and (max-width: 990px) {
+    .show-false {
+        display: none;
+    }
+}

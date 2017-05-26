@@ -485,10 +485,10 @@ input:focus {
 }
 
 .myfooter {
-  /*border-top: 0.2em solid black;*/
-  font-size: 1.2em;
-  background-color: rgb(255, 255, 255);
-  box-shadow: 0 2px 10px rgb(150,150,150);
-  padding: 1em 2em;
-  text-align: center;
+    font-size: 1.2em;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0 2px 10px rgb(150,150,150);
+    padding: 1em 2em;
+    text-align: center;
+    margin-top: 10%;
 }

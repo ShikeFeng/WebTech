@@ -13,12 +13,8 @@ var usernameText = document.getElementById('usernameText');
 var passwordText = document.getElementById('passwordText');
 var emailText = document.getElementById('emailText');
 
-var usenameValidate = document.getElementById('usernameValidate');
 var passwordValidate = document.getElementById('passwordValidate');
 var emailValidate = document.getElementById('emailValidate');
-
-var usernameText_login = document.getElementById('usernameText_login');
-var passwordText_login = document.getElementById('passwordText_login');
 
 usernameText.addEventListener('keyup', validate_username);
 passwordText.addEventListener('keyup', validate_password);
@@ -105,16 +101,6 @@ function clearValidationMesages(){
     messages[i].innerHTML = "";
   }
 }
-// function validateLogin(){
-//   if (userNameValidation(usernameText_login) != 0) {
-//       alert("Invalid Username Format!");
-//       return false;
-//   }
-//   else if (passwordValidation(passwordText_login) != 0) {
-//       alert("Invalid Password Format !");
-//       return false;
-//   }
-// }
 
 if(signupLink != null){
     signupLink.onclick = function () {
@@ -150,13 +136,11 @@ function login() {
     var userInfo = {};
     var userName = document.getElementsByClassName('user-name')[0].value;
     var password = document.getElementsByClassName('password')[0].value;
-    // alert(userName);
-    // alert(password);
+
     userInfo['username'] = userName;
     userInfo['password'] = password;
 
     var validationResult = userInfoValidation(userInfo);
-    // alert("Validated");
     if (validationResult.username != "valid"){
       alert(validationResult.username);
     }
@@ -167,14 +151,6 @@ function login() {
       var message = aesEncrypt_object(userInfo);
       sendRequest('POST', '/login', true, message);
     }
-    // if (validationResult.username === "valid" && validationResult.password === "valid"){
-    //     var message = aesEncrypt_object(userInfo);
-    //     sendRequest('POST', '/login', true, message);
-    // }
-    // else {
-    //   alert('Username : ' + validationResult.username);
-    //   alert('Password : ' + validationResult.password);
-    // }
 }
 
 function sendRequest(method, section, syncValue, data){
