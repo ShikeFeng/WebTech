@@ -669,9 +669,9 @@ function ban(req, res, next) {
     next();
 }
 
-// Redirect the browser to the login page.
+// Redirect the browser to the index page.
 function auth(req, res, next) {
-    res.redirect("/login.html");
+    res.redirect("/index.html");
 }
 
 // Called by express.static.  Deliver response as XHTML.

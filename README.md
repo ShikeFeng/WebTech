@@ -2,32 +2,34 @@
 Coursework for the Web Technology unit
 ### Aim
 The aim of this website is to provide a platform for students to post things.
-### What we have done
+### Requirements of this project
+
 #### HTML
-Bootstrap grid system and html box model for the structure of the website.
+investigated a variety of different issues and gained a general high level of confidence with the structure of HTML pages (or with generating HTML via a framework)
 #### CSS
-Bootstrap can help a little bit, plus the original css should do
+investigated a variety of different issues and gained a general high level of confidence with CSS style (or with generating CSS via a framework)
 #### JavaScript
-Communication with the server side, and some animations
+have gained a high level of understanding of how client-side JavaScript works, or a high level of expertise in using client-side frameworks
 #### PNG && SVG
 1. PNG: gained experience with some more sophisticated tools such as handling layers and transparency, or airbrushing or creating original artwork
 2. SVG: have gained a higher level of experience, e.g. with path editing, grouping, transformations, gradients, patterns, etc., or put a lot of effort into vector artwork
 
 #### Server
-URL validation
-manipulate the session object
-
+ dealt with things like https and certificates, or web sockets, or cloud hosting, or security issues beyond URL validation, or auto-testing, or cookies, or running under reduced privilege
 #### Database
 gained a lot of experience with SQL, or you've put a lot of effort into organizing database access (e.g. into a separate server-side module) or you've put a lot of effort into database design or details of handling your data
 
 #### Dynamic Pages
 EJS template
-AES encryption
+put in a lot of programming effort or become very fluent in using your chosen framework
 
 #### Node Modules
 express
 express-session
-sqlite3
+express-fileupload
+multer
+validator
 valid-url
 crypto-js
-multer
+helmet
+sqlite3
