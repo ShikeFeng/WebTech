@@ -28,7 +28,6 @@ function hidePassword(){
 
 function validateUpdate(){
     if (userNameValidation(profile_username.value) === 0 && passwordValidation(profile_password.value) === 0 && validator.isEmail(profile_email.value)) {
-      alert(1);
       return true;
     }
 
